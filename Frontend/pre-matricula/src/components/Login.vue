@@ -1,11 +1,12 @@
 <template>
-  <div class="hello">
+  <div class="login-container">
     <div class="container">
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Sign In</h5>
+
             <form class="form-signin">
               <div class="form-label-group">
                 <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
@@ -21,10 +22,16 @@
                 <input type="checkbox" class="custom-control-input" id="customCheck1">
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
+
+
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
               <hr class="my-4">
               <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
+
+
             </form>
+
+
           </div>
         </div>
       </div>
@@ -42,6 +49,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: .75rem;
+}
+
 body {
   background: #9CECFB;
   /* fallback for old browsers */
@@ -52,7 +64,7 @@ body {
 }
 
 .card-signin {
-  border: 0;
+  border: 1px solid black;
   border-radius: 1rem;
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
 }
@@ -85,13 +97,9 @@ body {
   margin-bottom: 1rem;
 }
 
+
 .form-label-group input {
   border-radius: 2rem;
-}
-
-.form-label-group>input,
-.form-label-group>label {
-  padding: var(--input-padding-y) var(--input-padding-x);
 }
 
 .form-label-group>label {
@@ -150,5 +158,6 @@ body {
   color: white;
   background-color: #3b5998;
 }
+
 
 </style>
