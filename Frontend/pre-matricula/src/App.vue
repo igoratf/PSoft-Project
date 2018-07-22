@@ -1,12 +1,20 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <menu-pre-mat/>
     <router-view/>
   </div>
 </template>
+
+
+<script>
+import MenuPreMat from './components/MenuPreMat.vue'
+export default {
+  components: {
+    'menu-pre-mat': MenuPreMat
+  },
+  name: 'app'
+}
+</script>
 
 <style>
 #app {
@@ -15,6 +23,5 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

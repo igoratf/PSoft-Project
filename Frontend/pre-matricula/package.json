@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "firebase": "^5.3.0",
+    "npm": "^6.2.0",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1"
   },
