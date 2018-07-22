@@ -5,6 +5,8 @@
         <div class="col"></div>
         <div class="col">
           <div class="form-container">
+            <h1> Login </h1>
+            <hr>
             <form>
 
               <div class="form-group">
@@ -40,7 +42,7 @@
               </div>
               <hr>
 
-              <button class="btn btn-google">
+              <button class="btn btn-google" @click="signInWithGoogle">
                 <i class="fab fa-google"></i> Sign in with Google</button>
 
             </form>
@@ -57,7 +59,22 @@ export default {
   name: "Login",
   data() {
     return {};
+  },
+  methods: {
+    signInWithGoogle() {
+       const provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithPopup(provider)
+      .then(data => console.log(data.user, data.credential.accessToken))
+      .catch(error => alert(error.message))
+      
+    }
+  },
+  created() {
+  firebase.auth().onAuthStateChanged(user => {
+    this.authUser = user;
+  });
   }
+  
 };
 </script>
 
