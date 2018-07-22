@@ -58,7 +58,9 @@
 export default {
   name: "Login",
   data() {
-    return {};
+    return {
+      authUser: null
+    };
   },
   methods: {
     signInWithGoogle() {
