@@ -22,7 +22,7 @@
     </ul>
   </div>
 
-  <span class="logout"><i class="fas fa-times"></i>  Sair</span>
+  <span class="logout" @click="signOut"><i class="fas fa-times"></i>  Sair</span>
 
 </nav>
 
@@ -31,6 +31,10 @@
 </template>
 
 <script>
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+import AuthService from '../services/AuthService.js';
   export default  {
     name: 'menu-pre-mat',
     mounted() {
@@ -38,14 +42,22 @@
     },
     data() {
       return {
-
+        authUser: null
       }
     },
     methods: {
-
+      signOut() {
+        AuthService.signOut();
+        console.log('deslogado');
+      }
     },
     computed: {
 
+    },
+    created() {
+      firebase.auth().onAuthStateChanged(user => {
+      this.authUser = user;
+    });
     }
 }
 </script>

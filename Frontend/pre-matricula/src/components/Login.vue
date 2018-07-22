@@ -55,6 +55,10 @@
 </template>
 
 <script>
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import AuthService from '../services/AuthService.js';
+
 export default {
   name: "Login",
   data() {
@@ -64,12 +68,8 @@ export default {
   },
   methods: {
     signInWithGoogle() {
-       const provider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithPopup(provider)
-      .then(data => console.log(data.user, data.credential.accessToken))
-      .catch(error => alert(error.message))
-      
-    }
+      AuthService.signInWithGoogle();
+    },
   },
   created() {
   firebase.auth().onAuthStateChanged(user => {
