@@ -16,7 +16,7 @@
             <form>
               <div class="row">
                 <div class="col">
-                  Realize login abaixo com a conta CCC
+                  Realize login abaixo com sua conta CCC
                 </div>
               </div>
 
@@ -77,6 +77,7 @@ export default {
 }
 
 .label {
+  min-width: 300px;
   margin-top: 10%;
   margin-left: 50%;
   transform: translateX(-50%);

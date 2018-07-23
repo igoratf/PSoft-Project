@@ -1,6 +1,6 @@
 <template>
 
-  <section class="cadastro">
+  <section class="cadastro-alunos">
     <h1>cadastro Component</h1>
   </section>
 
@@ -8,14 +8,14 @@
 
 <script>
   export default  {
-    name: 'cadastro',
+    name: 'cadastro-alunos',
     props: [],
     mounted() {
 
     },
     data() {
       return {
-
+        
       }
     },
     methods: {
