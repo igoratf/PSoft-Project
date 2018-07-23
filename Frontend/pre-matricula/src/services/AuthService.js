@@ -9,7 +9,7 @@ provider.setCustomParameters({hd: 'ccc.ufcg.edu.br'});
     firebase.auth().signInWithPopup(provider)
     .then(data => {
         console.log(data.user);
-        router.push('cadastro');
+        router.push('cadastro-alunos');
         })
     .catch(error => {
         alert(error.message);
