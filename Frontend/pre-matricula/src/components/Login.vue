@@ -2,48 +2,28 @@
   <div class="login-container">
     <div class="container">
       <div class="row">
+        <div class="col label">
+          <h1>Bem vindo ao Sistema de Pré Matrícula da UFCG</h1>
+        </div>
+      </div>
+      <div class="row">
         <div class="col"></div>
         <div class="col">
           <div class="form-container">
+
             <h1> Login </h1>
             <hr>
             <form>
-
-              <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-              </div>
-
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
-
               <div class="row">
                 <div class="col">
-                  <small>
-                    <a href="#">Change password</a>
-                  </small>
-                </div>
-
-                <div class="col">
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">
-                      <small>Remember me</small>
-                    </label>
-                  </div>
+                  Realize login abaixo com a conta CCC
                 </div>
               </div>
-              <br>
 
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary">Login</button>
-              </div>
               <hr>
 
               <button class="btn btn-google" @click="signInWithGoogle">
-                <i class="fab fa-google"></i> Sign in with Google</button>
+                <i class="fab fa-google"></i> <strong>Sign in with Google</strong></button>
 
             </form>
           </div>
@@ -55,9 +35,9 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import AuthService from '../services/AuthService.js';
+import firebase from "firebase/app";
+import "firebase/auth";
+import AuthService from "../services/AuthService.js";
 
 export default {
   name: "Login",
@@ -69,14 +49,13 @@ export default {
   methods: {
     signInWithGoogle() {
       AuthService.signInWithGoogle();
-    },
+    }
   },
   created() {
-  firebase.auth().onAuthStateChanged(user => {
-    this.authUser = user;
-  });
+    firebase.auth().onAuthStateChanged(user => {
+      this.authUser = user;
+    });
   }
-  
 };
 </script>
 
@@ -86,6 +65,7 @@ export default {
   width: 100%;
   border: 2px solid black;
   padding: 12px;
+  margin-top: 15%;
 }
 
 .forgot-pass {
@@ -94,6 +74,14 @@ export default {
 
 .check-remember {
   float: right;
+}
+
+.label {
+  margin-top: 10%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: 50%;
 }
 
 .btn-google {

@@ -1,7 +1,7 @@
 <template>
   <div class="menu-pre-mat">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Pre Matrícula</a>
+  <router-link to="/" class="navbar-brand">Pre Matrícula</router-link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -22,7 +22,13 @@
     </ul>
   </div>
 
-  <span class="logout" @click="signOut"><i class="fas fa-times"></i>  Sair</span>
+  <div class="header-infos">
+    <div v-if="authUser">
+      <span class="header-info"><i class="fas fa-user"></i><span class="logged-info">{{authUser.displayName}}</span></span>
+      <span class="header-info logout" @click="signOut"><i class="fas fa-times"></i><span class="logged-info">Sair</span></span>
+    </div>
+  </div>
+  
 
 </nav>
 
@@ -48,7 +54,6 @@ import AuthService from '../services/AuthService.js';
     methods: {
       signOut() {
         AuthService.signOut();
-        console.log('deslogado');
       }
     },
     computed: {
@@ -72,9 +77,23 @@ import AuthService from '../services/AuthService.js';
     color: white;
     font-size: 16px;
     line-height: 1.5;
+    margin-left: 16px;
   }
 
   .logout:hover {
     cursor: pointer;
   }
+
+  .header-infos {
+    color: white;
+  }
+
+  .header-info {
+    margin-left: 16px;
+  }
+
+  .logged-info {
+    margin-left: 8px;
+  }
+
 </style>

@@ -8,14 +8,18 @@ const provider = new firebase.auth.GoogleAuthProvider()
 provider.setCustomParameters({hd: 'ccc.ufcg.edu.br'});
     firebase.auth().signInWithPopup(provider)
     .then(data => {
-        console.log(data.user, data.credential.accessToken);
+        console.log(data.user);
         router.push('cadastro');
         })
-    .catch(error => alert(error.message))
+    .catch(error => {
+        alert(error.message);
+        router.push('login')
+    }
+    )
     },
     signOut() {
     firebase.auth().signOut()
-    .then(() => router.push('/login'))
+    .then(() => router.push('login'))
     .catch(error => alert(error.message))
     }
 
