@@ -23,7 +23,7 @@
               <hr>
 
               <button class="btn btn-google" @click="signInWithGoogle">
-                <i class="fab fa-google"></i> <strong>Sign in with Google</strong></button>
+              <i class="fab fa-google"></i><span class="sign-google"><strong>Sign in with Google</strong></span></button>
 
             </form>
           </div>
@@ -87,5 +87,10 @@ export default {
 .btn-google {
   color: white;
   background: #b71c1c;
+}
+
+.sign-google {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  margin-left: 8px;
 }
 </style>
