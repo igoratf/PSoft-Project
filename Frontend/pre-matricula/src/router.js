@@ -21,7 +21,7 @@ export default new Router({
       component: Login
     },
     {
-      path:'/cadastro',
+      path:'/cadastro-alunos',
       name:'cadastro-alunos',
       component: CadastroAlunos
     },

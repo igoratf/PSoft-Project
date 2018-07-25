@@ -23,7 +23,8 @@
               <hr>
 
               <button class="btn btn-google" @click="signInWithGoogle">
-              <i class="fab fa-google"></i><span class="sign-google"><strong>Sign in with Google</strong></span></button>
+              <i class="fab fa-google"></i><span class="sign-google"><strong>Sign in with Google</strong></span>
+              </button>
 
             </form>
           </div>
