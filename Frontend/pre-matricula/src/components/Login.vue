@@ -91,7 +91,7 @@ export default {
 }
 
 .sign-google {
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: 'Arial Narrow Bold', sans-serif;
   margin-left: 8px;
 }
 </style>
