@@ -78,7 +78,7 @@ export default {
 
 .label {
   min-width: 300px;
-  margin-top: 10%;
+  margin-top: 5%;
   margin-left: 50%;
   transform: translateX(-50%);
   text-align: center;
