@@ -1,17 +1,12 @@
 <template>
   <div id="app">
-    <menu-pre-mat/>
     <router-view/>
   </div>
 </template>
 
 
 <script>
-import MenuPreMat from './components/MenuPreMat.vue'
 export default {
-  components: {
-    'menu-pre-mat': MenuPreMat
-  },
   name: 'app'
 }
 </script>

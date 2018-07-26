@@ -40,7 +40,7 @@ import "firebase/auth";
 import AuthService from "../services/AuthService.js";
 
 export default {
-  name: "Login",
+  name: 'login',
   data() {
     return {
       authUser: null
@@ -49,10 +49,9 @@ export default {
   methods: {
     // Aqui tenho que ver se o backend já tem esse usuário e possivelmente enviar para outro canto em vez do cadastro
     signInWithGoogle() {
-      const provider = new firebase.auth.GoogleAuthProvider()
-      provider.setCustomParameters({hd: 'ccc.ufcg.edu.br'});
-      firebase.auth().signInWithPopup(provider)
+      return AuthService.signInWithGoogle()
       .then((user) => {
+        localStorage.setItem('user', user)
         this.$router.replace('student-registration')
       })
     }

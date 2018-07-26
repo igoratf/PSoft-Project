@@ -41,7 +41,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import AuthService from '../services/AuthService.js';
 
-  export default  {
+  export default {
     name: 'menu-pre-mat',
     data() {
       return {
@@ -50,20 +50,15 @@ import AuthService from '../services/AuthService.js';
     },
     methods: {
       signOut() {
-        firebase.auth().signOut()
+        return AuthService.signOut()
         .then((result) => {
+          localStorage.clear()
           this.$router.replace('login')
         })
       }
     },
     computed: {
-
     },
-    created() {
-      firebase.auth().onAuthStateChanged(user => {
-      this.authUser = user;
-    });
-    }
 }
 </script>
 

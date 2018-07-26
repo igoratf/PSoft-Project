@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from './components/Login.vue'
+import Dashboard from './components/Dashboard.vue'
+import MenuPreMat from './components/MenuPreMat.vue'
 import StudentRegistration from './components/StudentRegistration.vue'
 import About from './views/About.vue'
 
@@ -17,12 +19,17 @@ const router = new Router({
     },
     {
       path: '/',
-      redirect:'/about'
+      redirect:'/dashboard'
     },
     {
       path:'/login',
       name: 'login',
       component: Login,
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard
     },
     {
       path:'/student-registration',

@@ -1,8 +1,8 @@
-<template>
+<template lang="html">
 
-  <section class="student-registration">
+  <section class="dashboard">
     <MenuPreMat />
-    <h1>Student Registration Component</h1>
+    <h1>dashboard Component</h1>
   </section>
 
 </template>
@@ -11,16 +11,17 @@
 import MenuPreMat from '@/components/MenuPreMat.vue'
 
   export default  {
-    name: 'student-registration',
+    name: 'dashboard',
     components: {
-      MenuPreMat
+      'menu-pre-mat': MenuPreMat
     },
     props: [],
     mounted() {
+
     },
     data() {
       return {
-        
+
       }
     },
     methods: {
@@ -33,6 +34,5 @@ import MenuPreMat from '@/components/MenuPreMat.vue'
 </script>
 
 <style scoped>
-
 
 </style>
