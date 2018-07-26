@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from './components/Login.vue'
-import CadastroAlunos from './components/CadastroAlunos.vue'
+import StudentRegistration from './components/StudentRegistration.vue'
 import About from './views/About.vue'
 
 import firebase from 'firebase'
@@ -25,9 +25,9 @@ const router = new Router({
       component: Login,
     },
     {
-      path:'/cadastro-alunos',
-      name:'cadastro-alunos',
-      component: CadastroAlunos,
+      path:'/student-registration',
+      name:'student-registration',
+      component: StudentRegistration,
       meta: {requiresAuth: true}
     },
     {
@@ -38,7 +38,6 @@ const router = new Router({
     },
   ]
 })
-
 
 router.beforeEach((to, from, next) => {
   let currentUser = firebase.auth().currentUser;

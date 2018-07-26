@@ -43,9 +43,6 @@ import AuthService from '../services/AuthService.js';
 
   export default  {
     name: 'menu-pre-mat',
-    mounted() {
-
-    },
     data() {
       return {
         authUser: null
@@ -53,7 +50,10 @@ import AuthService from '../services/AuthService.js';
     },
     methods: {
       signOut() {
-        AuthService.signOut();
+        firebase.auth().signOut()
+        .then((result) => {
+          this.$router.replace('login')
+        })
       }
     },
     computed: {

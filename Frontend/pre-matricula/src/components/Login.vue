@@ -47,8 +47,14 @@ export default {
     };
   },
   methods: {
+    // Aqui tenho que ver se o backend já tem esse usuário e possivelmente enviar para outro canto em vez do cadastro
     signInWithGoogle() {
-      AuthService.signInWithGoogle();
+      const provider = new firebase.auth.GoogleAuthProvider()
+      provider.setCustomParameters({hd: 'ccc.ufcg.edu.br'});
+      firebase.auth().signInWithPopup(provider)
+      .then((user) => {
+        this.$router.replace('student-registration')
+      })
     }
   },
   created() {

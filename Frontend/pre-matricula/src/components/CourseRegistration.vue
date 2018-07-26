@@ -1,14 +1,14 @@
 <template lang="html">
 
-  <section class="cadastro-disciplinas">
-    <h1>cadastro-disciplinas Component</h1>
+  <section class="course-registration">
+    <h1>Disciplines Registration Component</h1>
   </section>
 
 </template>
 
 <script lang="js">
   export default  {
-    name: 'cadastro-disciplinas',
+    name: 'course-registration',
     props: [],
     mounted() {
 
@@ -27,8 +27,8 @@
 }
 </script>
 
-<style scoped lang="scss">
-  .cadastro-disciplinas {
+<style scoped>
+  .course-registration {
 
   }
 </style>
