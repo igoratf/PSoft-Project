@@ -59,8 +59,10 @@ import AuthService from '../services/AuthService.js';
     },
     computed: {
     },
-    updated() {
-      this.authUser = localStorage.getItem('user')
+    created() {
+      firebase.auth().onAuthStateChanged(user => {
+      this.authUser = user;
+    });
     }
 }
 </script>
