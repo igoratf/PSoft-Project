@@ -1,7 +1,7 @@
 <template>
 
   <section class="student-registration">
-    <MenuPreMat />
+    <MenuPreMat auth-user="authUser"/>
     <h1>Student Registration Component</h1>
   </section>
 
@@ -15,7 +15,6 @@ import MenuPreMat from '@/components/MenuPreMat.vue'
     components: {
       MenuPreMat
     },
-    props: [],
     mounted() {
     },
     data() {

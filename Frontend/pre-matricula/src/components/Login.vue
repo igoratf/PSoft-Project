@@ -51,6 +51,7 @@ export default {
     signInWithGoogle() {
       return AuthService.signInWithGoogle()
       .then((user) => {
+        console.log('oi')
         localStorage.setItem('user', user)
         this.$router.replace('student-registration')
       })
