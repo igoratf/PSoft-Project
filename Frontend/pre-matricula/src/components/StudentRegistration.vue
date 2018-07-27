@@ -23,6 +23,7 @@
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira sua matrícula" required>
                 <small id="emailHelp" class="form-text text-muted">Campo obrigatório</small>
               </div>
+              <hr>
               <button type="submit" class="btn btn-primary">Cadastrar</button>
             </form>
 
