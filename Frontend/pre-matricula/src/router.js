@@ -29,7 +29,8 @@ const router = new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: {requiresAuth: true}
     },
     {
       path:'/student-registration',
@@ -40,8 +41,7 @@ const router = new Router({
     {
       path: '/about',
       name: 'about',
-      component: About,
-      meta: {requiresAuth: true}
+      component: About
     },
   ]
 })
@@ -51,7 +51,7 @@ router.beforeEach((to, from, next) => {
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !currentUser) next('login')
-  else if (!requiresAuth && currentUser) next('cadastro-aluno')
+  else if (!requiresAuth && currentUser) next('about')
   else next()
 })
 

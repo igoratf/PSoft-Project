@@ -1,7 +1,7 @@
 <template>
 
   <section class="student-registration">
-    <MenuPreMat auth-user="authUser"/>
+    <MenuPreMat />
     <h1>Student Registration Component</h1>
   </section>
 

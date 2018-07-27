@@ -13,7 +13,7 @@ import MenuPreMat from '@/components/MenuPreMat.vue'
   export default  {
     name: 'dashboard',
     components: {
-      'menu-pre-mat': MenuPreMat
+      MenuPreMat
     },
     props: [],
     mounted() {
