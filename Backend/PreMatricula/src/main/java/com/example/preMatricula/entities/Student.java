@@ -1,33 +1,37 @@
 package com.example.preMatricula.entities;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Student {
 	
 	private String email;
 	private Long registration;
 	private Short period;
-	private List<Discipline> enrolledDisciplines;
+	private Set<Discipline> enrolledDisciplines;
 	
 	public Student(String email, Long registration, Short period) {
 		super();
 		this.email = email;
 		this.registration = registration;
 		this.period = period;
-		
-		this.enrolledDisciplines = new ArrayList<>();
+		this.enrolledDisciplines = new HashSet<>();
 	}
 	
-	public void putDiscipline(Discipline discipline) {
+	/**
+	 * Matricula-se em uma disciplina.
+	 * @param student A disciplina a se matricular.
+	 * @return true se ainda não estava matriculado na disciplina e false caso contrário.
+	 */
+	public boolean enrollInDiscipline(Discipline discipline) {
 		if (discipline == null) {
-			throw new NullPointerException("Discipline não pode ser null.");
+			throw new NullDisciplineException();
 		}
 		
-		this.enrolledDisciplines.add(discipline);
+		return this.enrolledDisciplines.add(discipline);
 	}
 
-	public List<Discipline> getEnrolledDisciplines() {
+	public Set<Discipline> getEnrolledDisciplines() {
 		return enrolledDisciplines;
 	}
 

@@ -1,5 +1,6 @@
 package com.example.preMatricula.entities;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Course {
@@ -9,15 +10,28 @@ public class Course {
 	
 	public Course() {
 		super();
+		
+		this.students = new HashMap<>();
+		this.disciplines = new HashMap<>();
 	}
 	
-	public void enrollStudentInDiscipline(Student student, Discipline discipline) {
+	/**
+	 * Matricula um aluno específico em uma disciplina específica.
+	 * @param studentRegistration A matrícula do aluno.
+	 * @param disciplineCode O código da disciplina.
+	 */
+	public void enrollStudentInDiscipline(Long studentRegistration, Long disciplineCode) {
+		Student student = this.students.get(studentRegistration);
+		Discipline discipline = this.disciplines.get(disciplineCode);
+		
 		if (student == null) {
-			throw new NullPointerException("Estudent não pode ser null");
+			throw new NullStudentException();
+		} else if (discipline == null) {
+			throw new NullDisciplineException();
 		}
 		
-		
-		
+		student.enrollInDiscipline(discipline);
+		discipline.enrollStudent(student);
 	}
 	
 }

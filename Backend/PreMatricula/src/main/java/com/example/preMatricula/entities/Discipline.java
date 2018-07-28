@@ -1,6 +1,7 @@
 package com.example.preMatricula.entities;
 
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Discipline {
 
@@ -9,7 +10,7 @@ public class Discipline {
 	private Short credits;
 	private Short workload;
 	private Grade grade;
-	private List<Student> studentsEnrolled;
+	private Set<Student> studentsEnrolled;
 	
 	public Discipline(String name, Long code, Short credits, Short workload, Grade grade) {
 		super();
@@ -18,14 +19,20 @@ public class Discipline {
 		this.credits = credits;
 		this.workload = workload;
 		this.grade = grade;
+		this.studentsEnrolled = new HashSet<>();
 	}
 	
-	public void putStudent(Student student) {
+	/**
+	 * Matricula um novo estudante.
+	 * @param student O estudante a ser matriculado.
+	 * @return true se o estudante ainda não estava presente e false caso contrário.
+	 */
+	public boolean enrollStudent(Student student) {
 		if (student == null) {
-			throw new NullPointerException("Student não pode ser null.");
+			throw new NullStudentException();
 		}
-		
-		studentsEnrolled.add(student);
+				
+		return studentsEnrolled.add(student);
 	}
 
 	public String getName() {
@@ -64,7 +71,7 @@ public class Discipline {
 		return code;
 	}
 
-	public List<Student> getStudentsEnrolled() {
+	public Set<Student> getStudentsEnrolled() {
 		return studentsEnrolled;
 	}
 	
