@@ -12,5 +12,9 @@ signInWithGoogle() {
 
 signOut() {
     return firebase.auth().signOut()
-    }
+    },
+
+adminSignIn(email, password) {
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+}
 }

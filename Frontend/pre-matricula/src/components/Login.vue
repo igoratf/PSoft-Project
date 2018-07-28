@@ -13,19 +13,57 @@
 
             <h1> Login </h1>
             <hr>
-            <form>
-              <div class="row">
-                <div class="col">
-                  Realize login abaixo com sua conta CCC
-                </div>
+
+            <form @submit.prevent="adminLogin">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="email">
               </div>
 
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <small>
+                    <a href="#">Change password</a>
+                  </small>
+                </div>
+
+                <div class="col">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">
+                      <small>Remember me</small>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <br>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Login</button>
+              </div>
               <hr>
-
-              <button class="btn btn-google" @click="signInWithGoogle">
-              <i class="fab fa-google"></i><span class="sign-google"><strong>Sign in with Google</strong></span></button>
-
             </form>
+
+            <div class="row">
+              <div class="col">
+                Se você for um aluno, realize login abaixo com sua conta CCC
+              </div>
+            </div>
+
+            <hr>
+
+            <button class="btn btn-google" @click="signInWithGoogle">
+              <i class="fab fa-google"></i>
+              <span class="sign-google">
+                <strong>Sign in with Google</strong>
+              </span>
+            </button>
+
           </div>
         </div>
         <div class="col"></div>
@@ -38,27 +76,28 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import AuthService from "../services/AuthService.js";
-import axios from 'axios'
+import axios from "axios";
 const instance = axios.create({
-  baseURL: '179.178.138.157'
-})
+  baseURL: "179.178.138.157"
+});
 
 export default {
-  name: 'login',
+  name: "login",
   data() {
     return {
-      authUser: null
+      authUser: null,
+      email: null,
+      password: null
     };
   },
   methods: {
-    // Aqui tenho que ver se o backend já tem esse usuário e possivelmente enviar para outro canto em vez do cadastro
+    // Aqui tenho que ver se o backend já tem esse usuário e possivelmente enviar para outro canto em vez do cadastro, no then e catch
     signInWithGoogle() {
-      return AuthService.signInWithGoogle()
-      .then((result) => {
-        console.log(result.user)
-        console.log('oi')
-        console.log(result.user.getIdToken)
-        console.log(result.credential.idToken)
+      return AuthService.signInWithGoogle().then(result => {
+        console.log(result.user);
+        console.log("oi");
+        console.log(result.user.getIdToken);
+        console.log(result.credential.idToken);
         // console.log(result.credential.idToken)
         // console.log(result.user.email)
         // let userEmail = result.user.email
@@ -75,7 +114,12 @@ export default {
         //   })
         // localStorage.setItem('user', user)
         // this.$router.replace('student-registration')
-      })
+      });
+    },
+    adminLogin() {
+      return AuthService.adminSignIn(this.email, this.password)
+      .then()
+      .catch()
     }
   },
   created() {
@@ -118,7 +162,7 @@ export default {
 }
 
 .sign-google {
-  font-family: 'Arial Narrow Bold', sans-serif;
+  font-family: "Arial Narrow Bold", sans-serif;
   margin-left: 8px;
 }
 </style>
