@@ -38,6 +38,10 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import AuthService from "../services/AuthService.js";
+import axios from 'axios'
+const instance = axios.create({
+  baseURL: '179.178.138.157'
+})
 
 export default {
   name: 'login',
@@ -50,9 +54,27 @@ export default {
     // Aqui tenho que ver se o backend já tem esse usuário e possivelmente enviar para outro canto em vez do cadastro
     signInWithGoogle() {
       return AuthService.signInWithGoogle()
-      .then((user) => {
-        localStorage.setItem('user', user)
-        this.$router.replace('student-registration')
+      .then((result) => {
+        console.log(result.user)
+        console.log('oi')
+        console.log(result.user.getIdToken)
+        console.log(result.credential.idToken)
+        // console.log(result.credential.idToken)
+        // console.log(result.user.email)
+        // let userEmail = result.user.email
+        // console.log('oi')
+        // axios.post('http://179.178.138.157:8080/matricula', {
+        //   aluno: {
+        //     numMatricula: 912391239,
+        //     email: userEmail,
+        //     codigosDisciplinas: null
+        //   }
+        // })
+        //   .then(() => {
+        //     this.$router.replace('student-registration')
+        //   })
+        // localStorage.setItem('user', user)
+        // this.$router.replace('student-registration')
       })
     }
   },
