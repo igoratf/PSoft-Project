@@ -1,7 +1,7 @@
 package com.example.preMatricula.entities;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Student {
 	
@@ -17,6 +17,18 @@ public class Student {
 		this.period = period;
 		
 		this.enrolledDisciplines = new ArrayList<>();
+	}
+	
+	public void putDiscipline(Discipline discipline) {
+		if (discipline == null) {
+			throw new NullPointerException("Discipline não pode ser null.");
+		}
+		
+		this.enrolledDisciplines.add(discipline);
+	}
+
+	public List<Discipline> getEnrolledDisciplines() {
+		return enrolledDisciplines;
 	}
 
 	public Long getRegistration() {
