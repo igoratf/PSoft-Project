@@ -15,42 +15,40 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.preMatricula.entities.Disciplina;
+import com.example.preMatricula.entities.Discipline;
 import com.example.preMatricula.services.DisciplinasService;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(path = "/disciplina")
 public class DisciplinasController {
-	
+
 	@Autowired
 	private DisciplinasService service;
 
 	@GetMapping
-	public Collection<Disciplina> getAll() throws IOException {
+	public Collection<Discipline> getAll() throws IOException {
 		return service.getDisciplinas();
 	}
 
 	@GetMapping(path = "/{id}")
-	public Optional<Disciplina> getById(@PathVariable(name = "id") String id) {
+	public Optional<Discipline> getById(@PathVariable(name = "id") Long id) {
 		return this.service.getDisciplinaById(id);
 	}
 
 	@PutMapping
-	public ResponseEntity<Disciplina> updateDisciplina(@RequestBody Disciplina disciplina) {
+	public ResponseEntity<String> updateDisciplina(@RequestBody Discipline disciplina) {
 		return this.service.updateDisciplina(disciplina);
 	}
 
 	@PostMapping
-	public ResponseEntity<Disciplina> addDisciplina(@RequestBody Disciplina disciplina) throws IOException {
+	public ResponseEntity<String> addDisciplina(@RequestBody Discipline disciplina) throws IOException {
 		return this.service.addDisciplina(disciplina);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Disciplina> deleteDisciplina(@PathVariable(name = "id") String id) {
-
+	public ResponseEntity<String> deleteDisciplina(@PathVariable(name = "id") Long id) {
 		return this.service.deleteDisciplina(id);
-
 	}
 
-	}
+}

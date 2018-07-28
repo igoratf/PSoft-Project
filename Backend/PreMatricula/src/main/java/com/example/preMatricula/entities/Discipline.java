@@ -7,12 +7,12 @@ public class Discipline {
 
 	private String name;
 	private Long code;
-	private Short credits;
-	private Short workload;
+	private Integer credits;
+	private Integer workload;
 	private Grade grade;
 	private Set<Student> studentsEnrolled;
 	
-	public Discipline(String name, Long code, Short credits, Short workload, Grade grade) {
+	public Discipline(String name, Long code, Integer credits, Integer workload, Grade grade) {
 		super();
 		this.name = name;
 		this.code = code;
@@ -43,19 +43,19 @@ public class Discipline {
 		this.name = name;
 	}
 
-	public Short getCredits() {
+	public Integer getCredits() {
 		return credits;
 	}
 
-	public void setCredits(Short credits) {
+	public void setCredits(Integer credits) {
 		this.credits = credits;
 	}
 
-	public Short getWorkload() {
+	public Integer getWorkload() {
 		return workload;
 	}
 
-	public void setWorkload(Short workload) {
+	public void setWorkload(Integer workload) {
 		this.workload = workload;
 	}
 
