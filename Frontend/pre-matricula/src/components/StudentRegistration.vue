@@ -25,7 +25,7 @@
               </div>
               <div class="form-group">
                 <label for="exampleFormControlSelect2">Grade Curricular</label>
-                <select class="form-control" id="exampleFormControlSelect2" v-model="coursePlan">
+                <select class="form-control" id="exampleFormControlSelect2" v-model="coursePlan" required>
                   <option>Nova</option>
                   <option>Antiga</option>
                 </select>
@@ -66,10 +66,8 @@ export default {
         coursePlan: this.coursePlan
       }
       console.log(formData);
-
       this.enrollmentNumber = null
       this.coursePlan = null
-
     }
   },
   computed: {}
