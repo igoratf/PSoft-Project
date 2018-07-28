@@ -31,15 +31,6 @@
                     <a href="#">Change password</a>
                   </small>
                 </div>
-
-                <div class="col">
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">
-                      <small>Remember me</small>
-                    </label>
-                  </div>
-                </div>
               </div>
               <br>
 
@@ -98,6 +89,7 @@ export default {
         console.log("oi");
         console.log(result.user.getIdToken);
         console.log(result.credential.idToken);
+        this.$router.replace('student-registration')
         // console.log(result.credential.idToken)
         // console.log(result.user.email)
         // let userEmail = result.user.email
@@ -137,14 +129,6 @@ export default {
   border: 2px solid black;
   padding: 12px;
   margin-top: 15%;
-}
-
-.forgot-pass {
-  float: left;
-}
-
-.check-remember {
-  float: right;
 }
 
 .label {

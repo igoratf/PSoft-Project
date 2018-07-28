@@ -17,11 +17,18 @@
               </div>
             </div>
             <hr>
-            <form>
+            <form @submit.prevent="submit">
               <div class="form-group">
                 <label for="exampleInputEmail1">Matrícula</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira sua matrícula" required>
+                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira sua matrícula" v-model="enrollmentNumber" min=0 required>
                 <small id="emailHelp" class="form-text text-muted">Campo obrigatório</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect2">Grade Curricular</label>
+                <select class="form-control" id="exampleFormControlSelect2" v-model="coursePlan">
+                  <option>Nova</option>
+                  <option>Antiga</option>
+                </select>
               </div>
               <hr>
               <button type="submit" class="btn btn-primary">Cadastrar</button>
@@ -47,10 +54,20 @@ export default {
   mounted() {},
   data() {
     return {
-      enrollmentNumber: null
+      enrollmentNumber: null,
+      coursePlan: null
     };
   },
-  methods: {},
+  methods: {
+    submit() {
+      formData = {
+        enrollmentNumber: this.enrollmentNumber,
+        coursePlan: this.coursePlan
+      };
+
+      console.log(formData);
+    }
+  },
   computed: {}
 };
 </script>
