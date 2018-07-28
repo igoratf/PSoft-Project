@@ -145,6 +145,11 @@ export default {
   background: #b71c1c;
 }
 
+.btn-google:hover {
+  background-color: darkred;
+}
+
+
 .sign-google {
   font-family: "Arial Narrow Bold", sans-serif;
   margin-left: 8px;
