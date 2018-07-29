@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col label">
-          <h1 >Bem vindo ao Sistema de Pré Matrícula da UFCG</h1>
+          <h1 >Bem vindo(a) ao Sistema de Pré Matrícula da UFCG</h1>
         </div>
       </div>
       <div class="row">
