@@ -1,9 +1,9 @@
 <template>
-  <div class="login-container">
+  <div class="login-container animated fadeIn delay-2s">
     <div class="container">
       <div class="row">
         <div class="col label">
-          <h1>Bem vindo ao Sistema de Pré Matrícula da UFCG</h1>
+          <h1 >Bem vindo ao Sistema de Pré Matrícula da UFCG</h1>
         </div>
       </div>
       <div class="row">
@@ -131,13 +131,8 @@ export default {
   padding: 12px;
   margin-top: 15%;
   margin-bottom: 15%;
-  animation: fadein 0.6s;
 }
 
-@keyframes rotatein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
 
 .label {
   min-width: 300px;
