@@ -1,11 +1,9 @@
 import Vue from 'vue'
-import BootstrapVue from 'bootstrap-vue'
 import App from './App.vue'
 import router from './router'
 import firebase from 'firebase/app';
 import 'firebase/auth';
-
-Vue.use(BootstrapVue)
+import axios from './auth-axios/axios';
 
 Vue.config.productionTip = false
 
@@ -23,5 +21,6 @@ firebase.initializeApp(config);
 
 new Vue({
   router,
+  axios,
   render: h => h(App)
 }).$mount('#app')

@@ -68,9 +68,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import AuthService from "../services/AuthService.js";
 import axios from "axios";
-const instance = axios.create({
-  baseURL: "179.178.138.157"
-});
+
 
 export default {
   name: "login",

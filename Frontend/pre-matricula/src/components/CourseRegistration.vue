@@ -1,9 +1,23 @@
 <template>
-  <section id="course-reg" class="course-registration animated fadeInDown faster">
+  <section class="course-registration animated fadeInDown faster">
     <MenuPreMat />
 
+    <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
+      Disciplina cadastrada!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="container alert alert-danger alert-dismissible fade" :class="{show: showError}" role="alert">
+      Erro ao cadastrar disciplina!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
     <div class="container form-container">
-      <form>
+      <form @submit.prevent="submit">
         <div class="form-header">
           <h1>Cadastro de Disciplinas</h1>
         </div>
@@ -32,8 +46,8 @@
           <div class="form-group col-md-4">
           </div>
           <div class="form-group col-md-4">
-            <label for="inputState">Grade curricular</label>
-            <select id="inputState" class="form-control" v-model="coursePlan">
+            <label for="coursePlan">Grade curricular</label>
+            <select id="coursePlan" class="form-control" v-model="coursePlan">
               <option selected>Nova</option>
               <option>Antiga</option>
               <option>Ambas</option>
@@ -42,7 +56,7 @@
           <div class="form-group col-md-4">
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
       </form>
     </div>
 
@@ -67,11 +81,31 @@ export default {
       code: null,
       credit: null,
       workload: null,
-      coursePlan: null
+      coursePlan: null,
+      showSuccess: false,
+      showError: false
     };
   },
 
-  methods: {},
+  methods: {
+    submit() {
+      let discipline = {
+        name: this.name,
+        code: this.code,
+        credit: this.credit,
+        workload: this.workload,
+        coursePlan: this.coursePlan
+      };
+      this.showSuccess = true
+      setTimeout(this.closeSuccessAlert, 2000);
+    },
+    closeSuccessAlert() {
+      this.showSuccess = false;
+    },
+    closeErrorAlert() {
+      this.showError = false;
+    }
+  },
 
   computed: {}
 };
@@ -82,8 +116,6 @@ export default {
   width: 100%;
   border: 2px solid black;
   padding: 12px;
-  margin-top: 5%;
   margin-bottom: 15%;
 }
-
 </style>
