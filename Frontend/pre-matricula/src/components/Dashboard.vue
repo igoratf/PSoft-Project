@@ -20,6 +20,7 @@
     </tr>
   </thead>
   <tbody>
+    <transition name="course-info" leave-active-class="animated zoomOut faster">
     <tr v-for="(list, index) in listTest" :key="list.code" :contenteditable="editable">
       <input class="course-checkbox" type="checkbox" :value="list" v-model="checked">
       <th scope="row">{{list.period}}</th>
@@ -31,6 +32,8 @@
       <button @click="makeEditable"><i class="far fa-edit"></i></button>
       <button class="btn-remove" @click="deleteCourse(index)"><i class="fas fa-times"></i></button>
     </tr>
+    </transition>
+    
   </tbody>
 </table>
 <hr>

@@ -97,6 +97,8 @@ export default {
         workload: this.workload,
         coursePlan: this.coursePlan
       };
+      // Submete aqui
+      this.clearFormData();
       this.showSuccess = true
       setTimeout(this.closeSuccessAlert, 2000);
     },
@@ -105,6 +107,15 @@ export default {
     },
     closeErrorAlert() {
       this.showError = false;
+    },
+    clearFormData() {
+      this.name = null,
+      this.code = null,
+      this.credit = null,
+      this.workload = null,
+      this.coursePlan = "",
+      this.showSuccess = false,
+      this.showError = false
     }
   },
 
