@@ -1,25 +1,28 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import router from '../router';
 
 export default {
 signInWithGoogle() {
-const provider = new firebase.auth.GoogleAuthProvider()
-provider.setCustomParameters({hd: 'ccc.ufcg.edu.br'});
-    firebase.auth().signInWithPopup(provider)
-    .then(data => {
-        router.push('cadastro-alunos');
-        })
-    .catch(error => {
-        alert(error.message);
-        router.push('login')
-    }
-    )
+    firebase.auth().useDeviceLanguage();
+    const provider = new firebase.auth.GoogleAuthProvider()
+    provider.addScope('email')
+    provider.setCustomParameters({hd: 'ccc.ufcg.edu.br'})
+    return firebase.auth().signInWithPopup(provider)
     },
-    signOut() {
-    firebase.auth().signOut()
-    .then(() => router.push('login'))
-    .catch(error => alert(error.message))
-    }
 
+signOut() {
+    return firebase.auth().signOut()
+    },
+
+adminSignIn(email, password) {
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+},
+
+checkCurrentLogin() {
+    if (localStorage.token) {
+        return true;
+    } else {
+        return false;
+    }
+}
 }

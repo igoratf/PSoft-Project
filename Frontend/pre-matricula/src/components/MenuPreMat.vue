@@ -1,23 +1,17 @@
 <template>
   <div class="menu-pre-mat">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <router-link to="/" class="navbar-brand">Pre Matrícula</router-link>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <router-link to="/" class="navbar-brand">Pre Matrícula</router-link>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-  </button>
+   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <router-link to="/" class="nav-link" href="#">Home</router-link>
+      <li class="nav-item">
+        <router-link to="student-registration" class="nav-link" active-class="active">Home</router-link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" router-link to>Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <router-link class="nav-link" to="dashboard" active-class="active">Dashboard</router-link>
       </li>
     </ul>
   </div>
@@ -41,11 +35,8 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import AuthService from '../services/AuthService.js';
 
-  export default  {
+  export default {
     name: 'menu-pre-mat',
-    mounted() {
-
-    },
     data() {
       return {
         authUser: null
@@ -53,13 +44,17 @@ import AuthService from '../services/AuthService.js';
     },
     methods: {
       signOut() {
-        AuthService.signOut();
+        return AuthService.signOut()
+        .then((result) => {
+          localStorage.clear()
+          this.$router.replace('login')
+        })
       }
     },
     computed: {
-
     },
     created() {
+      localStorage.getItem('token')
       firebase.auth().onAuthStateChanged(user => {
       this.authUser = user;
     });
@@ -71,6 +66,10 @@ import AuthService from '../services/AuthService.js';
   .menu-pre-mat {
     margin-bottom: 15px;
   }
+
+  .router-link-exact-active {
+  background: #2E2E2E;
+}
 
   .logout {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
