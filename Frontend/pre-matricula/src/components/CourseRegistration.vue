@@ -1,5 +1,5 @@
 <template>
-  <section class="course-registration animated fadeInDown delay-1s">
+  <section id="course-reg" class="course-registration animated fadeInDown faster">
     <MenuPreMat />
 
     <div class="container form-container">
@@ -85,4 +85,5 @@ export default {
   margin-top: 5%;
   margin-bottom: 15%;
 }
+
 </style>

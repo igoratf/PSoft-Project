@@ -1,6 +1,6 @@
 <template>
 
-  <section class="student-registration animated fadeInDown delay-1s">
+  <section class="student-registration animated fadeInDown faster">
     <MenuPreMat />
 
     <div class="container">
