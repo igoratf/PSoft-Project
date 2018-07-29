@@ -26,7 +26,7 @@ public class PreMatriculaApplicationTests {
 
 		disciplinas.deleteAll();
 
-		disciplinas.save(new Discipline("eda", 123L, 3, 0, Grade.Both));
+		disciplinas.save(new Discipline(123, "eda", 3, 0, Grade.Both));
 
 		System.out.println(disciplinas.findAll());
 	}

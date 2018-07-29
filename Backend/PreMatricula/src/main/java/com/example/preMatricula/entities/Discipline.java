@@ -1,18 +1,22 @@
 package com.example.preMatricula.entities;
 
 import java.util.Set;
+
+import org.springframework.data.annotation.Id;
+
 import java.util.HashSet;
 
 public class Discipline {
 
+	@Id
+	private Integer code;
 	private String name;
-	private Long code;
 	private Integer credits;
 	private Integer workload;
 	private Grade grade;
 	private Set<String> studentsEnrolledEmails;
 	
-	public Discipline(String name, Long code, Integer credits, Integer workload, Grade grade) {
+	public Discipline(Integer code, String name, Integer credits, Integer workload, Grade grade) {
 		super();
 		this.name = name;
 		this.code = code;
@@ -31,8 +35,13 @@ public class Discipline {
 		return studentsEnrolledEmails.add(studentEmail);
 	}
 	
-	public void unenrollDiscipline(String studentEmail) {
-		this.studentsEnrolledEmails.remove(studentEmail);
+	/**
+	 * Desmatricula um estudante especificado pelo seu id.
+	 * @param studentId O id do estudante a ser desmatriculado.
+	 * @return true se tinha um estudante com esse id, false caso contrário.
+	 */
+	public boolean unenrollDiscipline(String studentId) {
+		return this.studentsEnrolledEmails.remove(studentId);
 	}
 
 	public String getName() {
@@ -67,7 +76,7 @@ public class Discipline {
 		this.grade = grade;
 	}
 
-	public Long getCode() {
+	public Integer getCode() {
 		return code;
 	}
 

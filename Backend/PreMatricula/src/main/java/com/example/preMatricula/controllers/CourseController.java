@@ -1,7 +1,7 @@
 package com.example.preMatricula.controllers;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,44 +13,44 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.preMatricula.entities.Student;
-import com.example.preMatricula.services.MatriculasService;
 
-@CrossOrigin(origins = "*")
+import com.example.preMatricula.entities.Discipline;
+import com.example.preMatricula.services.CourseService;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
 @RestController
-@RequestMapping(path = "/matricula")
-public class MatriculaController {
+@CrossOrigin(origins = "*")
+@RequestMapping(path = "/course")
+public class CourseController {
 
 	@Autowired
-	private MatriculasService service;
+	private CourseService service;
 
 	@GetMapping
-	public List<Student> getAll() throws IOException {
-		return service.getMatriculas();
+	public Collection<Discipline> getAll() throws IOException {
+		return service.getDisciplinas();
 	}
 
 	@GetMapping(path = "/{id}")
-	public Optional<Student> getById(@PathVariable(name = "id") Long id) {
-		return this.service.getMatriculaById(id);
+	public Optional<Discipline> getById(@PathVariable(name = "id") Long id) {
+		return this.service.getDisciplinaById(id);
 	}
 
 	@PutMapping
-	public ResponseEntity<String> updateMatricula(@RequestBody Student matricula) {
-		return this.service.updateMatricula(matricula);
+	public ResponseEntity<String> updateDisciplina(@RequestBody Discipline disciplina) {
+		return this.service.updateDisciplina(disciplina);
 	}
 
 	@PostMapping
-	public ResponseEntity<String> addMatricula(@RequestBody Student matricula) throws IOException {
-		return this.service.addMatricula(matricula);
+	public ResponseEntity<String> addDisciplina(@RequestBody Discipline disciplina) throws IOException {
+		return this.service.addDisciplina(disciplina);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteDisciplina(@PathVariable(name = "id") Long id) {
-
-		return this.service.deleteMatricula(id);
-
+		return this.service.deleteDisciplina(id);
 	}
-
+	
 }
