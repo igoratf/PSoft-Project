@@ -1,11 +1,11 @@
 package com.example.preMatricula.interfaces;
 
-import com.example.preMatricula.entities.Matricula;
+import com.example.preMatricula.entities.Student;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
  
 @Repository
-public interface MatriculaRepository extends MongoRepository<Matricula, String> {
+public interface StudentRepository extends MongoRepository<Student, Long> {
 
 }

@@ -7,15 +7,15 @@ public class Student {
 	
 	private String email;
 	private Long registration;
-	private Short period;
-	private Set<Discipline> enrolledDisciplines;
+	private Integer period;
+	private Set<Long> enrolledDisciplinesID;
 	
-	public Student(String email, Long registration, Short period) {
+	public Student(String email, Long registration, Integer period) {
 		super();
 		this.email = email;
 		this.registration = registration;
 		this.period = period;
-		this.enrolledDisciplines = new HashSet<>();
+		this.enrolledDisciplinesID = new HashSet<>();
 	}
 	
 	/**
@@ -23,16 +23,16 @@ public class Student {
 	 * @param student A disciplina a se matricular.
 	 * @return true se ainda não estava matriculado na disciplina e false caso contrário.
 	 */
-	public boolean enrollInDiscipline(Discipline discipline) {
-		if (discipline == null) {
-			throw new NullDisciplineException();
-		}
-		
-		return this.enrolledDisciplines.add(discipline);
+	public boolean enrollInDiscipline(Long disciplineID) {
+		return this.enrolledDisciplinesID.add(disciplineID);
+	}
+	
+	public void unenrollDiscipline(Long disciplineID) {
+		this.enrolledDisciplinesID.remove(disciplineID);
 	}
 
-	public Set<Discipline> getEnrolledDisciplines() {
-		return enrolledDisciplines;
+	public Set<Long> getEnrolledDisciplines() {
+		return enrolledDisciplinesID;
 	}
 
 	public Long getRegistration() {
@@ -43,11 +43,11 @@ public class Student {
 		this.registration = registration;
 	}
 
-	public Short getPeriod() {
+	public Integer getPeriod() {
 		return period;
 	}
 
-	public void setPeriod(Short period) {
+	public void setPeriod(Integer period) {
 		this.period = period;
 	}
 

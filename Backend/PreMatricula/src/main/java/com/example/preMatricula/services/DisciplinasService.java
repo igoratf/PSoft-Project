@@ -3,7 +3,7 @@ package com.example.preMatricula.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.preMatricula.entities.Disciplina;
+import com.example.preMatricula.entities.Discipline;
 import com.example.preMatricula.interfaces.DisciplinaRepository;
 
 import org.springframework.http.HttpStatus;
@@ -16,23 +16,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class DisciplinasService {
 
     @Autowired
-    private DisciplinaRepository disciplinas;
+    private DisciplinaRepository disciplines;
 
-    public List<Disciplina> getDisciplinas() {
+    public List<Discipline> getDisciplinas() {
        
-    	return this.disciplinas.findAll();
+    	return this.disciplines.findAll();
     }    
 
-    public Optional<Disciplina> getDisciplinaById(String id) {
+    public Optional<Discipline> getDisciplinaById(Long id) {
 
-        return this.disciplinas.findById(id);
+        return this.disciplines.findById(id);
     }
 
 
-    public ResponseEntity addDisciplina(Disciplina disciplina) {
+    public ResponseEntity<String> addDisciplina(Discipline discipline) {
 
         try {
-            this.disciplinas.save(disciplina);
+            this.disciplines.save(discipline);
 
             return ResponseEntity.status(HttpStatus.OK).body("{\"responseBody\": \"Disciplina cadastrada com sucesso!\"}");
         
@@ -42,10 +42,10 @@ public class DisciplinasService {
         }
     }
 
-    public ResponseEntity updateDisciplina(Disciplina disciplina) {
+    public ResponseEntity<String> updateDisciplina(Discipline disciplina) {
 
         try {
-            this.disciplinas.save(disciplina);
+            this.disciplines.save(disciplina);
             return ResponseEntity.status(HttpStatus.OK).body("{\"responseBody\": \"Update realizado com sucesso!\"}");
         } catch (Exception e) {
 
@@ -53,10 +53,9 @@ public class DisciplinasService {
         }
     }
 
-    public ResponseEntity deleteDisciplina(String id) {
-
+    public ResponseEntity<String> deleteDisciplina(Long id) {
         try {
-            this.disciplinas.deleteById(id);
+            this.disciplines.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body("{\"responseBody\": \"Disciplina removida com sucesso!\"}");
         } catch (Exception e) {
 

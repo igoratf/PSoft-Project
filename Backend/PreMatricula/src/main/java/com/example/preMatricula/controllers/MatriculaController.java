@@ -15,43 +15,42 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.preMatricula.entities.Disciplina;
-import com.example.preMatricula.entities.Matricula;
+import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.services.MatriculasService;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(path = "/matricula")
 public class MatriculaController {
-	
+
 	@Autowired
 	private MatriculasService service;
 
 	@GetMapping
-	public List<Matricula> getAll() throws IOException {
+	public List<Student> getAll() throws IOException {
 		return service.getMatriculas();
 	}
 
 	@GetMapping(path = "/{id}")
-	public Optional<Matricula> getById(@PathVariable(name = "id") String id) {
+	public Optional<Student> getById(@PathVariable(name = "id") Long id) {
 		return this.service.getMatriculaById(id);
 	}
 
 	@PutMapping
-	public ResponseEntity<Disciplina> updateMatricula(@RequestBody Matricula matricula) {
+	public ResponseEntity<String> updateMatricula(@RequestBody Student matricula) {
 		return this.service.updateMatricula(matricula);
 	}
 
 	@PostMapping
-	public ResponseEntity<Disciplina> addMatricula(@RequestBody Matricula matricula) throws IOException {
+	public ResponseEntity<String> addMatricula(@RequestBody Student matricula) throws IOException {
 		return this.service.addMatricula(matricula);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Matricula> deleteDisciplina(@PathVariable(name = "id") String id) {
+	public ResponseEntity<String> deleteDisciplina(@PathVariable(name = "id") Long id) {
 
 		return this.service.deleteMatricula(id);
 
 	}
 
-	}
+}
