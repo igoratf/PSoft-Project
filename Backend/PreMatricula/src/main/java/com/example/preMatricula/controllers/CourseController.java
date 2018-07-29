@@ -3,9 +3,11 @@ package com.example.preMatricula.controllers;
 import java.util.Optional;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,5 +45,17 @@ public class CourseController {
 				
 		return this.service.putDiscipline(discipline);
 	}
+	
+	@PutMapping(path = "/disciplines/putlist")
+	public ResponseEntity<String> putDiscipline(@RequestBody List<Discipline> disciplines) {
+				
+		return this.service.putDisciplines(disciplines);
+	}
+	
+	/*@DeleteMapping
+	public ResponseEntity<String> deleteDiscipline(@PathVariable(name = "code") Integer code) {
+		
+		return this.service.deleteDiscipline(code);
+	}*/
 	
 }
