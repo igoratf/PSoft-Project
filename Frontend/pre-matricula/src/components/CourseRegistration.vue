@@ -25,21 +25,21 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="name">Nome</label>
-            <input type="text" class="form-control" id="name" placeholder="Nome da disciplina" v-model="name">
+            <input type="text" class="form-control" id="name" placeholder="Nome da disciplina" v-model="name" required>
           </div>
           <div class="form-group col-md-6">
             <label for="code">Código da disciplina</label>
-            <input type="number" class="form-control" id="code" placeholder="Código da disciplina" v-model="code">
+            <input type="number" class="form-control" id="code" placeholder="Código da disciplina" v-model="code" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="credit">Créditos</label>
-            <input type="number" class="form-control" id="credit" min=0 max=10 placeholder="Créditos da disciplina" v-model="credit">
+            <input type="number" class="form-control" id="credit" min=0 max=10 placeholder="Créditos da disciplina" v-model="credit" required>
           </div>
           <div class="form-group col-md-6">
             <label for="workload">Carga horária</label>
-            <input type="number" class="form-control" id="workload" placeholder="Carga horária da disciplina" v-model="workload">
+            <input type="number" class="form-control" id="workload" placeholder="Carga horária da disciplina" v-model="workload" required>
           </div>
         </div>
         <div class="form-row">
@@ -47,7 +47,7 @@
           </div>
           <div class="form-group col-md-4">
             <label for="coursePlan">Grade curricular</label>
-            <select id="coursePlan" class="form-control" v-model="coursePlan">
+            <select id="coursePlan" class="form-control" v-model="coursePlan" required>
               <option selected>Nova</option>
               <option>Antiga</option>
               <option>Ambas</option>
