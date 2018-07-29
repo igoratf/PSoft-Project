@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard.vue'
 import StudentRegistration from './components/StudentRegistration.vue'
 import CourseRegistration from './components/CourseRegistration.vue'
 import About from './views/About.vue'
+import AuthService from './services/AuthService';
 
 Vue.use(Router)
 
@@ -33,13 +34,13 @@ const router = new Router({
       path: '/student-registration',
       name: 'student-registration',
       component: StudentRegistration,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, registered: false }
     },
     {
       path: '/course-registration',
       name: 'course-registration',
       component: CourseRegistration,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, role: 'admin' }
     },
     {
       path: '/about',
@@ -57,12 +58,18 @@ router.beforeEach((to, from, next) => {
   else if (!requiresAuth && currentUser) next('about')
   else next()*/
   let requiresAuth = to.meta.requiresAuth
+  let requiresAdmin = to.meta.role
+  let currentUserRole = AuthService.getUserRole();
+  console.log(currentUserRole)
 
   if (!localStorage.token && requiresAuth) {
     next('login')
-  } else {
-    next()
-  }
+  } else if (requiresAdmin && currentUserRole != 'admin') {
+      next('dashboard')
+    }
+    else {
+      next()
+    }
 
 })
 

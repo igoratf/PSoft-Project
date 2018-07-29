@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import axios from '../auth-axios/axios';
 
 export default {
 signInWithGoogle() {
@@ -24,5 +25,19 @@ checkCurrentLogin() {
     } else {
         return false;
     }
+},
+
+getUserRole() {
+    let user = firebase.auth().currentUser;
+    if (user) {
+        user.role = 'student'
+        user.registered = false
+        return user.role
+    } else {
+        return ''
+    }
+    
+    
+    //axios.get('')
 }
 }
