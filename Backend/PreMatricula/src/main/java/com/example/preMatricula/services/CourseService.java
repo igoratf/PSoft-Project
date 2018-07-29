@@ -42,7 +42,7 @@ public class CourseService {
 		return this.disciplines.findById(code);
 	}
 
-	public ResponseEntity<JSONObject> putDiscipline(Discipline discipline) {
+	public ResponseEntity<String> putDiscipline(Discipline discipline) {
 		try {
 			boolean existed = this.disciplines.existsById(discipline.getCode());
 
@@ -50,19 +50,19 @@ public class CourseService {
 
 			if (existed) {
 				return new ResponseEntity<>(
-						(new JSONObject()).put("responseBody", "Disciplina atualizada com sucesso!"), HttpStatus.OK);
+						(new JSONObject()).put("responseBody", "Disciplina atualizada com sucesso!").toString(), HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(
-						(new JSONObject()).put("responseBody", "Disciplina cadastrada com sucesso!"), HttpStatus.CREATED);
+						(new JSONObject()).put("responseBody", "Disciplina cadastrada com sucesso!").toString(), HttpStatus.CREATED);
 			}
 			
 		} catch (Exception e) {
 
-			return new ResponseEntity<>((new JSONObject()).put("responseBody", e.getMessage()), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("{" + "responseBody:" + e.getMessage() + "}", HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	public ResponseEntity<JSONObject> addStudent(Student student) {
+	public ResponseEntity<String> addStudent(Student student) {
 		try {
 			boolean existed = this.students.existsById(student.getId());
 			
@@ -70,15 +70,15 @@ public class CourseService {
 
 			if (existed) {
 				return new ResponseEntity<>(
-						(new JSONObject()).put("responseBody", "Estudante atualizado(a) com sucesso!"), HttpStatus.OK);
+						(new JSONObject()).put("responseBody", "Estudante atualizado(a) com sucesso!").toString(), HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(
-						(new JSONObject()).put("responseBody", "Estudante criado(a) com sucesso!"), HttpStatus.CREATED);
+						(new JSONObject()).put("responseBody", "Estudante criado(a) com sucesso!").toString(), HttpStatus.CREATED);
 			}
 			
 		} catch (Exception e) {
 
-			return new ResponseEntity<>((new JSONObject()).put("responseBody", e.getMessage()), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("{" + "responseBody:" + e.getMessage() + "}", HttpStatus.BAD_REQUEST);
 		}
 	}
 
