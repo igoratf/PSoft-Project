@@ -26,22 +26,22 @@ import AuthService from '../services/AuthService.js';
       }
     },
     methods: {
-      checkCurrentLogin() {
-      if (AuthService.checkCurrentLogin()) {
-        this.$router.replace(this.$route.query.redirect || '/dashboard')
-      } else {
-        this.$router.replace('/login')
-      }
-    }
+
     },
     computed: {
 
     },
     updated () {
-      this.checkCurrentLogin();
     },
     created () {
-      this.checkCurrentLogin();
+      
+    },
+    beforeRouteEnter (to, from, next) {
+      if (AuthService.checkCurrentLogin()) {
+        console.log('verificado')
+      } else {
+        this.$router.replace('/login')
+      }
     }
 }
 </script>

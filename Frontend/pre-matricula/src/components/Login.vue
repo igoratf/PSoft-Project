@@ -17,12 +17,12 @@
             <form @submit.prevent="adminLogin">
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="email">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="email" required>
               </div>
 
               <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password" required>
               </div>
 
               <div class="row">
