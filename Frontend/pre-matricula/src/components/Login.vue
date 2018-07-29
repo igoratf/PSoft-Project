@@ -131,6 +131,12 @@ export default {
   padding: 12px;
   margin-top: 15%;
   margin-bottom: 15%;
+  animation: fadein 0.6s;
+}
+
+@keyframes rotatein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 .label {
