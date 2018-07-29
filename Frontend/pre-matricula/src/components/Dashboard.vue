@@ -2,50 +2,84 @@
 
   <section class="dashboard">
     <MenuPreMat />
-    <h1>dashboard Component</h1>
+
+    <div class="container">
+      <h1> Lista de disciplinas cadastradas</h1>
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="list in listTest">
+      <th scope="row">{{list.item}}</th>
+      <td>{{list.name}}</td>
+      <td>{{list.prop}}</td>
+      <td>{{list.yes}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
   </section>
 
 </template>
 
 <script>
-import MenuPreMat from '@/components/MenuPreMat.vue';
-import AuthService from '../services/AuthService.js';
+import MenuPreMat from "@/components/MenuPreMat.vue";
+import AuthService from "../services/AuthService.js";
 
-  export default  {
-    name: 'dashboard',
-    components: {
-      MenuPreMat
-    },
-    props: [],
-    mounted() {
-
-    },
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    },
-    computed: {
-
-    },
-    updated () {
-    },
-    created () {
-      
-    },
-    beforeRouteEnter (to, from, next) {
+export default {
+  name: "dashboard",
+  components: {
+    MenuPreMat
+  },
+  props: [],
+  mounted() {},
+  data() {
+    return {
+      listTest: [
+        {
+          'item':'oi',
+          'name':'dois',
+          'prop':'tres',
+          'yes': 'no'
+        }]
+    }
+  },
+  methods: {
+    checkCurrentLogin() {
       if (AuthService.checkCurrentLogin()) {
-        console.log('verificado')
+        this.$router.replace(this.$route.query.redirect || "/dashboard");
       } else {
-        this.$router.replace('/login')
+        this.$router.replace("/login");
       }
     }
-}
+  },
+  computed: {},
+  updated() {},
+  created() {},
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (AuthService.checkCurrentLogin()) {
+        vm.$router.replace(vm.$route.query.redirect || "/dashboard");
+      } else {
+        vm.$router.replace("/login");
+      }
+    });
+  }
+};
 </script>
 
 <style scoped>
+.container {
+  margin-top: 5%;
+}
 
+h1 {
+  margin-bottom: 2%;
+}
 </style>
