@@ -3,15 +3,17 @@
   <section class="dashboard">
     <MenuPreMat />
 
-    <div class="container">
+    <div class="container animated zoomIn faster">
       <h1> Lista de disciplinas cadastradas</h1>
     <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Período</th>
+      <th scope="col">Código</th>
+      <th scope="col">Disciplina</th>
+      <th scope="col">Num. créditos</th>
+      <th scope="col">Carga horária</th>
+      <th scope="col">Grade</th>
     </tr>
   </thead>
   <tbody>
