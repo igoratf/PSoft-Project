@@ -21,21 +21,34 @@
   </thead>
   <tbody>
     <transition name="course-info" leave-active-class="animated zoomOut faster">
-    <tr v-for="(list, index) in listTest" :key="list.code" :contenteditable="editable">
+    <tr v-for="(list, index) in listTest" :key="index">
       <input class="course-checkbox" type="checkbox" :value="list" v-model="checked">
-      <th scope="row">{{list.period}}</th>
-      <td>{{list.code}}</td>
-      <td>{{list.name}}</td>
-      <td>{{list.credit}}</td>
-      <td>{{list.workload}}</td>
-      <td>{{list.coursePlan}}</td>
-      <button @click="makeEditable"><i class="far fa-edit"></i></button>
+      <td scope="row" v-if="selected"><input class="form-input-number" type="number"  v-model="selected.period"></td>
+      <td v-if="list != selected" scope="row">{{list.period}}</td>
+      <td scope="row" v-if="selected"><input class="form-input-text" type="text" v-model="selected.code"></td>
+      <td v-if="list != selected">{{list.code}}</td>
+      <td scope="row" v-if="selected"><input class="form-input-text" type="text" v-model="selected.name"></td>
+      <td v-if="list != selected">{{list.name}}</td>
+      <td scope="row" v-if="selected"><input class="form-input-number" type="number" v-model="selected.credits"></td>
+      <td v-if="list != selected">{{list.credits}}</td>
+      <td scope="row" v-if="selected"><input class="form-input-text" type="number" v-model="selected.workload"></td>
+      <td v-if="list != selected">{{list.workload}}</td>
+      <td scope="row" v-if="selected"><select id="coursePlan" class="form-input-text" v-model="selected.coursePlan">
+              <option disabled seleted value="">Selecione a grade</option>
+              <option>Nova</option>
+              <option>Antiga</option>
+              <option>Ambas</option>
+            </select></td>
+      <td v-if="list != selected">{{list.coursePlan}}</td>
+      <button @click="makeEditable(index)"><i class="far fa-edit"></i></button>
       <button class="btn-remove" @click="deleteCourse(index)"><i class="fas fa-times"></i></button>
+      <button @click="endEditable">End</button>
     </tr>
     </transition>
     
   </tbody>
 </table>
+{{selected}}
 <hr>
 <button type="submit" class="btn btn-primary">Concluir</button>
 </form>
@@ -64,12 +77,13 @@ export default {
           period: 1,
           code: "18290380123",
           name: "Programação I",
-          credit: 4,
+          credits: 4,
           workload: 60,
           coursePlan: "Ambas"
         }
       ],
       checked: [],
+      selected: null,
       editable: false
     };
   },
@@ -80,7 +94,16 @@ export default {
     deleteCourse(index) {
       this.listTest.splice(index, 1)
     },
-    makeEditable() {
+    makeEditable(index) {
+      if (this.selected) {
+        this.selected = null;
+      } else {
+        this.selected = this.listTest[index];
+      }
+      this.editable = !this.editable;
+    },
+    endEditable() {
+      this.selected = null;
     }
   },
   computed: {},
@@ -113,6 +136,14 @@ h1 {
 
 .btn-remove {
   margin-left: 6px;
+}
+
+.form-input-text {
+  width:100px;
+}
+
+.form-input-number {
+  width: 50px;
 }
 </style>
  */
