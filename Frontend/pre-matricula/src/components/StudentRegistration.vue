@@ -97,7 +97,7 @@ export default {
   width: 100%;
   border: 2px solid black;
   padding: 12px;
-  margin-top: 15%;
+  margin-top: 20%;
   margin-bottom: 15%;
 }
 
