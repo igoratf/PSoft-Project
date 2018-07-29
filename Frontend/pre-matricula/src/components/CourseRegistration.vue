@@ -1,9 +1,8 @@
 <template>
-  <section class="course-registration">
+  <section class="course-registration animated fadeInDown delay-1s">
     <MenuPreMat />
 
     <div class="container form-container">
-
       <form>
         <div class="form-header">
           <h1>Cadastro de Disciplinas</h1>
