@@ -1,17 +1,23 @@
 package com.example.preMatricula.entities;
 
 import java.util.Set;
+
+import org.springframework.data.annotation.Id;
+
 import java.util.HashSet;
 
 public class Student {
 	
+	@Id
+	private String id;
 	private String email;
 	private Long registration;
 	private Integer period;
-	private Set<Long> enrolledDisciplinesID;
+	private Set<Integer> enrolledDisciplinesID;
 	
-	public Student(String email, Long registration, Integer period) {
+	public Student(String id, String email, Long registration, Integer period) {
 		super();
+		this.id = id;
 		this.email = email;
 		this.registration = registration;
 		this.period = period;
@@ -23,15 +29,19 @@ public class Student {
 	 * @param student A disciplina a se matricular.
 	 * @return true se ainda não estava matriculado na disciplina e false caso contrário.
 	 */
-	public boolean enrollInDiscipline(Long disciplineID) {
+	public boolean enrollInDiscipline(Integer disciplineID) {
 		return this.enrolledDisciplinesID.add(disciplineID);
 	}
 	
-	public void unenrollDiscipline(Long disciplineID) {
-		this.enrolledDisciplinesID.remove(disciplineID);
+	public void unenrollDiscipline(Integer disciplineCode) {
+		this.enrolledDisciplinesID.remove(disciplineCode);
 	}
 
-	public Set<Long> getEnrolledDisciplines() {
+	public String getId() {
+		return id;
+	}
+
+	public Set<Integer> getEnrolledDisciplines() {
 		return enrolledDisciplinesID;
 	}
 

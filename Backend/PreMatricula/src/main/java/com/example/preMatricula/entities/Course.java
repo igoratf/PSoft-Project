@@ -14,12 +14,12 @@ public class Course {
 	 */
 	public void enrollStudentInDiscipline(Student student, Discipline discipline) {	
 		student.enrollInDiscipline(discipline.getCode());
-		discipline.enrollStudent(student.getEmail());
+		discipline.enrollStudent(student.getId());
 	}
 	
 	public void unenrollStudentInDiscipline(Student student, Discipline discipline) {
 		student.unenrollDiscipline(discipline.getCode());
-		discipline.unenrollDiscipline(student.getEmail());
+		discipline.unenrollDiscipline(student.getId());
 	}
 
 }
