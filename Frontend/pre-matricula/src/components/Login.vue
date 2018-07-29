@@ -1,22 +1,28 @@
 <template>
-  <div class="login-container">
+  <div class="login-container animated fadeIn slow">
     <div class="container">
+      <div class="row">
+        <div class="col label">
+          <h1 >Bem vindo(a) ao Sistema de Pré Matrícula da UFCG</h1>
+        </div>
+      </div>
       <div class="row">
         <div class="col"></div>
         <div class="col">
           <div class="form-container">
+
             <h1> Login </h1>
             <hr>
-            <form>
 
+            <form @submit.prevent="adminLogin">
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="email">
               </div>
 
               <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
               </div>
 
               <div class="row">
@@ -25,15 +31,6 @@
                     <a href="#">Change password</a>
                   </small>
                 </div>
-
-                <div class="col">
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">
-                      <small>Remember me</small>
-                    </label>
-                  </div>
-                </div>
               </div>
               <br>
 
@@ -41,11 +38,23 @@
                 <button type="submit" class="btn btn-primary">Login</button>
               </div>
               <hr>
-
-              <button class="btn btn-google" @click="signInWithGoogle">
-                <i class="fab fa-google"></i> Sign in with Google</button>
-
             </form>
+
+            <div class="row">
+              <div class="col">
+                Se você for um aluno, realize login abaixo com sua conta CCC
+              </div>
+            </div>
+
+            <hr>
+
+            <button class="btn btn-google" @click="signInWithGoogle">
+              <i class="fab fa-google"></i>
+              <span class="sign-google">
+                <strong>Sign in with Google</strong>
+              </span>
+            </button>
+
           </div>
         </div>
         <div class="col"></div>
@@ -55,28 +64,60 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import AuthService from '../services/AuthService.js';
+import firebase from "firebase/app";
+import "firebase/auth";
+import AuthService from "../services/AuthService.js";
+import axios from "axios";
+
 
 export default {
-  name: "Login",
+  name: "login",
   data() {
     return {
-      authUser: null
+      authUser: null,
+      email: null,
+      password: null
     };
   },
   methods: {
+    // Aqui tenho que ver se o backend já tem esse usuário e possivelmente enviar para outro canto em vez do cadastro, no then e catch
     signInWithGoogle() {
-      AuthService.signInWithGoogle();
+      return AuthService.signInWithGoogle().then(result => {
+        console.log(result.user);
+        console.log("oi");
+        localStorage.setItem('token', result.credential.idToken)
+        // console.log(result.user.getIdToken);
+        // console.log(result.credential.idToken);
+        this.$router.replace('student-registration')
+        // console.log(result.credential.idToken)
+        // console.log(result.user.email)
+        // let userEmail = result.user.email
+        // console.log('oi')
+        // axios.post('http://179.178.138.157:8080/matricula', {
+        //   aluno: {
+        //     numMatricula: 912391239,
+        //     email: userEmail,
+        //     codigosDisciplinas: null
+        //   }
+        // })
+        //   .then(() => {
+        //     this.$router.replace('student-registration')
+        //   })
+        // localStorage.setItem('user', user)
+        // this.$router.replace('student-registration')
+      });
     },
+    adminLogin() {
+      return AuthService.adminSignIn(this.email, this.password)
+      .then()
+      .catch()
+    }
   },
   created() {
-  firebase.auth().onAuthStateChanged(user => {
-    this.authUser = user;
-  });
+    firebase.auth().onAuthStateChanged(user => {
+      this.authUser = user;
+    });
   }
-  
 };
 </script>
 
@@ -86,18 +127,32 @@ export default {
   width: 100%;
   border: 2px solid black;
   padding: 12px;
+  margin-top: 15%;
+  margin-bottom: 15%;
 }
 
-.forgot-pass {
-  float: left;
-}
 
-.check-remember {
-  float: right;
+.label {
+  min-width: 300px;
+  margin-top: 5%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: 50%;
 }
 
 .btn-google {
   color: white;
   background: #b71c1c;
+}
+
+.btn-google:hover {
+  background-color: darkred;
+}
+
+
+.sign-google {
+  font-family: "Arial Narrow Bold", sans-serif;
+  margin-left: 8px;
 }
 </style>

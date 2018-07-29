@@ -1,28 +1,31 @@
 <template>
   <div class="menu-pre-mat">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Pre Matrícula</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+      <router-link to="/" class="navbar-brand">Pre Matrícula</router-link>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <router-link to="home" class="nav-link" href="#">Home</router-link>
+      <li class="nav-item">
+        <router-link to="student-registration" class="nav-link" active-class="active">Home</router-link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" router-link to>Features</a>
+        <router-link class="nav-link" to="dashboard" active-class="active">Dashboard</router-link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <router-link class="nav-link" to="course-registration" active-class="active">Cadastrar disciplinas</router-link>
       </li>
     </ul>
   </div>
 
-  <span class="logout" @click="signOut"><i class="fas fa-times"></i>  Sair</span>
+  <div class="header-infos">
+    <div v-if="authUser">
+      <span class="header-info"><i class="fas fa-user"></i><span class="logged-info">{{authUser.displayName}}</span></span>
+      <span class="header-info logout" @click="signOut"><i class="fas fa-times"></i><span class="logged-info">Sair</span></span>
+    </div>
+  </div>
+  
 
 </nav>
 
@@ -35,11 +38,8 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import AuthService from '../services/AuthService.js';
 
-  export default  {
+  export default {
     name: 'menu-pre-mat',
-    mounted() {
-
-    },
     data() {
       return {
         authUser: null
@@ -47,14 +47,17 @@ import AuthService from '../services/AuthService.js';
     },
     methods: {
       signOut() {
-        AuthService.signOut();
-        console.log('deslogado');
+        return AuthService.signOut()
+        .then((result) => {
+          localStorage.clear()
+          this.$router.replace('login')
+        })
       }
     },
     computed: {
-
     },
     created() {
+      localStorage.getItem('token')
       firebase.auth().onAuthStateChanged(user => {
       this.authUser = user;
     });
@@ -67,14 +70,32 @@ import AuthService from '../services/AuthService.js';
     margin-bottom: 15px;
   }
 
+  .router-link-exact-active {
+  background: #2E2E2E;
+}
+
   .logout {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: white;
     font-size: 16px;
     line-height: 1.5;
+    margin-left: 16px;
   }
 
   .logout:hover {
     cursor: pointer;
   }
+
+  .header-infos {
+    color: white;
+  }
+
+  .header-info {
+    margin-left: 16px;
+  }
+
+  .logged-info {
+    margin-left: 8px;
+  }
+
 </style>
