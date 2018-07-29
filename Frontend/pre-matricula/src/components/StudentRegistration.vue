@@ -1,9 +1,9 @@
 <template>
 
-  <section class="student-registration animated fadeInDown faster">
+  <section class="student-registration">
     <MenuPreMat />
 
-    <div class="container">
+    <div class="container animated fadeInUp faster">
       <div class="row">
         <div class="col"></div>
         <div class="col">

@@ -1,5 +1,5 @@
 <template>
-  <section class="course-registration animated fadeInDown faster">
+  <section class="course-registration">
     <MenuPreMat />
 
     <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
@@ -16,7 +16,7 @@
       </button>
     </div>
 
-    <div class="container form-container">
+    <div class="container form-container animated fadeInUp faster">
       <form @submit.prevent="submit">
         <div class="form-header">
           <h1>Cadastro de Disciplinas</h1>

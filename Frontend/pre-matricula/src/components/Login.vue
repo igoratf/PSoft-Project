@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container animated fadeIn delay-2s">
+  <div class="login-container animated fadeIn slow">
     <div class="container">
       <div class="row">
         <div class="col label">
