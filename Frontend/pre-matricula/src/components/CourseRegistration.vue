@@ -16,7 +16,7 @@
       </button>
     </div>
 
-    <div class="container form-container animated fadeInUp faster">
+    <div class="container form-container animated zoomIn faster">
       <form @submit.prevent="submit">
         <div class="form-header">
           <h1>Cadastro de Disciplinas</h1>

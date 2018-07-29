@@ -3,7 +3,7 @@
   <section class="student-registration">
     <MenuPreMat />
 
-    <div class="container animated fadeInUp faster">
+    <div class="container animated zoomIn faster">
       <div class="row">
         <div class="col"></div>
         <div class="col">
