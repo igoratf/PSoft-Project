@@ -16,10 +16,11 @@
       <th scope="col">Num. créditos</th>
       <th scope="col">Carga horária</th>
       <th scope="col">Grade</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-    <tr v-for="list in listTest" :key="list.code">
+    <tr v-for="(list, index) in listTest" :key="list.code" :contenteditable="editable">
       <input class="course-checkbox" type="checkbox" :value="list" v-model="checked">
       <th scope="row">{{list.period}}</th>
       <td>{{list.code}}</td>
@@ -27,6 +28,8 @@
       <td>{{list.credit}}</td>
       <td>{{list.workload}}</td>
       <td>{{list.coursePlan}}</td>
+      <button @click="makeEditable"><i class="far fa-edit"></i></button>
+      <button class="btn-remove" @click="deleteCourse(index)"><i class="fas fa-times"></i></button>
     </tr>
   </tbody>
 </table>
@@ -63,12 +66,18 @@ export default {
           coursePlan: "Ambas"
         }
       ],
-      checked: []
+      checked: [],
+      editable: false
     };
   },
   methods: {
     submit() {
 
+    },
+    deleteCourse(index) {
+      this.listTest.splice(index, 1)
+    },
+    makeEditable() {
     }
   },
   computed: {},
@@ -97,6 +106,10 @@ export default {
 
 h1 {
   margin-bottom: 2%;
+}
+
+.btn-remove {
+  margin-left: 6px;
 }
 </style>
  */

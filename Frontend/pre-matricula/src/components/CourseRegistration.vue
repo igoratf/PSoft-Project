@@ -1,4 +1,4 @@
-<template>
+/* <template>
   <section class="course-registration">
     <MenuPreMat />
 
@@ -28,14 +28,14 @@
             <input type="text" class="form-control" id="name" placeholder="Nome da disciplina" v-model="name" required>
           </div>
           <div class="form-group col-md-6">
-            <label for="code">Código da disciplina</label>
+            <label for="code">Código</label>
             <input type="number" class="form-control" id="code" placeholder="Código da disciplina" v-model="code" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="credit">Créditos</label>
-            <input type="number" class="form-control" id="credit" min=0 max=10 placeholder="Créditos da disciplina" v-model="credit" required>
+            <label for="credit">Período</label>
+            <input type="number" class="form-control" id="credit" min=0 max=10 placeholder="Período da disciplina" v-model="period" required>
           </div>
           <div class="form-group col-md-6">
             <label for="workload">Carga horária</label>
@@ -43,17 +43,18 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-6">
+            <label for="workload">Créditos</label>
+            <input type="number" class="form-control" id="workload" placeholder="Quantidade de créditos da disciplina" min=1 max=10 v-model="credit" required>
           </div>
-          <div class="form-group col-md-4">
-            <label for="coursePlan">Grade curricular</label>
+          <div class="form-group col-md-6">
+             <label for="coursePlan">Grade curricular</label>
             <select id="coursePlan" class="form-control" v-model="coursePlan" required>
-              <option selected>Nova</option>
+              <option disabled seleted value="">Selecione a grade</option>
+              <option>Nova</option>
               <option>Antiga</option>
               <option>Ambas</option>
             </select>
-          </div>
-          <div class="form-group col-md-4">
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Cadastrar</button>
@@ -81,7 +82,7 @@ export default {
       code: null,
       credit: null,
       workload: null,
-      coursePlan: null,
+      coursePlan: "",
       showSuccess: false,
       showError: false
     };
@@ -119,3 +120,4 @@ export default {
   margin-bottom: 15%;
 }
 </style>
+ */
