@@ -19,30 +19,29 @@
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody v-for="(list, index) in listTest" :key="index">
     <transition name="course-info" leave-active-class="animated zoomOut faster">
-    <tr v-for="(list, index) in listTest" :key="index">
+    <tr >
       <input class="course-checkbox" type="checkbox" :value="list" v-model="checked">
-      <td scope="row" v-if="selected"><input class="form-input-number" type="number"  v-model="selected.period"></td>
-      <td v-if="list != selected" scope="row">{{list.period}}</td>
-      <td scope="row" v-if="selected"><input class="form-input-text" type="text" v-model="selected.code"></td>
-      <td v-if="list != selected">{{list.code}}</td>
-      <td scope="row" v-if="selected"><input class="form-input-text" type="text" v-model="selected.name"></td>
-      <td v-if="list != selected">{{list.name}}</td>
-      <td scope="row" v-if="selected"><input class="form-input-number" type="number" v-model="selected.credits"></td>
+      <td scope="row" v-if="list == selected"><input class="form-input-number" type="number"  v-model="selected.period"></td>
+      <td v-else scope="row">{{list.period}}</td>
+      <td scope="row" v-if="list == selected"><input class="form-input-text" type="text" v-model="selected.code"></td>
+      <td v-else>{{list.code}}</td>
+      <td scope="row" v-if="list == selected"><input class="form-input-text" type="text" v-model="selected.name"></td>
+      <td v-else>{{list.name}}</td>
+      <td scope="row" v-if="list == selected"><input class="form-input-number" type="number" v-model="selected.credits"></td>
       <td v-if="list != selected">{{list.credits}}</td>
-      <td scope="row" v-if="selected"><input class="form-input-text" type="number" v-model="selected.workload"></td>
-      <td v-if="list != selected">{{list.workload}}</td>
-      <td scope="row" v-if="selected"><select id="coursePlan" class="form-input-text" v-model="selected.coursePlan">
+      <td scope="row" v-if="list == selected"><input class="form-input-text" type="number" v-model="selected.workload"></td>
+      <td v-else>{{list.workload}}</td>
+      <td scope="row" v-if="list == selected"><select id="coursePlan" class="form-input-text" v-model="selected.coursePlan">
               <option disabled seleted value="">Selecione a grade</option>
               <option>Nova</option>
               <option>Antiga</option>
               <option>Ambas</option>
             </select></td>
-      <td v-if="list != selected">{{list.coursePlan}}</td>
+      <td v-else>{{list.coursePlan}}</td>
       <button @click="makeEditable(index)"><i class="far fa-edit"></i></button>
       <button class="btn-remove" @click="deleteCourse(index)"><i class="fas fa-times"></i></button>
-      <button @click="endEditable">End</button>
     </tr>
     </transition>
     
@@ -80,6 +79,14 @@ export default {
           credits: 4,
           workload: 60,
           coursePlan: "Ambas"
+        },
+        {
+          period: 1,
+          code: "12903819203",
+          name: "LPT",
+          credits: 4,
+          workload: 60,
+          coursePlan: "Antiga"
         }
       ],
       checked: [],
