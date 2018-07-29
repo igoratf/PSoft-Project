@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.preMatricula.entities.Student;
-import com.example.preMatricula.interfaces.MatriculaRepository;
+import com.example.preMatricula.interfaces.StudentRepository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class MatriculasService {
 
 	@Autowired
-	private MatriculaRepository matriculas;
+	private StudentRepository matriculas;
 
 	public List<Student> getMatriculas() {
 		return this.matriculas.findAll();
