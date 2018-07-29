@@ -3,67 +3,83 @@ package com.example.preMatricula.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.preMatricula.entities.Discipline;
+import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.interfaces.DisciplinaRepository;
 import com.example.preMatricula.interfaces.StudentRepository;
 
 @Service
 public class CourseService {
 
-	@SuppressWarnings("unused")
+	@Autowired
 	private StudentRepository students;
 
-    @Autowired
-    private DisciplinaRepository disciplines;
+	@Autowired
+	private DisciplinaRepository disciplines;
 
-    public List<Discipline> getDisciplinas() {
-       
-    	return this.disciplines.findAll();
-    }    
+	public List<Student> getStudents() {
+		return this.students.findAll();
+	}
 
-    public Optional<Discipline> getDisciplinaById(Long id) {
+	public List<Discipline> getDisciplines() {
 
-        return this.disciplines.findById(id);
-    }
+		return this.disciplines.findAll();
+	}
 
+	public Optional<Student> getStudentByID(String studentID) {
 
-    public ResponseEntity<String> addDisciplina(Discipline discipline) {
+		return this.students.findById(studentID);
+	}
 
-        try {
-            this.disciplines.save(discipline);
+	public Optional<Discipline> getDisciplineByCode(Integer code) {
 
-            return ResponseEntity.status(HttpStatus.OK).body("{\"responseBody\": \"Disciplina cadastrada com sucesso!\"}");
-        
-        } catch (Exception e) {
+		return this.disciplines.findById(code);
+	}
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"responseBody\": \"" + e.getMessage()+ "\"}");
-        }
-    }
+	public ResponseEntity<JSONObject> putDiscipline(Discipline discipline) {
+		try {
+			boolean existed = this.disciplines.existsById(discipline.getCode());
 
-    public ResponseEntity<String> updateDisciplina(Discipline disciplina) {
+			this.disciplines.save(discipline);
 
-        try {
-            this.disciplines.save(disciplina);
-            return ResponseEntity.status(HttpStatus.OK).body("{\"responseBody\": \"Update realizado com sucesso!\"}");
-        } catch (Exception e) {
+			if (existed) {
+				return new ResponseEntity<>(
+						(new JSONObject()).put("responseBody", "Disciplina atualizada com sucesso!"), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(
+						(new JSONObject()).put("responseBody", "Disciplina cadastrada com sucesso!"), HttpStatus.CREATED);
+			}
+			
+		} catch (Exception e) {
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"responseBody\": \"" + e.getMessage()+ "\"}");
-        }
-    }
+			return new ResponseEntity<>((new JSONObject()).put("responseBody", e.getMessage()), HttpStatus.BAD_REQUEST);
+		}
+	}
 
-    public ResponseEntity<String> deleteDisciplina(Long id) {
-        try {
-            this.disciplines.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body("{\"responseBody\": \"Disciplina removida com sucesso!\"}");
-        } catch (Exception e) {
+	public ResponseEntity<JSONObject> addStudent(Student student) {
+		try {
+			boolean existed = this.students.existsById(student.getId());
+			
+			this.students.save(student);
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"responseBody\": \"" + e.getMessage()+ "\"}");
-        }
-    }
-    
+			if (existed) {
+				return new ResponseEntity<>(
+						(new JSONObject()).put("responseBody", "Estudante atualizado(a) com sucesso!"), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(
+						(new JSONObject()).put("responseBody", "Estudante criado(a) com sucesso!"), HttpStatus.CREATED);
+			}
+			
+		} catch (Exception e) {
+
+			return new ResponseEntity<>((new JSONObject()).put("responseBody", e.getMessage()), HttpStatus.BAD_REQUEST);
+		}
+	}
+
 }
