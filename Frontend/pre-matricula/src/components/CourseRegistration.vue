@@ -34,8 +34,8 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="credit">Período</label>
-            <input type="number" class="form-control" id="credit" min=0 max=10 placeholder="Período da disciplina" v-model="period" required>
+            <label for="period">Período</label>
+            <input type="number" class="form-control" id="period" min=1 max=10 placeholder="Período da disciplina" v-model="period" required>
           </div>
           <div class="form-group col-md-6">
             <label for="workload">Carga horária</label>
@@ -44,8 +44,8 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="workload">Créditos</label>
-            <input type="number" class="form-control" id="workload" placeholder="Quantidade de créditos da disciplina" min=1 max=10 v-model="credit" required>
+            <label for="credits">Créditos</label>
+            <input type="number" class="form-control" id="credits" placeholder="Quantidade de créditos da disciplina" min=0 max=10 v-model="credit" required>
           </div>
           <div class="form-group col-md-6">
              <label for="coursePlan">Grade curricular</label>
@@ -80,7 +80,7 @@ export default {
     return {
       name: null,
       code: null,
-      credit: null,
+      credits: null,
       workload: null,
       coursePlan: "",
       showSuccess: false,
@@ -93,7 +93,7 @@ export default {
       let discipline = {
         name: this.name,
         code: this.code,
-        credit: this.credit,
+        credits: this.credits,
         workload: this.workload,
         coursePlan: this.coursePlan
       };
@@ -111,7 +111,7 @@ export default {
     clearFormData() {
       this.name = null,
       this.code = null,
-      this.credit = null,
+      this.credits = null,
       this.workload = null,
       this.coursePlan = "",
       this.showSuccess = false,
