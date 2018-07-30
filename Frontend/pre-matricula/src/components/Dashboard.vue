@@ -19,9 +19,8 @@
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody v-for="(list, index) in listTest" :key="index">
-    <transition name="course-info" leave-active-class="animated zoomOut faster">
-    <tr >
+  <tbody is="transition-group" leave-active-class="animated zoomOut faster">
+    <tr v-for="(list, index) in listTest" :key="index">
       <input class="course-checkbox" type="checkbox" :value="list" v-model="checked">
       <td scope="row" v-if="list == selected"><input class="form-input-number" type="number"  v-model="selected.period"></td>
       <td v-else scope="row">{{list.period}}</td>
@@ -42,9 +41,7 @@
       <td v-else>{{list.coursePlan}}</td>
       <button @click="makeEditable(index)"><i class="far fa-edit"></i></button>
       <button class="btn-remove" @click="deleteCourse(index)"><i class="fas fa-times"></i></button>
-    </tr>
-    </transition>
-    
+    </tr>    
   </tbody>
 </table>
 {{selected}}
