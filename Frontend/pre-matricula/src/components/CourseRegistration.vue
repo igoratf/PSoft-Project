@@ -34,8 +34,8 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="period">Período</label>
-            <input type="number" class="form-control" id="period" min=1 max=10 placeholder="Período da disciplina" v-model="period" required>
+            <label for="semester">Período</label>
+            <input type="number" class="form-control" id="semester" min=1 max=10 placeholder="Período da disciplina" v-model="semester" required>
           </div>
           <div class="form-group col-md-6">
             <label for="workload">Carga horária</label>
@@ -45,7 +45,7 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="credits">Créditos</label>
-            <input type="number" class="form-control" id="credits" placeholder="Quantidade de créditos da disciplina" min=0 max=10 v-model="credit" required>
+            <input type="number" class="form-control" id="credits" placeholder="Quantidade de créditos da disciplina" min=0 max=10 v-model="credits" required>
           </div>
           <div class="form-group col-md-6">
              <label for="coursePlan">Grade curricular</label>
@@ -66,6 +66,7 @@
 
 <script>
 import MenuPreMat from "@/components/MenuPreMat.vue";
+import axios from '../auth-axios/axios';
 
 export default {
   name: "course-registration",
@@ -82,6 +83,7 @@ export default {
       code: null,
       credits: null,
       workload: null,
+      semester: null,
       coursePlan: "",
       showSuccess: false,
       showError: false
@@ -93,12 +95,18 @@ export default {
       let discipline = {
         name: this.name,
         code: this.code,
+        semester: this.semester,
         credits: this.credits,
         workload: this.workload,
         coursePlan: this.coursePlan
       };
+      console.log(discipline)
+      axios.put('/course/disciplines/put', {
+        discipline
+      }).then((result) => console.log(result))
+      .catch((error) => console.log(error))
       // Submete aqui
-      this.clearFormData();
+      // this.clearFormData();
       this.showSuccess = true
       setTimeout(this.closeSuccessAlert, 2000);
     },
@@ -112,6 +120,7 @@ export default {
       this.name = null,
       this.code = null,
       this.credits = null,
+      this.semester = null,
       this.workload = null,
       this.coursePlan = "",
       this.showSuccess = false,

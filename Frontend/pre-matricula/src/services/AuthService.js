@@ -30,7 +30,7 @@ checkCurrentLogin() {
 getUserRole() {
     let user = firebase.auth().currentUser;
     if (user) {
-        user.role = 'student'
+        user.role = 'admin'
         user.registered = false
         return user.role
     } else {
