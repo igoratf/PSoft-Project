@@ -1,5 +1,6 @@
 /* <template>
   <section class="course-registration">
+    <!-- > Lembrar de passar user como prop para MenuPreMat -->
     <MenuPreMat />
 
     <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">

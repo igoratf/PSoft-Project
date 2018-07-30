@@ -85,6 +85,7 @@ export default {
       return AuthService.signInWithGoogle().then(result => {
         console.log(result.user);
         console.log("oi");
+        console.log(result.credential.idToken);
         localStorage.setItem('token', result.credential.idToken)
         // console.log(result.user.getIdToken);
         // console.log(result.credential.idToken);

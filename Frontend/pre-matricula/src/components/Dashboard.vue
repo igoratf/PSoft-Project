@@ -51,6 +51,13 @@
   </div>
 
   {{checked}}
+
+  <div class="container animated zoomIn faster">
+    <h1>Exportar matrículas </h1>
+    <button type="button" class="btn btn-outline-success">Exportar matrículas</button>
+  </div>
+
+
     </section>
 
   </template>
@@ -69,6 +76,7 @@
     mounted() {},
     data() {
       return {
+        currentUser,
         courseList: [
           {
             semester: 1,

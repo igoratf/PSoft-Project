@@ -40,10 +40,12 @@ import AuthService from '../services/AuthService.js';
     data() {
       return {
         currentUser: {
-          role: 'admin'
+          role: 'admin',
+          // currentUser: this.authUser
         }
       }
     },
+    // props: ['authUser'],
     methods: {
       signOut() {
         return AuthService.signOut()
