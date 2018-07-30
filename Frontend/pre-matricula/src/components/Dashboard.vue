@@ -89,7 +89,6 @@
         ],
         checked: [],
         selected: null,
-        editable: false
       };
     },
     methods: {
@@ -98,26 +97,24 @@
         this.courseList.splice(index, 1);
       },
       editDiscipline(index) {
-        this.editable = !this.editable;
+        let discipline = this.courseList[index];
         if (this.selected) {
+          this.selected = null;
           return CourseService.registerDiscipline(discipline)
           .then((result) => {
-            
           })
           .catch((error) => {
             alert(error.message)
           })
-          this.selected = null;
         } else {
           this.selected = this.courseList[index];
         }
-        
       },
     },
     computed: {},
     updated() {},
     created() {
-      this.CourseService.getDisciplines()
+      CourseService.getDisciplines()
       .then((result) => {
         this.courseList = result;
       })
