@@ -56,8 +56,9 @@
   </template>
 
   <script>
-  import MenuPreMat from "@/components/MenuPreMat.vue";
-  import AuthService from "../services/AuthService.js";
+  import MenuPreMat from '@/components/MenuPreMat.vue';
+  import AuthService from '../services/AuthService.js';
+  import CourseService from '../services/CourseService.js';
 
   export default {
     name: "dashboard",
@@ -68,7 +69,7 @@
     mounted() {},
     data() {
       return {
-        listTest: [
+        courseList: [
           {
             semester: 1,
             code: "18290380123",
@@ -110,7 +111,15 @@
     },
     computed: {},
     updated() {},
-    created() {},
+    created() {
+      this.CourseService.getDisciplines()
+      .then((result) => {
+        this.courseList = result;
+      })
+      .catch((error) => {
+        alert(error.message)
+      })
+    },
     beforeRouteEnter(to, from, next) {
       next(vm => {
         if (AuthService.checkCurrentLogin()) {

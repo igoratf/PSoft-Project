@@ -67,6 +67,7 @@
 <script>
 import MenuPreMat from "@/components/MenuPreMat.vue";
 import axios from '../auth-axios/axios';
+import CourseService from '../services/CourseService.js';
 
 export default {
   name: "course-registration",
@@ -101,9 +102,7 @@ export default {
         coursePlan: this.coursePlan
       };
       console.log(discipline)
-      axios.put('/course/disciplines/put', {
-        discipline
-      }).then((result) => console.log(result))
+      this.CourseService.registerCourse(discipline).then((result) => {console.log(result)})
       .catch((error) => console.log(error))
       // Submete aqui
       // this.clearFormData();
