@@ -3,7 +3,9 @@
     <!-- > Lembrar de passar user como prop para MenuPreMat -->
     <MenuPreMat />
 
-    <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
+    <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError"/>
+
+    <!-- <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
       {{successMessage}}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -15,7 +17,7 @@
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-    </div>
+    </div> -->
 
     <div class="container form-container animated zoomIn faster">
       <form @submit.prevent="submit">
@@ -51,7 +53,7 @@
           <div class="form-group col-md-6">
              <label for="coursePlan">Grade curricular</label>
             <select id="coursePlan" class="form-control" v-model="coursePlan" required>
-              <option disabled seleted value="">Selecione a grade</option>
+              <option disabled selected value="">Selecione a grade</option>
               <option>Nova</option>
               <option>Antiga</option>
               <option>Ambas</option>
@@ -69,11 +71,13 @@
 import MenuPreMat from "@/components/MenuPreMat.vue";
 import axios from '../auth-axios/axios';
 import CourseService from '../services/CourseService.js';
+import Alert from '../views/Alert';
 
 export default {
   name: "course-registration",
   components: {
-    MenuPreMat
+    MenuPreMat,
+    Alert
   },
   props: [],
 
@@ -87,8 +91,8 @@ export default {
       workload: null,
       semester: null,
       coursePlan: "",
-      successMessage: null,
-      errorMessage: null,
+      successMessage: "",
+      errorMessage: "",
       showSuccess: false,
       showError: false
     };

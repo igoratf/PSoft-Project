@@ -16,10 +16,6 @@ signOut() {
     return firebase.auth().signOut()
     },
 
-adminSignIn(email, password) {
-    return firebase.auth().signInWithEmailAndPassword(email, password)
-},
-
 checkCurrentLogin() {
     if (localStorage.token) {
         return true;
@@ -37,8 +33,5 @@ getUserRole() {
     } else {
         return ''
     }
-    
-    
-    //axios.get('')
 }
 }

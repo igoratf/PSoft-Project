@@ -5,7 +5,7 @@
 
       <div class="container animated zoomIn faster">
         <h1> Lista de disciplinas cadastradas</h1>
-  <form @submit.prevent="submit">
+  <form @submit.prevent="submitEnrollment">
     <table class="table table-hover">
     <thead>
       <tr>
@@ -33,7 +33,7 @@
         <td scope="row" v-if="list == selected"><input class="form-input-text" type="number" v-model="selected.workload"></td>
         <td v-else>{{list.workload}}</td>
         <td scope="row" v-if="list == selected"><select id="coursePlan" class="form-input-text" v-model="selected.coursePlan">
-                <option disabled seleted value="">Selecione a grade</option>
+                <option disabled selected value="">Selecione a grade</option>
                 <option>Nova</option>
                 <option>Antiga</option>
                 <option>Ambas</option>
@@ -50,6 +50,8 @@
   </form>
   </div>
 
+  
+
   {{checked}}
 
   <div class="container animated zoomIn faster">
@@ -63,6 +65,7 @@
   </template>
 
   <script>
+  import axios from '../auth-axios/axios';
   import MenuPreMat from '@/components/MenuPreMat.vue';
   import AuthService from '../services/AuthService.js';
   import CourseService from '../services/CourseService.js';
@@ -76,7 +79,7 @@
     mounted() {},
     data() {
       return {
-        currentUser,
+        currentUser: null,
         courseList: [
           {
             semester: 1,
@@ -100,7 +103,20 @@
       };
     },
     methods: {
-      submit() {},
+      submitEnrollment() {
+        let enrollment = this.checked.map(function(discipline) {
+          return discipline.code;
+        })
+        axios.put('/course/enroll', {
+          enrollment
+        })
+        .then((result) => {
+
+        })
+        .catch((error) => {
+
+        })
+      },
       deleteCourse(index) {
         this.courseList.splice(index, 1);
       },
@@ -122,13 +138,14 @@
     computed: {},
     updated() {},
     created() {
-      CourseService.getDisciplines()
-      .then((result) => {
-        this.courseList = result;
-      })
-      .catch((error) => {
-        alert(error.message)
-      })
+      currentUser = firebase.auth().currentUser;
+      // CourseService.getDisciplines()
+      // .then((result) => {
+      //   this.courseList = result;
+      // })
+      // .catch((error) => {
+      //   alert(error.message)
+      // })
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
