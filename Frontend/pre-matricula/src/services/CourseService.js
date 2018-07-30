@@ -8,9 +8,8 @@ export default {
       })
     },
 
-    studentEnroll(idToken, codeList) {
+    studentEnroll(codeList) {
         return axios.put('/course/enroll', {
-            studentID: idToken,
             codes: codeList
         })
     },
