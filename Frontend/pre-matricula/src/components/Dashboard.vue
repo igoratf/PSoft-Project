@@ -52,6 +52,10 @@
 
   {{checked}}
 
+   <!-- > Cria um <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError"/>
+    e cria esses atributos no data
+    -->
+
   <div class="container animated zoomIn faster">
     <h1>Exportar matrículas </h1>
     <button type="button" class="btn btn-outline-success">Exportar matrículas</button>
