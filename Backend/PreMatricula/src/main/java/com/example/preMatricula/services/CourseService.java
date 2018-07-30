@@ -38,6 +38,10 @@ public class CourseService {
 			return new ResponseEntity<>("{" + "responseBody:" + e.getMessage() + "}", HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	public List<Student> getStudents() {
+		return this.studentService.getStudents();
+	}
 
 	public ResponseEntity<String> putDiscipline(Discipline discipline) {
 		try {
@@ -72,5 +76,5 @@ public class CourseService {
 	public void deleteDisciplines() {
 		this.disciplineService.deleteDisciplines();
 	}
-
+	
 }

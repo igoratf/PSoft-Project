@@ -12,15 +12,15 @@ public class Student {
 	private String id;
 	private String email;
 	private Long registration;
-	private Integer period;
+	private Integer semester;
 	private Set<Integer> enrolledDisciplinesID;
 	
-	public Student(String id, String email, Long registration, Integer period) {
+	public Student(String id, String email, Long registration, Integer semester) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.registration = registration;
-		this.period = period;
+		this.semester = semester;
 		this.enrolledDisciplinesID = new HashSet<>();
 	}
 	
@@ -53,12 +53,12 @@ public class Student {
 		this.registration = registration;
 	}
 
-	public Integer getPeriod() {
-		return period;
+	public Integer getSemester() {
+		return semester;
 	}
 
-	public void setPeriod(Integer period) {
-		this.period = period;
+	public void setSemester(Integer semester) {
+		this.semester = semester;
 	}
 
 	public String getEmail() {

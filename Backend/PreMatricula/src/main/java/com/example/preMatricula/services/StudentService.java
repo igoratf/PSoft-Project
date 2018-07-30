@@ -1,10 +1,14 @@
 package com.example.preMatricula.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.interfaces.StudentRepository;
 
+@Service
 public class StudentService {
 
 	@Autowired
@@ -16,6 +20,10 @@ public class StudentService {
 		this.students.save(student);
 		
 		return existed;
+	}
+
+	public List<Student> getStudents() {
+		return this.students.findAll();
 	}
 
 }
