@@ -51,7 +51,9 @@ public class CourseService {
 			this.disciplineService.enrollStudentInDisciplines(enrollment);
 			
 			this.studentService.enrollStudentInDisciplines(enrollment);
-						
+			
+			return new ResponseEntity<>("Estudante matriculado com sucesso!", HttpStatus.ACCEPTED);
+			
 		} catch (Exception e) {
 
 			return new ResponseEntity<>("{" + "responseBody:" + e.getMessage() + "}", HttpStatus.BAD_REQUEST);
