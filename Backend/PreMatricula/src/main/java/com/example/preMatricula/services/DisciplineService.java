@@ -60,5 +60,16 @@ public class DisciplineService {
 		Iterable<Discipline> found = this.disciplines.findAllById(enrollment.getDisciplineCodes());
 		found.forEach(discipline -> discipline.enrollStudent(enrollment.getStudentID()));
 	}
+	
+	public Integer computeTotalCredits(List<Integer> codes) {
+		Iterable<Discipline> found = this.disciplines.findAllById(codes);
+		
+		int sumCredits = 0;
+		for (Discipline discipline : found) {
+			sumCredits += discipline.getCredits();
+		}
+
+		return sumCredits;
+	}
 
 }

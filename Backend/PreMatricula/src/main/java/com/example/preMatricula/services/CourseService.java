@@ -39,17 +39,19 @@ public class CourseService {
 				}
 			}
 			
-			this.disciplineService.unenrollStudentFromAllDisciplines(enrollment.getStudentID());
-			this.disciplineService.enrollStudentInDisciplines(enrollment);
-			
-			this.studentService.enrollStudentInDisciplines(enrollment);
-			
 			if (hasError) {
 				return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
 			}
 			
-			throw new RuntimeException();
+			if (!this.validateCredits(enrollment.getDisciplineCodes())) {
+				return new ResponseEntity<>("Quantidade inválida de créditos.", HttpStatus.BAD_REQUEST);
+			}
 			
+			this.disciplineService.unenrollStudentFromAllDisciplines(enrollment.getStudentID());
+			this.disciplineService.enrollStudentInDisciplines(enrollment);
+			
+			this.studentService.enrollStudentInDisciplines(enrollment);
+						
 		} catch (Exception e) {
 
 			return new ResponseEntity<>("{" + "responseBody:" + e.getMessage() + "}", HttpStatus.BAD_REQUEST);
@@ -122,6 +124,15 @@ public class CourseService {
 
 	public void deleteDisciplines() {
 		this.disciplineService.deleteDisciplines();
+	}
+	
+	private boolean validateCredits(List<Integer> disciplines) {
+		int sumCredits = this.disciplineService.computeTotalCredits(disciplines);
+		
+		final int minCredits = 16;
+		final int maxCredits = 24;
+		
+		return (minCredits >= sumCredits && sumCredits <= maxCredits);
 	}
 	
 }
