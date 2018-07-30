@@ -50,6 +50,10 @@ public class CourseService {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	public void deleteStudents() {
+		this.studentService.deleteStudents();
+	}
 
 	public ResponseEntity<String> putDiscipline(Discipline discipline) {
 		try {

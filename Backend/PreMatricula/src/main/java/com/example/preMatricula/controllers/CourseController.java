@@ -47,6 +47,16 @@ public class CourseController {
 		return this.service.getStudent(id);
 	}
 	
+	
+	
+	
+	// Lembrar de tentar salvar o banco inteiro a cada operação desse tipo!
+	@DeleteMapping(path = "/students")
+	public void deleteStudents() {
+		
+		this.service.deleteStudents();
+	}
+	
 	@PutMapping(path = "/discipline")
 	public ResponseEntity<String> putDiscipline(@RequestBody Discipline discipline) {
 		

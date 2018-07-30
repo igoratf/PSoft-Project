@@ -35,4 +35,8 @@ public class StudentService {
 		return this.students.findById(id);
 	}
 
+	public void deleteStudents() {
+		this.students.deleteAll();
+	}
+
 }
