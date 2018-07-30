@@ -41,6 +41,12 @@ public class CourseController {
 		return this.service.getStudents();
 	}
 	
+	@GetMapping(path = "/student/{id}")
+	public @ResponseBody ResponseEntity<Optional<Student>> getStudent(@PathVariable(name = "id") String id) {
+		
+		return this.service.getStudent(id);
+	}
+	
 	@PutMapping(path = "/discipline")
 	public ResponseEntity<String> putDiscipline(@RequestBody Discipline discipline) {
 		

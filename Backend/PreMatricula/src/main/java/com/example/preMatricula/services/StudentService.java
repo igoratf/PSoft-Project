@@ -1,6 +1,7 @@
 package com.example.preMatricula.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,14 @@ public class StudentService {
 
 	public List<Student> getStudents() {
 		return this.students.findAll();
+	}
+
+	public boolean containsStudent(String id) {
+		return this.students.existsById(id);
+	}
+
+	public Optional<Student> getStudent(String id) {
+		return this.students.findById(id);
 	}
 
 }

@@ -42,6 +42,14 @@ public class CourseService {
 	public List<Student> getStudents() {
 		return this.studentService.getStudents();
 	}
+	
+	public ResponseEntity<Optional<Student>> getStudent(String id) {
+		if (this.studentService.containsStudent(id)) {
+			return new ResponseEntity<>(this.studentService.getStudent(id), HttpStatus.FOUND);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 	public ResponseEntity<String> putDiscipline(Discipline discipline) {
 		try {
