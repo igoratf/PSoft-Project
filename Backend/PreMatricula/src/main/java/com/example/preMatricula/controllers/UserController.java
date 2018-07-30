@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.preMatricula.services.UserService;
 
+@RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "/user/save")
-@RestController
 public class UserController {
 	
 	@Autowired

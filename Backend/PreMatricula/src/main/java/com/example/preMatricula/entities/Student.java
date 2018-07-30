@@ -12,37 +12,28 @@ public class Student {
 	private String id;
 	private String email;
 	private Long registration;
-	private Integer period;
+	private Integer semester;
 	private Set<Integer> enrolledDisciplinesID;
 	
-	public Student(String id, String email, Long registration, Integer period) {
+	public Student(String id, String email, Long registration, Integer semester) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.registration = registration;
-		this.period = period;
+		this.semester = semester;
 		this.enrolledDisciplinesID = new HashSet<>();
-	}
-	
-	/**
-	 * Matricula-se em uma disciplina.
-	 * @param student A disciplina a se matricular.
-	 * @return true se ainda não estava matriculado na disciplina e false caso contrário.
-	 */
-	public boolean enrollInDiscipline(Integer disciplineID) {
-		return this.enrolledDisciplinesID.add(disciplineID);
-	}
-	
-	public void unenrollDiscipline(Integer disciplineCode) {
-		this.enrolledDisciplinesID.remove(disciplineCode);
 	}
 
 	public String getId() {
 		return id;
 	}
 
-	public Set<Integer> getEnrolledDisciplines() {
+	public Set<Integer> getEnrolledDisciplinesID() {
 		return enrolledDisciplinesID;
+	}
+
+	public void setEnrolledDisciplinesID(Set<Integer> enrolledDisciplinesID) {
+		this.enrolledDisciplinesID = enrolledDisciplinesID;
 	}
 
 	public Long getRegistration() {
@@ -53,12 +44,12 @@ public class Student {
 		this.registration = registration;
 	}
 
-	public Integer getPeriod() {
-		return period;
+	public Integer getSemester() {
+		return semester;
 	}
 
-	public void setPeriod(Integer period) {
-		this.period = period;
+	public void setSemester(Integer semester) {
+		this.semester = semester;
 	}
 
 	public String getEmail() {

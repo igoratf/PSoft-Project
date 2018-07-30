@@ -16,6 +16,7 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+	@Override
 	public String getUserIdFromIdToken(String idToken) throws Exception {
 		String uid = null;
 		try {
