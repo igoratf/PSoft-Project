@@ -12,6 +12,7 @@ signInWithGoogle() {
     },
 
 signOut() {
+    localStorage.clear();
     return firebase.auth().signOut()
     },
 

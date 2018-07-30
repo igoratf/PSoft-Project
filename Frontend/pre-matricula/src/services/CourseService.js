@@ -1,4 +1,3 @@
-import 'firebase/auth';
 import axios from '../auth-axios/axios';
 
 

@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody is="transition-group" leave-active-class="animated zoomOut faster">
-      <tr v-for="(list, index) in listTest" :key="index">
+      <tr v-for="(list, index) in courseList" :key="index">
         <input class="course-checkbox" type="checkbox" :value="list" v-model="checked">
         <td scope="row" v-if="list == selected"><input class="form-input-number" type="number"  v-model="selected.semester"></td>
         <td v-else scope="row">{{list.semester}}</td>
@@ -39,7 +39,7 @@
                 <option>Ambas</option>
               </select></td>
         <td v-else>{{list.coursePlan}}</td>
-        <button @click="makeEditable(index)"><i class="far fa-edit"></i></button>
+        <button @click="editDiscipline(index)"><i class="far fa-edit"></i></button>
         <button class="btn-remove" @click="deleteCourse(index)"><i class="fas fa-times"></i></button>
       </tr>    
     </tbody>
@@ -95,18 +95,23 @@
     methods: {
       submit() {},
       deleteCourse(index) {
-        this.listTest.splice(index, 1);
+        this.courseList.splice(index, 1);
       },
-      makeEditable(index) {
+      editDiscipline(index) {
+        this.editable = !this.editable;
         if (this.selected) {
-          this.CourseService.registerDiscipline(discipline)
-          .then()
-          .catch()
+          return CourseService.registerDiscipline(discipline)
+          .then((result) => {
+            
+          })
+          .catch((error) => {
+            alert(error.message)
+          })
           this.selected = null;
         } else {
-          this.selected = this.listTest[index];
+          this.selected = this.courseList[index];
         }
-        this.editable = !this.editable;
+        
       },
     },
     computed: {},

@@ -103,14 +103,18 @@ export default {
         workload: this.workload,
         coursePlan: this.coursePlan
       };
-      console.log(discipline)
-      this.CourseService.registerCourse(discipline)
+      console.log(discipline);
+      return CourseService.registerDiscipline(discipline)
       .then((result) => {
-        setSuccessAlert(result.message);
+        console.log('sucesso');
+        alert(result.message);
+        this.setSuccessAlert(result.message);
         this.clearFormData();
       })
       .catch((error) => {
-        setErrorAlert(error.message);
+        console.log('erro')
+        alert(error.message)
+        this.setErrorAlert(error.message);
       })
     },
     setSuccessAlert(message) {
