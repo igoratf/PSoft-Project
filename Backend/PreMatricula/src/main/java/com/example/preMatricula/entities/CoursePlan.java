@@ -1,6 +1,6 @@
 package com.example.preMatricula.entities;
 
-public enum Grade {
+public enum CoursePlan {
 	New,
 	Old,
 	Both

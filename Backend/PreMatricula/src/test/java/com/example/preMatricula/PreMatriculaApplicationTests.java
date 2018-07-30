@@ -1,7 +1,7 @@
 package com.example.preMatricula;
 
 import com.example.preMatricula.entities.Discipline;
-import com.example.preMatricula.entities.Grade;
+import com.example.preMatricula.entities.CoursePlan;
 import com.example.preMatricula.interfaces.DisciplinaRepository;
 
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class PreMatriculaApplicationTests {
 
 		disciplinas.deleteAll();
 
-		disciplinas.save(new Discipline(123, "eda", 3, 0, Grade.Both));
+		disciplinas.save(new Discipline(123, 3, "eda", 3, 0, CoursePlan.Both));
 
 		System.out.println(disciplinas.findAll());
 	}
