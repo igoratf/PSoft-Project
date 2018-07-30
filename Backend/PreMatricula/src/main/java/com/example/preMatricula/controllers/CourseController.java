@@ -35,49 +35,38 @@ public class CourseController {
 	@Autowired
 	private UserService userService;
 
-	@PutMapping(path = "/enroll")
-	public ResponseEntity<String> enroll(@RequestBody Enrollment enrollment,
+	/*@PutMapping(path = "/enroll")
+	public ResponseEntity<String> enroll(@RequestBody List<Integer> disciplineCodes,
 			@RequestHeader(name = "Authorization") String token) throws Exception {
 
-		if (userService.isAuthenticated(token))
-			return this.courseService.enroll(enrollment);
-		return null;
+		String studentId = this.userService.getUserIdFromIdToken(token);
+		return this.courseService.enroll(new Enrollment(studentId, disciplineCodes));
 	}
 
 	@PutMapping(path = "/student")
 	public ResponseEntity<String> putStudent(@RequestBody Student student,
 			@RequestHeader(name = "Authorization") String token) throws Exception {
-		if (userService.isAuthenticated(token)) {
-			String uid = userService.getUserIdFromIdToken(token.split(" ")[1]);
-			student.setId(uid);
-			return this.courseService.putStudent(student);
-		}
-		return null;
+
+		student.setId(userService.getUserIdFromIdToken(token));
+		return this.courseService.putStudent(student);
 	}
 
 	@GetMapping(path = "/students")
 	public List<Student> getStudents(@RequestHeader(name = "Authorization") String token) throws Exception {
-		if (userService.isAuthenticated(token))
-			return this.courseService.getStudents();
-		return null;
+		return this.courseService.getStudents();
 	}
 
 	@GetMapping(path = "/student")
 	public @ResponseBody ResponseEntity<Optional<Student>> getStudent(
 			@RequestHeader(name = "Authorization") String token) throws Exception {
 
-		if (userService.isAuthenticated(token)) {
-			String id = this.userService.getUserIdFromIdToken(token);
-			return this.courseService.getStudent(id);
-		}
-		return null;
+		String id = this.userService.getUserIdFromIdToken(token);
+		return this.courseService.getStudent(id);
 	}
 
-	// Lembrar de tentar salvar o banco inteiro a cada operação desse tipo!
 	@DeleteMapping(path = "/students")
 	public void deleteStudents(@RequestHeader(name = "Authorization") String token) throws Exception {
-		if (userService.isAuthenticated(token))
-			this.courseService.deleteStudents();
+		this.courseService.deleteStudents();
 	}
 
 	@PutMapping(path = "/discipline")
@@ -121,6 +110,6 @@ public class CourseController {
 
 		return false;
 
-	}
+	}*/
 
 }
