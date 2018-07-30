@@ -9,16 +9,17 @@ import org.springframework.stereotype.Service;
 
 import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
-import com.example.preMatricula.interfaces.StudentRepository;
+import com.example.preMatricula.entities.User;
+import com.example.preMatricula.interfaces.UserRepository;
 
 @Service
 public class StudentService {
 
 	@Autowired
-	private StudentRepository students;
+	private UserRepository students;
 	
 	public void enrollStudentInDisciplines(Enrollment enrollment) {
-		Student student = this.students.findById(enrollment.getStudentID()).get();
+		User student = this.students.findById(enrollment.getStudentID()).get();
 		student.setEnrolledDisciplinesID( new HashSet<>(enrollment.getDisciplineCodes()));
 	}
 	
@@ -30,7 +31,7 @@ public class StudentService {
 		return existed;
 	}
 
-	public List<Student> getStudents() {
+	public List<User> getStudents() {
 		return this.students.findAll();
 	}
 
@@ -38,7 +39,7 @@ public class StudentService {
 		return this.students.existsById(id);
 	}
 
-	public Optional<Student> getStudent(String id) {
+	public Optional<User> getStudent(String id) {
 		return this.students.findById(id);
 	}
 

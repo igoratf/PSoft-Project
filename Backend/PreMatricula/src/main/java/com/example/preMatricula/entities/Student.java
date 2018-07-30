@@ -17,26 +17,32 @@ public class Student extends User {
 		this.enrolledDisciplinesID = new HashSet<>();
 	}
 
+	@Override
 	public Set<Integer> getEnrolledDisciplinesID() {
 		return enrolledDisciplinesID;
 	}
 
+	@Override
 	public void setEnrolledDisciplinesID(Set<Integer> enrolledDisciplinesID) {
 		this.enrolledDisciplinesID = enrolledDisciplinesID;
 	}
 
+	@Override
 	public Long getRegistration() {
 		return registration;
 	}
 
+	@Override
 	public void setRegistration(Long registration) {
 		this.registration = registration;
 	}
 
+	@Override
 	public Integer getSemester() {
 		return semester;
 	}
 
+	@Override
 	public void setSemester(Integer semester) {
 		this.semester = semester;
 	}

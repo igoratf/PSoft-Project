@@ -1,5 +1,7 @@
 package com.example.preMatricula.entities;
 
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 
 public abstract class User {
@@ -39,5 +41,17 @@ public abstract class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public abstract Set<Integer> getEnrolledDisciplinesID();
+
+	public abstract void setEnrolledDisciplinesID(Set<Integer> enrolledDisciplinesID);
+
+	public abstract Long getRegistration();
+
+	public abstract void setRegistration(Long registration);
+
+	public abstract Integer getSemester();
+
+	public abstract void setSemester(Integer semester);
 	
 }
