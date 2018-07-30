@@ -10,9 +10,10 @@ import com.google.firebase.auth.FirebaseAuth;
 public class UserServiceImpl implements UserService {
 
 	@Override
-	public void saveUser(String idToken) throws Exception {
-		String uid = getUserIdFromIdToken(idToken);
-		System.out.println("User Id :: " + uid);
+	public boolean isAuthenticated(String idToken) throws Exception {
+
+		getUserIdFromIdToken(idToken.split(" ")[1]);
+		return true;
 
 	}
 

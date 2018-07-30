@@ -46,4 +46,8 @@ public class StudentService {
 		this.students.deleteAll();
 	}
 
+	public boolean userExists(String uid) {
+		return false;
+	}
+
 }
