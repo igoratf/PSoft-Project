@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.preMatricula.entities.Discipline;
+import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.services.CourseService;
 
@@ -29,6 +30,12 @@ public class CourseController {
 	@Autowired
 	private CourseService service;
 
+	@PutMapping(path = "/enroll")
+	public ResponseEntity<String> enroll(@RequestBody Enrollment enrollment) {
+		
+		return this.service.enroll(enrollment);
+	}
+	
 	@PutMapping(path = "/student")
 	public ResponseEntity<String> putStudent(@RequestBody Student student) {
 		
@@ -46,9 +53,6 @@ public class CourseController {
 		
 		return this.service.getStudent(id);
 	}
-	
-	
-	
 	
 	// Lembrar de tentar salvar o banco inteiro a cada operação desse tipo!
 	@DeleteMapping(path = "/students")

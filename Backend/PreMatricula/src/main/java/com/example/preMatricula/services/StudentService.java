@@ -1,11 +1,13 @@
 package com.example.preMatricula.services;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.interfaces.StudentRepository;
 
@@ -14,6 +16,11 @@ public class StudentService {
 
 	@Autowired
 	private StudentRepository students;
+	
+	public void enrollStudentInDisciplines(Enrollment enrollment) {
+		Student student = this.students.findById(enrollment.getStudentID()).get();
+		student.setEnrolledDisciplinesID( new HashSet<>(enrollment.getDisciplineCodes()));
+	}
 	
 	public boolean putStudent(Student student) {
 		boolean existed = this.students.existsById(student.getId());

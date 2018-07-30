@@ -23,26 +23,17 @@ public class Student {
 		this.semester = semester;
 		this.enrolledDisciplinesID = new HashSet<>();
 	}
-	
-	/**
-	 * Matricula-se em uma disciplina.
-	 * @param student A disciplina a se matricular.
-	 * @return true se ainda não estava matriculado na disciplina e false caso contrário.
-	 */
-	public boolean enrollInDiscipline(Integer disciplineID) {
-		return this.enrolledDisciplinesID.add(disciplineID);
-	}
-	
-	public void unenrollDiscipline(Integer disciplineCode) {
-		this.enrolledDisciplinesID.remove(disciplineCode);
-	}
 
 	public String getId() {
 		return id;
 	}
 
-	public Set<Integer> getEnrolledDisciplines() {
+	public Set<Integer> getEnrolledDisciplinesID() {
 		return enrolledDisciplinesID;
+	}
+
+	public void setEnrolledDisciplinesID(Set<Integer> enrolledDisciplinesID) {
+		this.enrolledDisciplinesID = enrolledDisciplinesID;
 	}
 
 	public Long getRegistration() {

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.preMatricula.entities.Discipline;
+import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
 
 @Service
@@ -20,6 +21,40 @@ public class CourseService {
 	
 	@Autowired
 	private StudentService studentService;
+	
+	
+	public ResponseEntity<String> enroll(Enrollment enrollment) {
+		try {
+			if (!this.studentService.containsStudent(enrollment.getStudentID())) {
+				return new ResponseEntity<>((new JSONObject()).put("responseBody", "Estudante não encontrado.").toString(), HttpStatus.BAD_REQUEST);
+			}
+			
+			boolean hasError = false;
+			JSONObject errors = new JSONObject();
+			errors.put("responseBody", "Uma ou mais disciplinas não foram encontradas.");
+			for (Integer code : enrollment.getDisciplineCodes()) {
+				if (!this.disciplineService.containsDiscipline(code)) {
+					hasError = true;
+					errors.accumulate("notFoundDisciplines", code);
+				}
+			}
+			
+			this.disciplineService.unenrollStudentFromAllDisciplines(enrollment.getStudentID());
+			this.disciplineService.enrollStudentInDisciplines(enrollment);
+			
+			this.studentService.enrollStudentInDisciplines(enrollment);
+			
+			if (hasError) {
+				return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
+			}
+			
+			throw new RuntimeException();
+			
+		} catch (Exception e) {
+
+			return new ResponseEntity<>("{" + "responseBody:" + e.getMessage() + "}", HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 	public ResponseEntity<String> putStudent(Student student) {
 		try {

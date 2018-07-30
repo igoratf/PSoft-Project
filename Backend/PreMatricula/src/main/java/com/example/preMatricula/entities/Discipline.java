@@ -42,7 +42,7 @@ public class Discipline {
 	 * @param studentID O identificador do estudante a ser desmatriculado.
 	 * @return true se tinha um estudante com esse id, false caso contrário.
 	 */
-	public boolean unenrollDiscipline(String studentID) {
+	public boolean unenrollStudent(String studentID) {
 		return this.studentsEnrolledIDs.remove(studentID);
 	}
 
