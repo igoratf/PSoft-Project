@@ -105,7 +105,6 @@ export default {
         discipline
       }).then((result) => console.log(result))
       .catch((error) => console.log(error))
-      // Submete aqui
       // this.clearFormData();
       this.showSuccess = true
       setTimeout(this.closeSuccessAlert, 2000);
