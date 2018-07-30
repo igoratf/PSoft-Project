@@ -3,14 +3,14 @@
     <MenuPreMat />
 
     <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
-      Disciplina cadastrada!
+      {{successMessage}}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
 
     <div class="container alert alert-danger alert-dismissible fade" :class="{show: showError}" role="alert">
-      Erro ao cadastrar disciplina!
+      {{errorMessage}}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -86,6 +86,8 @@ export default {
       workload: null,
       semester: null,
       coursePlan: "",
+      successMessage: null,
+      errorMessage: null,
       showSuccess: false,
       showError: false
     };
@@ -102,12 +104,24 @@ export default {
         coursePlan: this.coursePlan
       };
       console.log(discipline)
-      this.CourseService.registerCourse(discipline).then((result) => {console.log(result)})
-      .catch((error) => console.log(error))
-      // Submete aqui
-      // this.clearFormData();
-      this.showSuccess = true
+      this.CourseService.registerCourse(discipline)
+      .then((result) => {
+        setSuccessAlert(result.message);
+        this.clearFormData();
+      })
+      .catch((error) => {
+        setErrorAlert(error.message);
+      })
+    },
+    setSuccessAlert(message) {
+      this.successMessage = message;
+      this.showSuccess = true;
       setTimeout(this.closeSuccessAlert, 2000);
+    },
+    setErrorAlert(message) {
+      this.errorMessage = message;
+      this.showError = true;
+      setTimeout(this.closeErrorAlert, 2000);
     },
     closeSuccessAlert() {
       this.showSuccess = false;
@@ -123,7 +137,9 @@ export default {
       this.workload = null,
       this.coursePlan = "",
       this.showSuccess = false,
-      this.showError = false
+      this.showError = false,
+      this.errorMessage = false,
+      this.successMessage = false
     }
   },
 

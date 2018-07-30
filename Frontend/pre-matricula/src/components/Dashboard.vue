@@ -99,15 +99,15 @@
       },
       makeEditable(index) {
         if (this.selected) {
+          this.CourseService.registerDiscipline(discipline)
+          .then()
+          .catch()
           this.selected = null;
         } else {
           this.selected = this.listTest[index];
         }
         this.editable = !this.editable;
       },
-      endEditable() {
-        this.selected = null;
-      }
     },
     computed: {},
     updated() {},
