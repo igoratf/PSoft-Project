@@ -52,9 +52,9 @@
 
   {{checked}}
 
-   <!-- > Cria um <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError"/>
-    e cria esses atributos no data
-    -->
+  <alert : type="info" v-if="showSuccess"><b>{{successMessage}}</b></alert>
+  <alert : type="info" v-if="showError"><b>{{errorMessage}}</b></alert>
+
 
   <div class="container animated zoomIn faster">
     <h1>Exportar matrículas </h1>
@@ -101,6 +101,10 @@
         ],
         checked: [],
         selected: null,
+        successMessage: null,
+        errorMessage: null,
+        showSuccess: false,
+        showError: false
       };
     },
     methods: {
