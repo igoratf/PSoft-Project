@@ -1,7 +1,5 @@
 package com.example.preMatricula;
 
-import com.example.preMatricula.entities.Discipline;
-import com.example.preMatricula.entities.CoursePlan;
 import com.example.preMatricula.interfaces.DisciplinaRepository;
 
 import org.junit.Test;
