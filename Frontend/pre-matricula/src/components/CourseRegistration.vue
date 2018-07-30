@@ -104,23 +104,13 @@ export default {
         workload: this.workload,
         coursePlan: this.coursePlan
       };
-      console.log(discipline);
-      return CourseService.registerDiscipline(discipline)
-      .then((result) => {
-        console.log('sucesso');
-        alert(result.message);
-        this.setSuccessAlert(result.message);
-        this.clearFormData();
-      })
-      .catch((error) => {
-        console.log('erro')
-        alert(error.message)
-        this.setErrorAlert(error.message);
-      })
-    },
-    setSuccessAlert(message) {
-      this.successMessage = message;
-      this.showSuccess = true;
+      console.log(discipline)
+      axios.put('/course/disciplines/put', {
+        discipline
+      }).then((result) => console.log(result))
+      .catch((error) => console.log(error))
+      // this.clearFormData();
+      this.showSuccess = true
       setTimeout(this.closeSuccessAlert, 2000);
     },
     setErrorAlert(message) {
