@@ -31,64 +31,96 @@ public class CourseController {
 
 	@Autowired
 	private CourseService courseService;
-	
+
 	@Autowired
 	private UserService userService;
 
 	@PutMapping(path = "/enroll")
-	public ResponseEntity<String> enroll(@RequestBody Enrollment enrollment) {
-		
-		return this.courseService.enroll(enrollment);
+	public ResponseEntity<String> enroll(@RequestBody Enrollment enrollment,
+			@RequestHeader(name = "Authorization") String token) throws Exception {
+
+		if (userService.isAuthenticated(token))
+			return this.courseService.enroll(enrollment);
+		return null;
 	}
-	
+
 	@PutMapping(path = "/student")
-	public ResponseEntity<String> putStudent(@RequestBody Student student) {
-		
-		return this.courseService.putStudent(student);
+	public ResponseEntity<String> putStudent(@RequestBody Student student,
+			@RequestHeader(name = "Authorization") String token) throws Exception {
+		if (userService.isAuthenticated(token)) {
+			String uid = userService.getUserIdFromIdToken(token.split(" ")[1]);
+			student.setId(uid);
+			return this.courseService.putStudent(student);
+		}
+		return null;
 	}
-	
+
 	@GetMapping(path = "/students")
-	public List<Student> getStudents() {
-		
-		return this.courseService.getStudents();
+	public List<Student> getStudents(@RequestHeader(name = "Authorization") String token) throws Exception {
+		if (userService.isAuthenticated(token))
+			return this.courseService.getStudents();
+		return null;
 	}
-	
+
 	@GetMapping(path = "/student")
-	public @ResponseBody ResponseEntity<Optional<Student>> getStudent(@RequestHeader(name = "ID-TOKEN") String token) throws Exception {
-		
-		String id = this.userService.getUserIdFromIdToken(token);
-		return this.courseService.getStudent(id);
+	public @ResponseBody ResponseEntity<Optional<Student>> getStudent(
+			@RequestHeader(name = "Authorization") String token) throws Exception {
+
+		if (userService.isAuthenticated(token)) {
+			String id = this.userService.getUserIdFromIdToken(token);
+			return this.courseService.getStudent(id);
+		}
+		return null;
 	}
-	
+
 	// Lembrar de tentar salvar o banco inteiro a cada operação desse tipo!
 	@DeleteMapping(path = "/students")
-	public void deleteStudents() {
-		
-		this.courseService.deleteStudents();
+	public void deleteStudents(@RequestHeader(name = "Authorization") String token) throws Exception {
+		if (userService.isAuthenticated(token))
+			this.courseService.deleteStudents();
 	}
-	
+
 	@PutMapping(path = "/discipline")
-	public ResponseEntity<String> putDiscipline(@RequestBody Discipline discipline) {
-		
-		return this.courseService.putDiscipline(discipline);
+	public ResponseEntity<String> putDiscipline(@RequestBody Discipline discipline,
+			@RequestHeader(name = "Authorization") String token) throws Exception {
+		if (userService.isAuthenticated(token))
+			return this.courseService.putDiscipline(discipline);
+		return null;
 	}
-	
+
 	@GetMapping(path = "/discipline/{code}")
-	public @ResponseBody ResponseEntity<Optional<Discipline>> getDiscipline(@PathVariable(name = "code") Integer code) {
-		
-		return this.courseService.getDiscipline(code);
+	public @ResponseBody ResponseEntity<Optional<Discipline>> getDiscipline(@PathVariable(name = "code") Integer code,
+			@RequestHeader(name = "Authorization") String token) throws Exception {
+		if (userService.isAuthenticated(token))
+			return this.courseService.getDiscipline(code);
+		return null;
 	}
-	
+
 	@GetMapping(path = "/disciplines")
-	public List<Discipline> getDisciplines() {
-		
-		return this.courseService.getDisciplines();
+	public List<Discipline> getDisciplines(@RequestHeader(name = "Authorization") String token) throws Exception {
+		if (userService.isAuthenticated(token))
+			return this.courseService.getDisciplines();
+		return null;
 	}
-	
+
 	@DeleteMapping(path = "/disciplines")
-	public void deleteDisciplines() {
-		
-		this.courseService.deleteDisciplines();
+	public void deleteDisciplines(@RequestHeader(name = "Authorization") String token) throws Exception {
+
+		if (userService.isAuthenticated(token))
+			this.courseService.deleteDisciplines();
+
 	}
-	
+
+	@GetMapping(path = "/login")
+	public boolean userExist(@RequestHeader(name = "Authorization") String token) throws Exception {
+
+		if (userService.isAuthenticated(token)) {
+			String uid = userService.getUserIdFromIdToken(token.split(" ")[1]);
+			return this.courseService.containsStudent(uid);
+		}
+
+		return false;
+
+	}
+
 }

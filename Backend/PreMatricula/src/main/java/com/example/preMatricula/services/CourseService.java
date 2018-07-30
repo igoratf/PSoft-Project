@@ -137,4 +137,7 @@ public class CourseService {
 		return (minCredits >= sumCredits && sumCredits <= maxCredits);
 	}
 	
+	public boolean containsStudent(String id) {
+		return this.studentService.containsStudent(id);
+	}
 }

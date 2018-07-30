@@ -55,5 +55,9 @@ public class Student {
 	public String getEmail() {
 		return email;
 	}
+
+	public void setId(String userIdFromIdToken) {
+		this.id = userIdFromIdToken;
+	}
 	
 }
