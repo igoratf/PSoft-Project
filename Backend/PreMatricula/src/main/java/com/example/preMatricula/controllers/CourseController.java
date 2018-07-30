@@ -15,8 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.preMatricula.entities.Discipline;
+import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.services.CourseService;
-
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +29,12 @@ public class CourseController {
 	@Autowired
 	private CourseService service;
 
+	@PutMapping(path = "/student")
+	public ResponseEntity<String> putStudent(@RequestBody Student student) {
+		
+		return this.service.putStudent(student);
+	}
+	
 	@PutMapping(path = "/discipline")
 	public ResponseEntity<String> putDiscipline(@RequestBody Discipline discipline) {
 		
