@@ -1,7 +1,7 @@
 package com.example.preMatricula.entities;
 
 public enum CoursePlan {
-	New,
-	Old,
-	Both
+	Nova,
+	Antiga,
+	Ambas
 }

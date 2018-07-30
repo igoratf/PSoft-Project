@@ -24,11 +24,6 @@ public class PreMatriculaApplicationTests {
 	@Test
 	public void testBD() {
 
-		disciplinas.deleteAll();
-
-		disciplinas.save(new Discipline(123, 3, "eda", 3, 0, CoursePlan.Both));
-
-		System.out.println(disciplinas.findAll());
 	}
 
 }
