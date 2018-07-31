@@ -10,21 +10,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.preMatricula.entities.User;
+import com.example.preMatricula.services.StudentService;
 import com.example.preMatricula.services.UserService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "/users")
-public class UserController {
-
-	@Autowired
-	private UserService userService;
+@RequestMapping(path = "/student")
+public class StudentController {
 	
-	@GetMapping
-	public @ResponseBody ResponseEntity<String> getUser(
-			@RequestHeader(name = "Authorization") String token) throws Exception {
-		
-		return this.userService.getUser(token);
-	}
+	@Autowired
+	private StudentService studentService;
+	
+	//@GetMapping
+	//public @ResponseBody ResponseEntity<User> putStudent(
+	//		@RequestHeader(name = "Authorization") String token) throws Exception {
+	//	
+	//	return this.studentService.putUser(token);
+	//}
 	
 }

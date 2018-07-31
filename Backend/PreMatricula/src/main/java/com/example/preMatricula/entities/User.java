@@ -15,7 +15,7 @@ public abstract class User {
 	public User(String name, String role) {
 		super();
 		this.name = name;
-		this.role = role;
+		this.setRole(role);
 	}
 
 	public String getId() {
@@ -40,6 +40,14 @@ public abstract class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	public abstract Set<Integer> getEnrolledDisciplinesID();
