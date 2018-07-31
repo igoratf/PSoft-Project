@@ -90,7 +90,7 @@ export default {
   },
   computed: {},
   created () {
-    this.user = firebase.auth().currentUser
+    this.user = AuthService.getCurrentUser();
     this.checkCurrentLogin();
   },
   updated () {

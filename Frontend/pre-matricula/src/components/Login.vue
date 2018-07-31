@@ -74,7 +74,7 @@ export default {
   name: "login",
   data() {
     return {
-      authUser: null,
+      user: null,
       email: null,
       password: null
     };
@@ -107,6 +107,7 @@ export default {
     }
   },
   created() {
+    this.user = AuthService.getCurrentUser();
   }
 };
 </script>

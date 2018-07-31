@@ -72,6 +72,7 @@ import MenuPreMat from '@/components/MenuPreMat.vue';
 import axios from '../auth-axios/axios';
 import CourseService from '../services/CourseService.js';
 import Alert from './Alert.vue';
+import AuthService from '../services/AuthService';
 
 export default {
   name: "course-registration",
@@ -85,6 +86,7 @@ export default {
 
   data() {
     return {
+      user: null,
       name: null,
       code: null,
       credits: null,
@@ -151,6 +153,7 @@ export default {
     }
   },
   created () {
+    this.user = AuthService.getCurrentUser();
   },
 
   computed: {}

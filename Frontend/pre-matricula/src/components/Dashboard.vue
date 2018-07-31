@@ -137,7 +137,7 @@
           this.setErrorAlert(error.message);
         })
       },
-      getUser() {
+      getUsers() {
         let user = null
         return axios.get('users')
         .then((result) => user = result)
@@ -185,7 +185,7 @@
     updated() {
     },
     created() {
-      this.currentUser = firebase.auth().currentUser;
+      this.currentUser = AuthService.getCurrentUser();
       this.getUser();
       // CourseService.getDisciplines()
       // .then((result) => {
