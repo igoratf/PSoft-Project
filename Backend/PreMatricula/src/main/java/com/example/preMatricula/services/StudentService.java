@@ -5,32 +5,39 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
-import com.example.preMatricula.interfaces.StudentRepository;
+import com.example.preMatricula.entities.User;
+import com.example.preMatricula.repositories.UserRepository;
+import com.google.firebase.auth.FirebaseToken;
 
 @Service
 public class StudentService {
 
 	@Autowired
-	private StudentRepository students;
-	
+	private UserService userService;
+
+	@Autowired
+	private UserRepository students;
+
 	public void enrollStudentInDisciplines(Enrollment enrollment) {
-		Student student = this.students.findById(enrollment.getStudentID()).get();
-		student.setEnrolledDisciplinesID( new HashSet<>(enrollment.getDisciplineCodes()));
+		User student = this.students.findById(enrollment.getStudentID()).get();
+		student.setEnrolledDisciplinesID(new HashSet<>(enrollment.getDisciplineCodes()));
 	}
-	
+
 	public boolean putStudent(Student student) {
 		boolean existed = this.students.existsById(student.getId());
-		
+
 		this.students.save(student);
-		
+
 		return existed;
 	}
 
-	public List<Student> getStudents() {
+	public List<User> getStudents() {
 		return this.students.findAll();
 	}
 
@@ -38,7 +45,7 @@ public class StudentService {
 		return this.students.existsById(id);
 	}
 
-	public Optional<Student> getStudent(String id) {
+	public Optional<User> getStudent(String id) {
 		return this.students.findById(id);
 	}
 
@@ -48,6 +55,26 @@ public class StudentService {
 
 	public boolean userExists(String uid) {
 		return false;
+	}
+
+	public ResponseEntity<String> putStudent(Student student, String token) {
+		try {
+			FirebaseToken firebaseToken = this.userService.getFirebaseTokenFromIdToken(token);
+			student.setId(firebaseToken.getUid());
+			student.setEmail(firebaseToken.getEmail());
+
+			boolean existed = this.students.existsById(student.getId());
+
+			this.students.save(student);
+
+			if (existed) {
+				return new ResponseEntity<>("Estudante atualizado(a)!", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>("Estudante criado(a)!", HttpStatus.CREATED);
+			}
+		} catch (Exception ex) {
+			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }
