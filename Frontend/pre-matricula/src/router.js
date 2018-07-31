@@ -4,7 +4,6 @@ import Login from './components/Login.vue'
 import Dashboard from './components/Dashboard.vue'
 import StudentRegistration from './components/StudentRegistration.vue'
 import CourseRegistration from './components/CourseRegistration.vue'
-import About from './views/About.vue'
 import AuthService from './services/AuthService';
 
 Vue.use(Router)
@@ -41,12 +40,7 @@ const router = new Router({
       name: 'course-registration',
       component: CourseRegistration,
       meta: { requiresAuth: true, role: 'admin' }
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: About
-    },
+    }
   ]
 })
 
@@ -59,7 +53,7 @@ router.beforeEach((to, from, next) => {
   else next()*/
   let requiresAuth = to.meta.requiresAuth
   let requiresAdmin = to.meta.role
-  let currentUserRole = localStorage.getItem('user')
+  let currentUserRole = AuthService.getUserRole();
   console.log(currentUserRole)
 
   if (!localStorage.token && requiresAuth) {

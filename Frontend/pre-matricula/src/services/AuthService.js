@@ -23,6 +23,16 @@ checkCurrentLogin() {
     }
 },
 
+
+getCurrentUser() {
+    let user = localStorage.user
+    if (user) {
+        return JSON.parse(user)
+    } else {
+        return undefined
+    }
+},
+
 getUserRole() {
     let user = firebase.auth().currentUser;
     if (user) {

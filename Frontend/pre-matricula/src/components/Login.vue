@@ -10,42 +10,21 @@
         <div class="col"></div>
         <div class="col">
           <div class="form-container">
-
-            <h1> Login </h1>
-            <hr>
-
-            <form @submit.prevent="adminLogin">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="email">
-              </div>
-
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
-              </div>
-
-              <div class="row">
-                <div class="col">
-                  <small>
-                    <a href="#">Change password</a>
-                  </small>
-                </div>
-              </div>
-              <br>
-
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary">Login</button>
-              </div>
-              <hr>
-            </form>
-
             <div class="row">
               <div class="col">
-                Se você for um aluno, realize login abaixo com sua conta CCC
+                <img src="../assets/logoufcg.jpg" width=130px>
+            </div> 
+            </div>
+            
+            <hr>
+            <h1> Login </h1>
+
+            
+            <div class="row">
+              <div class="col">
+                Realize login abaixo com sua conta @ccc.ufcg.edu.br
               </div>
             </div>
-
             <hr>
 
             <button class="btn btn-google" @click="signInWithGoogle">
