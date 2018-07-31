@@ -9,22 +9,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.preMatricula.entities.Discipline;
 import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.entities.User;
 
 @Service
 public class CourseService {
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private StudentService studentService;
 
 	@Autowired
 	private DisciplineService disciplineService;
 	
-	@Autowired
-	private StudentService studentService;
+	public ResponseEntity<String> enroll(List<Integer> disciplineCodes, String token) {
+		try  {
+			String uid = this.userService.getUserIdFromIdToken(token);
+			
+			return this.enroll(new Enrollment(uid, disciplineCodes));
+		} catch (Exception ex) {
+			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
 	
-	
-	public ResponseEntity<String> enroll(Enrollment enrollment) {
+	private ResponseEntity<String> enroll(Enrollment enrollment) {
 		try {
 			if (!this.studentService.containsStudent(enrollment.getStudentID())) {
 				return new ResponseEntity<>((new JSONObject()).put("responseBody", "Estudante não encontrado.").toString(), HttpStatus.BAD_REQUEST);
@@ -91,22 +102,6 @@ public class CourseService {
 		}
 	}
 	
-	public void deleteStudents() {
-		this.studentService.deleteStudents();
-	}
-
-	public ResponseEntity<Optional<Discipline>> getDiscipline(Integer code) {
-		if (this.disciplineService.containsDiscipline(code)) {
-			return new ResponseEntity<>(this.disciplineService.getDiscipline(code), HttpStatus.FOUND);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	public void deleteDisciplines() {
-		this.disciplineService.deleteDisciplines();
-	}
-	
 	private boolean validateCredits(List<Integer> disciplines) {
 		int sumCredits = this.disciplineService.computeTotalCredits(disciplines);
 		
@@ -119,4 +114,5 @@ public class CourseService {
 	public boolean containsStudent(String id) {
 		return this.studentService.containsStudent(id);
 	}
+
 }
