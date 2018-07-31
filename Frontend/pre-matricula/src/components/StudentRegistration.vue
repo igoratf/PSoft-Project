@@ -48,6 +48,7 @@
 <script>
 import MenuPreMat from "@/components/MenuPreMat.vue";
 import AuthService from "../services/AuthService.js";
+import axios from '../auth-axios/axios';
 
 export default {
   name: "student-registration",
@@ -71,9 +72,9 @@ export default {
       this.user.number = this.enrollmentNumber;
       this.user.coursePlan = this.coursePlan;
       localStorage.setItem('user', user)
+      return axios.put('')
       console.log(formData);
-      this.enrollmentNumber = null
-      this.coursePlan = null
+      this.clearFormData();
     },
     checkCurrentLogin() {
       if (AuthService.checkCurrentLogin()) {
@@ -81,10 +82,15 @@ export default {
       } else {
         this.$router.replace('/login')
       }
+    },
+    clearFormData() {
+      this.enrollmentNumber = null;
+      this.coursePlan = null;
     }
   },
   computed: {},
   created () {
+    this.user = localStorage.getItem('user')
     this.checkCurrentLogin();
   },
   updated () {

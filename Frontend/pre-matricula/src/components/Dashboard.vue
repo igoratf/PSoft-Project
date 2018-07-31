@@ -50,7 +50,7 @@
   </form>
   </div>
 
-   <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
+   <!-- <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
       {{successMessage}}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -62,40 +62,40 @@
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-    </div>
-
-    <!-- > Cria um <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError"/>
-    e cria esses atributos no data
-    -->
+    </div> -->
 
   {{checked}}
 
-  <div class="container animated zoomIn faster">
+  <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError" />
+
+
+  <div class="container footer animated zoomIn faster">
     <h1>Exportar matrículas </h1>
     <button type="button" class="btn btn-outline-success">Exportar matrículas</button>
   </div>
-
-
     </section>
 
   </template>
 
   <script>
-  import axios from '../auth-axios/axios';
+  import firebase from 'firebase/app';
+  import axios from '../auth-axios/axios.js';
   import MenuPreMat from '@/components/MenuPreMat.vue';
   import AuthService from '../services/AuthService.js';
   import CourseService from '../services/CourseService.js';
+  import Alert from './Alert.vue';
 
   export default {
     name: "dashboard",
     components: {
-      MenuPreMat
+      MenuPreMat,
+      Alert
     },
     props: [],
     mounted() {},
     data() {
       return {
-        currentUser: null,
+        currentUser: "",
         courseList: [
           {
             semester: 1,
@@ -116,24 +116,39 @@
         ],
         checked: [],
         selected: null,
+        successMessage: "oi",
+        errorMessage: "oi",
+        showSuccess: false,
+        showError: false
       };
     },
     methods: {
       submitEnrollment() {
         let enrollment = this.checked.map(function(discipline) {
-          return discipline.code;
+          // return discipline.code;
         })
-        axios.put('/course/enroll', {
+        return axios.put('/course/enroll', {
           enrollment
         })
         .then((result) => {
-
+          this.setAlert(this.showSuccess);
         })
         .catch((error) => {
-
+          this.setErrorAlert(error.message);
         })
       },
+      getUser() {
+        let user = null
+        return axios.get('users')
+        .then((result) => user = result)
+        .catch((error) => console.log(error.message))
+        console.log(user);
+      },
       deleteCourse(index) {
+        let discipline = this.courseList[index];
+        return axios.delete('/')
+        .then(setSuccessAlert())
+        .catch(this.setErrorAlert())
         this.courseList.splice(index, 1);
       },
       editDiscipline(index) {
@@ -150,11 +165,28 @@
           this.selected = this.courseList[index];
         }
       },
+      setSucessAlert() {
+        this.showSuccess = true;
+        setTimeout(this.closeSuccessAlert, 2000);
+      },
+      setErrorAlert(message) {
+        this.errorMessage = message;
+        this.showError = true;
+        setTimeout(this.closeErrorAlert, 2000);
+      },
+      closeSuccessAlert() {
+        this.showSuccess = false;
+      },
+      closeErrorAlert() {
+        this.showError = false;
+      }
     },
     computed: {},
-    updated() {},
+    updated() {
+    },
     created() {
-      currentUser = firebase.auth().currentUser;
+      this.currentUser = firebase.auth().currentUser;
+      this.getUser();
       // CourseService.getDisciplines()
       // .then((result) => {
       //   this.courseList = result;
@@ -172,6 +204,7 @@
         }
       });
     }
+    
   };
   </script>
 
@@ -202,6 +235,10 @@
 
   table {
     margin-right: 10%;
+  }
+
+  .footer {
+    margin-bottom: 8%;
   }
   </style>
   */

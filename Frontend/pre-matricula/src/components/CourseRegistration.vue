@@ -68,10 +68,10 @@
 </template>
 
 <script>
-import MenuPreMat from "@/components/MenuPreMat.vue";
+import MenuPreMat from '@/components/MenuPreMat.vue';
 import axios from '../auth-axios/axios';
 import CourseService from '../services/CourseService.js';
-import Alert from '../views/Alert';
+import Alert from './Alert.vue';
 
 export default {
   name: "course-registration",
@@ -108,24 +108,23 @@ export default {
         workload: this.workload,
         coursePlan: this.coursePlan
       };
-      console.log(discipline);
-      return CourseService.registerDiscipline(discipline)
-      .then((result) => {
-        console.log('sucesso');
-        alert(result.message);
-        this.setSuccessAlert(result.message);
-        this.clearFormData();
+      console.log(discipline)
+      axios.put('/course/disciplines/put', {
+        discipline
+      }).then((result) => {
+        console.log(result)
+        setSuccessAlert(result.message)
       })
       .catch((error) => {
-        console.log('erro')
-        alert(error.message)
-        this.setErrorAlert(error.message);
+        console.log(error)
+        setErrorAlert(error.message)
       })
+      // this.clearFormData();
     },
     setSuccessAlert(message) {
-      this.successMessage = message;
-      this.showSuccess = true;
-      setTimeout(this.closeSuccessAlert, 2000);
+        this.successMessage = message;
+        this.showSuccess = true;
+        setTimeout(this.closeSuccessAlert, 2000);
     },
     setErrorAlert(message) {
       this.errorMessage = message;
@@ -150,6 +149,8 @@ export default {
       this.errorMessage = false,
       this.successMessage = false
     }
+  },
+  created () {
   },
 
   computed: {}
