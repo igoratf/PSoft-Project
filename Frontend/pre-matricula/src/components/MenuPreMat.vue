@@ -13,22 +13,19 @@
       <li class="nav-item">
         <router-link class="nav-link" to="dashboard" active-class="active">Dashboard</router-link>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="user.role == 'admin'">
         <router-link class="nav-link" to="course-registration" active-class="active">Cadastrar disciplinas</router-link>
       </li>
     </ul>
   </div>
 
   <div class="header-infos">
-    <div v-if="authUser">
-      <span class="header-info"><i class="fas fa-user"></i><span class="logged-info">{{authUser.displayName}}</span></span>
+    <div v-if="user">
+      <span class="header-info" @click="editUser"><i class="fas fa-user"></i><span class="logged-info">{{user.name}}</span></span>
       <span class="header-info logout" @click="signOut"><i class="fas fa-times"></i><span class="logged-info">Sair</span></span>
     </div>
-  </div>
-  
-
+  </div>  
 </nav>
-
 </div>
 
 </template>
@@ -42,7 +39,10 @@ import AuthService from '../services/AuthService.js';
     name: 'menu-pre-mat',
     data() {
       return {
-        authUser: null
+        user: {
+          role: 'admin',
+          // user: this.authUser
+        }
       }
     },
     methods: {
@@ -52,15 +52,19 @@ import AuthService from '../services/AuthService.js';
           localStorage.clear()
           this.$router.replace('login')
         })
+      },
+      editUser() {
+        this.$router.replace('student-registration')
       }
     },
     computed: {
     },
     created() {
+      this.user = AuthService.getCurrentUser();
+      console.log('oi')
+      console.log(this.user.name)
+      // console.log(localStorage.getItem('user').name)
       localStorage.getItem('token')
-      firebase.auth().onAuthStateChanged(user => {
-      this.authUser = user;
-    });
     }
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
 
   <section class="student-registration">
+    <!-- > Lembrar de passar user como prop para MenuPreMat -->
     <MenuPreMat />
 
     <div class="container animated zoomIn faster">
@@ -47,6 +48,7 @@
 <script>
 import MenuPreMat from "@/components/MenuPreMat.vue";
 import AuthService from "../services/AuthService.js";
+import axios from '../auth-axios/axios';
 
 export default {
   name: "student-registration",
@@ -58,7 +60,7 @@ export default {
     return {
       user: null,
       enrollmentNumber: null,
-      coursePlan: null
+      coursePlan: ""
     };
   },
   methods: {
@@ -70,9 +72,9 @@ export default {
       this.user.number = this.enrollmentNumber;
       this.user.coursePlan = this.coursePlan;
       localStorage.setItem('user', user)
+      return axios.put('/course/students', user)
       console.log(formData);
-      this.enrollmentNumber = null
-      this.coursePlan = null
+      this.clearFormData();
     },
     checkCurrentLogin() {
       if (AuthService.checkCurrentLogin()) {
@@ -80,10 +82,15 @@ export default {
       } else {
         this.$router.replace('/login')
       }
+    },
+    clearFormData() {
+      this.enrollmentNumber = null;
+      this.coursePlan = "";
     }
   },
   computed: {},
   created () {
+    this.user = AuthService.getCurrentUser();
     this.checkCurrentLogin();
   },
   updated () {

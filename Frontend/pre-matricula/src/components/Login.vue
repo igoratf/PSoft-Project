@@ -67,45 +67,38 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import AuthService from "../services/AuthService.js";
-import axios from "axios";
+import axios from '../auth-axios/axios';
 
 
 export default {
   name: "login",
   data() {
     return {
-      authUser: null,
+      user: null,
       email: null,
       password: null
     };
   },
   methods: {
-    // Aqui tenho que ver se o backend já tem esse usuário e possivelmente enviar para outro canto em vez do cadastro, no then e catch
     signInWithGoogle() {
       return AuthService.signInWithGoogle().then(result => {
-        console.log(result.user);
-        console.log("oi");
-        localStorage.setItem('token', result.credential.idToken)
-        // console.log(result.user.getIdToken);
-        // console.log(result.credential.idToken);
-        this.$router.replace('student-registration')
-        // console.log(result.credential.idToken)
-        // console.log(result.user.email)
-        // let userEmail = result.user.email
-        // console.log('oi')
-        // axios.post('http://179.178.138.157:8080/matricula', {
-        //   aluno: {
-        //     numMatricula: 912391239,
-        //     email: userEmail,
-        //     codigosDisciplinas: null
-        //   }
-        // })
-        //   .then(() => {
-        //     this.$router.replace('student-registration')
-        //   })
-        // localStorage.setItem('user', user)
-        // this.$router.replace('student-registration')
-      });
+        localStorage.setItem('token', result.user._lat)
+      }).then(() => {
+        axios.get('/users')
+        .then((result) => {
+          this.$router.replace('student-registration')
+          let user = result.request.response
+          localStorage.setItem('user', user)
+          console.log(result)
+          console.log(result.request.response)
+        })
+        .catch((error) => {
+          alert(error.message)
+        })
+      })
+       .catch((error) => {
+         alert(error.message)
+       })       
     },
     adminLogin() {
       return AuthService.adminSignIn(this.email, this.password)
@@ -114,9 +107,7 @@ export default {
     }
   },
   created() {
-    firebase.auth().onAuthStateChanged(user => {
-      this.authUser = user;
-    });
+    console.log('oi', localStorage.user)
   }
 };
 </script>

@@ -18,6 +18,9 @@ var config = {
 };
 firebase.initializeApp(config);
 
+export default firebase
+
+Vue.prototype.$eventHub = new Vue();
 
 new Vue({
   router,

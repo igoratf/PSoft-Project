@@ -1,20 +1,23 @@
-<template>
+/* <template>
   <section class="course-registration">
+    <!-- > Lembrar de passar user como prop para MenuPreMat -->
     <MenuPreMat />
 
-    <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
-      Disciplina cadastrada!
+    <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError"/>
+
+    <!-- <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
+      {{successMessage}}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
 
     <div class="container alert alert-danger alert-dismissible fade" :class="{show: showError}" role="alert">
-      Erro ao cadastrar disciplina!
+      {{errorMessage}}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-    </div>
+    </div> -->
 
     <div class="container form-container animated zoomIn faster">
       <form @submit.prevent="submit">
@@ -28,14 +31,14 @@
             <input type="text" class="form-control" id="name" placeholder="Nome da disciplina" v-model="name" required>
           </div>
           <div class="form-group col-md-6">
-            <label for="code">Código da disciplina</label>
+            <label for="code">Código</label>
             <input type="number" class="form-control" id="code" placeholder="Código da disciplina" v-model="code" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="credit">Créditos</label>
-            <input type="number" class="form-control" id="credit" min=0 max=10 placeholder="Créditos da disciplina" v-model="credit" required>
+            <label for="semester">Período</label>
+            <input type="number" class="form-control" id="semester" min=1 max=10 placeholder="Período da disciplina" v-model="semester" required>
           </div>
           <div class="form-group col-md-6">
             <label for="workload">Carga horária</label>
@@ -43,17 +46,18 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-6">
+            <label for="credits">Créditos</label>
+            <input type="number" class="form-control" id="credits" placeholder="Quantidade de créditos da disciplina" min=0 max=10 v-model="credits" required>
           </div>
-          <div class="form-group col-md-4">
-            <label for="coursePlan">Grade curricular</label>
+          <div class="form-group col-md-6">
+             <label for="coursePlan">Grade curricular</label>
             <select id="coursePlan" class="form-control" v-model="coursePlan" required>
-              <option selected>Nova</option>
+              <option disabled selected value="">Selecione a grade</option>
+              <option>Nova</option>
               <option>Antiga</option>
               <option>Ambas</option>
             </select>
-          </div>
-          <div class="form-group col-md-4">
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Cadastrar</button>
@@ -64,12 +68,17 @@
 </template>
 
 <script>
-import MenuPreMat from "@/components/MenuPreMat.vue";
+import MenuPreMat from '@/components/MenuPreMat.vue';
+import axios from '../auth-axios/axios';
+import CourseService from '../services/CourseService.js';
+import Alert from './Alert.vue';
+import AuthService from '../services/AuthService';
 
 export default {
   name: "course-registration",
   components: {
-    MenuPreMat
+    MenuPreMat,
+    Alert
   },
   props: [],
 
@@ -77,11 +86,15 @@ export default {
 
   data() {
     return {
+      user: null,
       name: null,
       code: null,
-      credit: null,
+      credits: null,
       workload: null,
-      coursePlan: null,
+      semester: null,
+      coursePlan: "",
+      successMessage: "",
+      errorMessage: "",
       showSuccess: false,
       showError: false
     };
@@ -92,19 +105,55 @@ export default {
       let discipline = {
         name: this.name,
         code: this.code,
-        credit: this.credit,
+        semester: this.semester,
+        credits: this.credits,
         workload: this.workload,
         coursePlan: this.coursePlan
       };
-      this.showSuccess = true
-      setTimeout(this.closeSuccessAlert, 2000);
+      console.log(discipline)
+      axios.put('/course/disciplines/put', {
+        discipline
+      }).then((result) => {
+        console.log(result)
+        setSuccessAlert(result.message)
+      })
+      .catch((error) => {
+        console.log(error)
+        setErrorAlert(error.message)
+      })
+      // this.clearFormData();
+    },
+    setSuccessAlert(message) {
+        this.successMessage = message;
+        this.showSuccess = true;
+        setTimeout(this.closeSuccessAlert, 2000);
+    },
+    setErrorAlert(message) {
+      this.errorMessage = message;
+      this.showError = true;
+      setTimeout(this.closeErrorAlert, 2000);
     },
     closeSuccessAlert() {
       this.showSuccess = false;
     },
     closeErrorAlert() {
       this.showError = false;
+    },
+    clearFormData() {
+      this.name = null,
+      this.code = null,
+      this.credits = null,
+      this.semester = null,
+      this.workload = null,
+      this.coursePlan = "",
+      this.showSuccess = false,
+      this.showError = false,
+      this.errorMessage = false,
+      this.successMessage = false
     }
+  },
+  created () {
+    this.user = AuthService.getCurrentUser();
   },
 
   computed: {}
@@ -119,3 +168,4 @@ export default {
   margin-bottom: 15%;
 }
 </style>
+ */
