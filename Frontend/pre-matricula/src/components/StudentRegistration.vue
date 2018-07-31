@@ -60,7 +60,7 @@ export default {
     return {
       user: null,
       enrollmentNumber: null,
-      coursePlan: null
+      coursePlan: ""
     };
   },
   methods: {
@@ -72,7 +72,7 @@ export default {
       this.user.number = this.enrollmentNumber;
       this.user.coursePlan = this.coursePlan;
       localStorage.setItem('user', user)
-      return axios.put('')
+      return axios.put('/course/students', user)
       console.log(formData);
       this.clearFormData();
     },
@@ -85,12 +85,12 @@ export default {
     },
     clearFormData() {
       this.enrollmentNumber = null;
-      this.coursePlan = null;
+      this.coursePlan = "";
     }
   },
   computed: {},
   created () {
-    this.user = localStorage.getItem('user')
+    this.user = firebase.auth().currentUser
     this.checkCurrentLogin();
   },
   updated () {

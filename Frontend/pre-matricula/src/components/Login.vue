@@ -80,19 +80,25 @@ export default {
     };
   },
   methods: {
-    // Aqui tenho que ver se o backend já tem esse usuário e possivelmente enviar para outro canto em vez do cadastro, no then e catch
     signInWithGoogle() {
       return AuthService.signInWithGoogle().then(result => {
         localStorage.setItem('token', result.user._lat)
       }).then(() => {
-        axios.get()
-        .then((user) => {
-
+        axios.get('/users')
+        .then((result) => {
+          this.$router.replace('student-registration')
+          let user = result.request.response
+          localStorage.setItem('user', user)
+          console.log(result)
+          console.log(result.request.response)
+        })
+        .catch((error) => {
+          alert(error.message)
         })
       })
        .catch((error) => {
          alert(error.message)
-       })      
+       })       
     },
     adminLogin() {
       return AuthService.adminSignIn(this.email, this.password)
@@ -101,10 +107,6 @@ export default {
     }
   },
   created() {
-    firebase.auth().onAuthStateChanged(user => {
-      this.authUser = user;
-      // console.log('aqui', user.getIdToken())
-    });
   }
 };
 </script>
