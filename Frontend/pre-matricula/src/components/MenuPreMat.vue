@@ -60,9 +60,10 @@ import AuthService from '../services/AuthService.js';
     computed: {
     },
     created() {
-      let testUser = JSON.parse(localStorage.getItem('user'))
-      console.log('meu user ', testUser)
       this.user = AuthService.getCurrentUser()
+      // let testUser = JSON.parse(localStorage.getItem('user'))
+      // console.log('meu user ', testUser)
+      
       console.log(this.user.role)
       console.log('oi')
       console.log(this.user.name)

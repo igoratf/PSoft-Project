@@ -39,7 +39,7 @@ const router = new Router({
       path: '/course-registration',
       name: 'course-registration',
       component: CourseRegistration,
-      meta: { requiresAuth: true, role: 'admin' }
+      meta: { requiresAuth: true, requiresAdmin: true }
     }
   ]
 })

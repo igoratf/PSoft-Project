@@ -21,7 +21,7 @@
     </thead>
     <tbody is="transition-group" leave-active-class="animated zoomOut faster">
       <tr v-for="(list, index) in courseList" :key="index">
-        <input class="course-checkbox" type="checkbox" :value="list" v-model="checked">
+        <input class="course-checkbox" type="checkbox" :value="list" v-model="checked" v-if="user.role">
         <td scope="row" v-if="list == selected"><input class="form-input-number" type="number"  v-model="selected.semester"></td>
         <td v-else scope="row">{{list.semester}}</td>
         <td scope="row" v-if="list == selected"><input class="form-input-text" type="text" v-model="selected.code"></td>
@@ -39,8 +39,10 @@
                 <option>Ambas</option>
               </select></td>
         <td v-else>{{list.coursePlan}}</td>
-        <button @click="editDiscipline(index)"><i class="far fa-edit"></i></button>
-        <button class="btn-remove" @click="deleteCourse(index)"><i class="fas fa-times"></i></button>
+        <td v-if="user.role == 'Coordinator'">
+        <button class="btn-opts"@click="editDiscipline(index)"><i class="far fa-edit" ></i></button>
+        <button class="btn- opts btn-remove" @click="deleteCourse(index)"><i class="fas fa-times"></i></button>
+        </td>
       </tr>    
     </tbody>
   </table>
@@ -137,13 +139,6 @@
           this.setErrorAlert(error.message);
         })
       },
-      getUsers() {
-        let user = null
-        return axios.get('users')
-        .then((result) => user = result)
-        .catch((error) => console.log(error.message))
-        console.log(user);
-      },
       deleteCourse(index) {
         let discipline = this.courseList[index];
         return axios.delete('/')
@@ -183,6 +178,7 @@
     },
     computed: {},
     updated() {
+      this.user = AuthService.getCurrentUser();
       return axios.get('/disciplines')
       .then((result) => {
         // this.courseList = result
@@ -190,8 +186,10 @@
       })
     },
     created() {
-      this.user = AuthService.getuser();
+      console.log(this.user)
+      this.user = AuthService.getCurrentUser();
       this.getUser();
+      console.log(this.user.role)
       // CourseService.getDisciplines()
       // .then((result) => {
       //   this.courseList = result;
@@ -241,6 +239,7 @@
   table {
     margin-right: 10%;
   }
+
 
   .footer {
     margin-bottom: 8%;
