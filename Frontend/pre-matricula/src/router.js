@@ -59,7 +59,7 @@ router.beforeEach((to, from, next) => {
   else next()*/
   let requiresAuth = to.meta.requiresAuth
   let requiresAdmin = to.meta.role
-  let currentUserRole = AuthService.getUserRole();
+  let currentUserRole = localStorage.getItem('user')
   console.log(currentUserRole)
 
   if (!localStorage.token && requiresAuth) {
