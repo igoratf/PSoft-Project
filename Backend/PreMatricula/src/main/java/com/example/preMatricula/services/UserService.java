@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.preMatricula.entities.User;
 import com.example.preMatricula.interfaces.UserRepository;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 
 @Service
 public class UserService {
@@ -17,18 +18,28 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public String getUserIdFromIdToken(String idToken) throws Exception {
+	public FirebaseToken getFirebaseTokenFromIdToken(String idToken) throws Exception {
 		idToken = idToken.split(" ")[1];
 		
-		String uid = null;
 		try {
-			uid = FirebaseAuth.getInstance().verifyIdTokenAsync(idToken).get().getUid();
+			return FirebaseAuth.getInstance().verifyIdTokenAsync(idToken).get();
 		} catch (InterruptedException | ExecutionException e) {
-			System.out.println("Teve erro!");
-			System.out.println(e.getMessage());
 			throw new Exception("User Not Authenticated");
 		}
-		return uid;
+	}
+	
+	public String getUserIdFromIdToken(String idToken) throws Exception {
+		return getFirebaseTokenFromIdToken(idToken).getUid();
+	}
+	
+	public boolean isAuthenticated(String token) {
+		try {
+			this.getUserIdFromIdToken(token);
+			
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 	
 	public boolean isCoordinator(String token) throws Exception {

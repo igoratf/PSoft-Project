@@ -13,6 +13,7 @@ import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.entities.User;
 import com.example.preMatricula.interfaces.UserRepository;
+import com.google.firebase.auth.FirebaseToken;
 
 @Service
 public class StudentService {
@@ -56,18 +57,20 @@ public class StudentService {
 		return false;
 	}
 
-	public ResponseEntity<String> putUser(Student student, String token) {
+	public ResponseEntity<String> putStudent(Student student, String token) {
 		try {
-			student.setId(this.userService.getUserIdFromIdToken(token));
+			FirebaseToken firebaseToken = this.userService.getFirebaseTokenFromIdToken(token);
+			student.setId(firebaseToken.getUid());
+			student.setEmail(firebaseToken.getEmail());
 
 			boolean existed = this.students.existsById(student.getId());
 
 			this.students.save(student);
 
 			if (existed) {
-				return new ResponseEntity<>("Estudante atualizado!", HttpStatus.OK);
+				return new ResponseEntity<>("Estudante atualizado(a)!", HttpStatus.OK);
 			} else {
-				return new ResponseEntity<>("Estudante criado!", HttpStatus.CREATED);
+				return new ResponseEntity<>("Estudante criado(a)!", HttpStatus.CREATED);
 			}
 		} catch (Exception ex) {
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);

@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.preMatricula.entities.Discipline;
 import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.interfaces.DisciplinaRepository;
+import com.google.api.Http;
 
 @Service
 public class DisciplineService {
@@ -16,16 +19,40 @@ public class DisciplineService {
 	@Autowired
 	private DisciplinaRepository disciplines;
 
-	public boolean putDiscipline(Discipline discipline) {
-		boolean existed = this.disciplines.existsById(discipline.getCode());
+	@Autowired
+	private UserService userService;
 
-		this.disciplines.save(discipline);
+	public ResponseEntity<String> putDiscipline(Discipline discipline, String token) {
+		try {
+			if (!this.userService.isCoordinator(token)) {
+				return new ResponseEntity<String>("Você precisa ser o coordenador para poder colocar uma nova disciplina.", HttpStatus.UNAUTHORIZED);
+			}
 
-		return existed;
+			boolean existed = this.disciplines.existsById(discipline.getCode());
+
+			this.disciplines.save(discipline);
+
+			if (existed) {
+				return new ResponseEntity<>("Disciplina atualizada!", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>("Disciplina criada!", HttpStatus.CREATED);
+			}
+		} catch (Exception ex) {
+			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
-	public List<Discipline> getDisciplines() {
-		return this.disciplines.findAll();
+	public ResponseEntity<List<Discipline>> getDisciplines(String token) {
+		try {
+			if (!this.userService.isAuthenticated(token)) {
+				return new ResponseEntity<>(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
+			}
+
+			return new ResponseEntity<>(this.disciplines.findAll(), HttpStatus.OK);
+			
+		} catch (Exception ex) {
+			return new ResponseEntity<List<Discipline>>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	public Optional<Discipline> getDiscipline(Integer code) {
@@ -60,10 +87,10 @@ public class DisciplineService {
 		Iterable<Discipline> found = this.disciplines.findAllById(enrollment.getDisciplineCodes());
 		found.forEach(discipline -> discipline.enrollStudent(enrollment.getStudentID()));
 	}
-	
+
 	public Integer computeTotalCredits(List<Integer> codes) {
 		Iterable<Discipline> found = this.disciplines.findAllById(codes);
-		
+
 		int sumCredits = 0;
 		for (Discipline discipline : found) {
 			sumCredits += discipline.getCredits();

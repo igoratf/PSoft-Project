@@ -95,28 +95,6 @@ public class CourseService {
 		this.studentService.deleteStudents();
 	}
 
-	public ResponseEntity<String> putDiscipline(Discipline discipline) {
-		try {
-			if (this.disciplineService.putDiscipline(discipline)) {
-				return new ResponseEntity<>(
-						(new JSONObject()).put("responseBody", "Disciplina atualizada com sucesso!").toString(),
-						HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(
-						(new JSONObject()).put("responseBody", "Disciplina criada com sucesso!").toString(),
-						HttpStatus.CREATED);
-			}
-
-		} catch (Exception e) {
-
-			return new ResponseEntity<>("{" + "responseBody:" + e.getMessage() + "}", HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	public List<Discipline> getDisciplines() {
-		return this.disciplineService.getDisciplines();
-	}
-
 	public ResponseEntity<Optional<Discipline>> getDiscipline(Integer code) {
 		if (this.disciplineService.containsDiscipline(code)) {
 			return new ResponseEntity<>(this.disciplineService.getDiscipline(code), HttpStatus.FOUND);

@@ -28,7 +28,7 @@ public class StudentController {
 	public @ResponseBody ResponseEntity<String> putStudent(@RequestHeader(name = "Authorization") String token, @RequestBody Student student)
 			throws Exception {
 
-		return this.studentService.putUser(student, token);
+		return this.studentService.putStudent(student, token);
 	}
 
 }
