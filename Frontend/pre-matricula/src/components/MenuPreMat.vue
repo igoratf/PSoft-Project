@@ -13,7 +13,7 @@
       <li class="nav-item">
         <router-link class="nav-link" to="dashboard" active-class="active">Dashboard</router-link>
       </li>
-      <li class="nav-item" v-if="user.role == 'admin'">
+      <li class="nav-item" v-if="user.role == 'Coordinator'">
         <router-link class="nav-link" to="course-registration" active-class="active">Cadastrar disciplinas</router-link>
       </li>
     </ul>
@@ -60,7 +60,10 @@ import AuthService from '../services/AuthService.js';
     computed: {
     },
     created() {
-      this.user = AuthService.getCurrentUser();
+      let testUser = JSON.parse(localStorage.getItem('user'))
+      console.log('meu user ', testUser)
+      this.user = AuthService.getCurrentUser()
+      console.log(this.user.role)
       console.log('oi')
       console.log(this.user.name)
       // console.log(localStorage.getItem('user').name)

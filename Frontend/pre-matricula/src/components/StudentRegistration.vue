@@ -9,19 +9,22 @@
         <div class="col"></div>
         <div class="col">
           <div class="form-container">
-
-            <h1> Cadastro </h1>
+            <h1 v-if="!user.registration"> Cadastro </h1>
+            <h1 v-else>Editar dados</h1>
             <hr>
             <div class="row">
-              <div class="col">
-                Para continuar, por favor insira sua matrícula abaixo
+              <div class="col" v-if="!user.registration">
+                Para continuar, por favor insira sua matrícula e sua grade abaixo
+              </div>
+              <div class="col" v-else>
+                Atualize seus dados abaixo
               </div>
             </div>
             <hr>
             <form id="student-form" @submit.prevent="submit">
               <div class="form-group">
                 <label for="exampleInputEmail1">Matrícula</label>
-                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira sua matrícula" v-model="enrollmentNumber" min=0 required>
+                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira sua matrícula" v-model="registration" min=0 max=999999999 required>
                 <small class="form-text text-muted">Campo obrigatório</small>
               </div>
               <div class="form-group">
@@ -58,23 +61,30 @@ export default {
   mounted() {},
   data() {
     return {
-      user: null,
-      enrollmentNumber: null,
+      user: "",
+      registration: "",
       coursePlan: ""
     };
   },
   methods: {
     submit() {
       let formData = {
-        number: this.enrollmentNumber,
+        number: this.registration,
         coursePlan: this.coursePlan
       }
-      this.user.number = this.enrollmentNumber;
+      this.user.registration = this.registration;
       this.user.coursePlan = this.coursePlan;
-      localStorage.setItem('user', user)
-      return axios.put('/course/students', user)
+      console.log(this.user)
+      localStorage.setItem('user', JSON.stringify(this.user))
+      return axios.put('/students', this.user)
+      .then((result) => {
+        this.clearFormData();
+        console.log(result)
+      })
+      .catch((error) => {
+        alert(error.message)
+      })
       console.log(formData);
-      this.clearFormData();
     },
     checkCurrentLogin() {
       if (AuthService.checkCurrentLogin()) {
@@ -84,7 +94,7 @@ export default {
       }
     },
     clearFormData() {
-      this.enrollmentNumber = null;
+      this.registration = null;
       this.coursePlan = "";
     }
   },

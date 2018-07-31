@@ -69,7 +69,7 @@
   <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError" />
 
 
-  <div class="container footer animated zoomIn faster">
+  <div class="container footer animated zoomIn faster" v-if="user.role == 'Coordinator'">
     <h1>Exportar matrículas </h1>
     <button type="button" class="btn btn-outline-success">Exportar matrículas</button>
   </div>
@@ -95,7 +95,7 @@
     mounted() {},
     data() {
       return {
-        currentUser: "",
+        user: "",
         courseList: [
           {
             semester: 1,
@@ -183,9 +183,14 @@
     },
     computed: {},
     updated() {
+      return axios.get('/disciplines')
+      .then((result) => {
+        // this.courseList = result
+        console.log(result)
+      })
     },
     created() {
-      this.currentUser = AuthService.getCurrentUser();
+      this.user = AuthService.getuser();
       this.getUser();
       // CourseService.getDisciplines()
       // .then((result) => {

@@ -53,12 +53,20 @@ router.beforeEach((to, from, next) => {
   else next()*/
   let requiresAuth = to.meta.requiresAuth
   let requiresAdmin = to.meta.role
-  let currentUserRole = AuthService.getUserRole();
+  let currentUser = AuthService.getCurrentUser();
+  let currentUserRole = ""
+  if (currentUser) {
+    currentUserRole = currentUser.role  
+  } else {
+    currentUserRole = ""
+  }
+  
+  // let currentUserRole = AuthService.getUserRole();
   console.log(currentUserRole)
 
   if (!localStorage.token && requiresAuth) {
     next('login')
-  } else if (requiresAdmin && currentUserRole != 'admin') {
+  } else if (requiresAdmin && currentUserRole != 'Coordinator') {
       next('dashboard')
     }
     else {

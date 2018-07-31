@@ -25,24 +25,13 @@ checkCurrentLogin() {
 
 
 getCurrentUser() {
-    let user = localStorage.user
+    let user = JSON.parse(localStorage.getItem('user'))
     if (user) {
-        return JSON.parse(user)
+        return user
     } else {
         return undefined
     }
 },
 
-getUserRole() {
-    let user = firebase.auth().currentUser;
-    if (user) {
-        user.role = 'admin'
-        user.registered = false
-        return user.role
-    } else {
-        return ''
-    }
-    
 
-}
 }

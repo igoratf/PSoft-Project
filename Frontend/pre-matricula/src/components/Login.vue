@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col label">
-          <h1 >Bem vindo(a) ao Sistema de Pré Matrícula da UFCG</h1>
+          <h1>Bem vindo(a) ao Sistema de Pré Matrícula da UFCG</h1>
         </div>
       </div>
       <div class="row">
@@ -13,13 +13,11 @@
             <div class="row">
               <div class="col">
                 <img src="../assets/logoufcg.jpg" width=130px>
-            </div> 
+              </div>
             </div>
-            
+
             <hr>
             <h1> Login </h1>
-
-            
             <div class="row">
               <div class="col">
                 Realize login abaixo com sua conta @ccc.ufcg.edu.br
@@ -46,8 +44,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import AuthService from "../services/AuthService.js";
-import axios from '../auth-axios/axios';
-
+import axios from "../auth-axios/axios";
 
 export default {
   name: "login",
@@ -60,33 +57,45 @@ export default {
   },
   methods: {
     signInWithGoogle() {
-      return AuthService.signInWithGoogle().then(result => {
-        localStorage.setItem('token', result.user._lat)
-      }).then(() => {
-        axios.get('/users')
-        .then((result) => {
-          this.$router.replace('student-registration')
-          let user = result.request.response
-          localStorage.setItem('user', user)
-          console.log(result)
-          console.log(result.request.response)
+      return AuthService.signInWithGoogle()
+        .then(result => {
+          console.log(result.user._lat)
+          localStorage.setItem("token", result.user._lat);
         })
-        .catch((error) => {
-          alert(error.message)
+        .then(() => {
+          axios
+            .get("/users")
+            .then(result => {
+              this.$router.replace("student-registration");
+              let user = result.request.response;
+              console.log('user aqui ', user)
+              localStorage.setItem("user", user);
+              console.log(result);
+              console.log(result.request.response);
+            })
+            .catch(error => {
+              this.$router.replace("student-registration");
+              let testUser = {
+                name: 'Igor Farias',
+                email: 'igor.atf@gmail.com',
+                role: 'Coordinator'
+              }
+              localStorage.setItem("user", testUser)
+              alert(error.message);
+            });
         })
-      })
-       .catch((error) => {
-         alert(error.message)
-       })       
+        .catch(error => {
+          alert(error.message);
+        });
     },
     adminLogin() {
       return AuthService.adminSignIn(this.email, this.password)
-      .then()
-      .catch()
+        .then()
+        .catch();
     }
   },
   created() {
-    console.log('oi', localStorage.user)
+    console.log("oi", localStorage.user);
   }
 };
 </script>
@@ -100,7 +109,6 @@ export default {
   margin-top: 15%;
   margin-bottom: 15%;
 }
-
 
 .label {
   min-width: 300px;
@@ -119,7 +127,6 @@ export default {
 .btn-google:hover {
   background-color: darkred;
 }
-
 
 .sign-google {
   font-family: "Arial Narrow Bold", sans-serif;
