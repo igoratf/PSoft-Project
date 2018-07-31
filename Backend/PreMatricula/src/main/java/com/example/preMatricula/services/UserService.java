@@ -20,7 +20,6 @@ public class UserService {
 	public String getUserIdFromIdToken(String idToken) throws Exception {
 		idToken = idToken.split(" ")[1];
 		
-		System.out.println(idToken);
 		
 		String uid = null;
 		try {
@@ -47,8 +46,9 @@ public class UserService {
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}*/
-			
-			return null;
+		    return ResponseEntity.status(HttpStatus.OK).body("{\"uid\": \"" + uid + "\"}");
+
+
 			
 		} catch (Exception ex) {
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
