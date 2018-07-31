@@ -21,7 +21,7 @@
 
   <div class="header-infos">
     <div v-if="user">
-      <span class="header-info"><i class="fas fa-user"></i><span class="logged-info">{{user.name}}</span></span>
+      <span class="header-info" @click="editUser"><i class="fas fa-user"></i><span class="logged-info">{{user.name}}</span></span>
       <span class="header-info logout" @click="signOut"><i class="fas fa-times"></i><span class="logged-info">Sair</span></span>
     </div>
   </div>  
@@ -52,6 +52,9 @@ import AuthService from '../services/AuthService.js';
           localStorage.clear()
           this.$router.replace('login')
         })
+      },
+      editUser() {
+        this.$router.replace('student-registration')
       }
     },
     computed: {

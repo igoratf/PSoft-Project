@@ -107,7 +107,7 @@ export default {
     }
   },
   created() {
-    this.user = AuthService.getCurrentUser();
+    console.log('oi', localStorage.user)
   }
 };
 </script>
