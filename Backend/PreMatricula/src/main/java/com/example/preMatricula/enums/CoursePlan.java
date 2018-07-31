@@ -1,4 +1,4 @@
-package com.example.preMatricula.entities;
+package com.example.preMatricula.enums;
 
 public enum CoursePlan {
 	Nova,

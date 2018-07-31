@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.preMatricula.entities.Discipline;
 import com.example.preMatricula.entities.Enrollment;
-import com.example.preMatricula.interfaces.DisciplinaRepository;
+import com.example.preMatricula.repositories.DisciplinaRepository;
 
 @Service
 public class DisciplineService {

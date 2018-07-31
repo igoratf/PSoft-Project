@@ -2,6 +2,8 @@ package com.example.preMatricula.entities;
 
 import java.util.Set;
 
+import com.example.preMatricula.exceptions.StudentOnlyException;
+
 public class Coordinator extends User {
 
 	public Coordinator(String name) {

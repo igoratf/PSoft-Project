@@ -1,6 +1,5 @@
 package com.example.preMatricula;
 
-import com.example.preMatricula.interfaces.DisciplinaRepository;
 import com.example.preMatricula.services.UserService;
 
 import org.junit.Test;
@@ -8,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.example.preMatricula.repositories.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -21,10 +21,9 @@ public class PreMatriculaApplicationTests {
 	}
 
 	@Test
-	public void testBD() throws Exception {
+	public void testStudent() throws Exception {
 
-		System.out.println(user.getUserIdFromIdToken(
-				"eyJhbGciOiJSUzI1NiIsImtpZCI6IjM2OTExYjU1NjU5YTI5YmU3NTYyMDYzYmIxNzc2NWI1NDk4ZTgwZDYifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcHJlbWF0cmljdWxhLWIwY2QwIiwibmFtZSI6IkphdmFuIEthdWUgVGF2YXJlcyBMYWNlcmRhIiwicGljdHVyZSI6Imh0dHBzOi8vbGg0Lmdvb2dsZXVzZXJjb250ZW50LmNvbS8tYVpCUnpTOU9jdm8vQUFBQUFBQUFBQUkvQUFBQUFBQUFBQUEvQUFublk3cUhPeDRxbXVrX2tBWjdnYjM5bzRzMGllWG52QS9tby9waG90by5qcGciLCJhdWQiOiJwcmVtYXRyaWN1bGEtYjBjZDAiLCJhdXRoX3RpbWUiOjE1MzI4OTM4ODQsInVzZXJfaWQiOiJiUHR1QXMwSmI1VkxsMUdYWFhoYXRlanJBb1IyIiwic3ViIjoiYlB0dUFzMEpiNVZMbDFHWFhYaGF0ZWpyQW9SMiIsImlhdCI6MTUzMjk5NjkxNiwiZXhwIjoxNTMzMDAwNTE2LCJlbWFpbCI6ImphdmFuLmxhY2VyZGFAY2NjLnVmY2cuZWR1LmJyIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMDYxNzk5MTU1MzE1NTQ1Nzc3NTMiXSwiZW1haWwiOlsiamF2YW4ubGFjZXJkYUBjY2MudWZjZy5lZHUuYnIiXX0sInNpZ25faW5fcHJvdmlkZXIiOiJnb29nbGUuY29tIn19.moDs3QZ0z0_SeXn8nSj0hvzuWbBMIy6a0rfT5Ahnk2vWm8Igu98oQhJ29YlbrzJIJFxvDexNAAtD5cIAx5ZmzT2wlPuBKe6GmRi3exXk7TCXZQKYf0Y9A0ov8An_qQ7KbrX26SPyMRokd38h3VJ-jE_WvlL1UoZIHFSRoy5NH4GmzQrFYoGtWhG_BrQ_G_dXS1rfoCOYIoxIkEV-rtNc-jbO5xF4yQLUFePseA5Gue6R0ijX4nkSkbH8eTK0A-WKdz7RI1FU0n7L8KXZp0iBz-RkzVM5kDmUhjyP4UBX8zJvwu3C-QeIkuL41ju2HddGyL0OPQujo9r8OfdOBgJmxA"));
+		
 
 	}
 

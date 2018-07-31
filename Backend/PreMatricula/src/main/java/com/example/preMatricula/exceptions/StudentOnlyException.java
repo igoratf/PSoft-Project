@@ -1,4 +1,4 @@
-package com.example.preMatricula.entities;
+package com.example.preMatricula.exceptions;
 
 public class StudentOnlyException extends RuntimeException {
 

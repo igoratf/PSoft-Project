@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.entities.User;
-import com.example.preMatricula.interfaces.UserRepository;
+import com.example.preMatricula.repositories.UserRepository;
 import com.google.firebase.auth.FirebaseToken;
 
 @Service

@@ -2,6 +2,8 @@ package com.example.preMatricula.entities;
 
 import java.util.Set;
 
+import com.example.preMatricula.enums.CoursePlan;
+
 import org.springframework.data.annotation.Id;
 
 import java.util.HashSet;

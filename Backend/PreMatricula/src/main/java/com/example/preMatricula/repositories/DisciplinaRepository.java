@@ -1,4 +1,4 @@
-package com.example.preMatricula.interfaces;
+package com.example.preMatricula.repositories;
 
 import com.example.preMatricula.entities.Discipline;
 
