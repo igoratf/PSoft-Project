@@ -79,6 +79,7 @@ export default {
       return axios.put('/students', this.user)
       .then((result) => {
         this.clearFormData();
+        this.$router.replace('dashboard')
         console.log(result)
       })
       .catch((error) => {
