@@ -11,17 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.preMatricula.services.CourseService;
+import com.example.preMatricula.services.CoordinationService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "/course")
-public class CourseController {
+@RequestMapping(path = "/coordination")
+public class CoordinationController {
 
 	@Autowired
-	private CourseService courseService;
+	private CoordinationService courseService;
 
 	@PutMapping(path = "/enroll")
 	public ResponseEntity<String> enroll(@RequestBody List<Integer> disciplineCodes,

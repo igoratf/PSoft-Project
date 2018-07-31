@@ -14,7 +14,7 @@ import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.entities.User;
 
 @Service
-public class CourseService {
+public class CoordinationService {
 	
 	@Autowired
 	private UserService userService;
