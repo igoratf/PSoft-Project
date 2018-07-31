@@ -20,7 +20,6 @@ public class UserService {
 	public String getUserIdFromIdToken(String idToken) throws Exception {
 		idToken = idToken.split(" ")[1];
 		
-		
 		String uid = null;
 		try {
 			uid = FirebaseAuth.getInstance().verifyIdTokenAsync(idToken).get().getUid();
@@ -37,21 +36,18 @@ public class UserService {
 			return this.userRepository.findById(uid).get().getRole().equals("Coordinator");
 	}
 
-	public ResponseEntity<String> getUser(String token) {
+	public ResponseEntity<User> getUser(String token) {
 		try {
 			String uid = this.getUserIdFromIdToken(token);
 			
-			/*if (this.userRepository.existsById(uid)) {
+			if (this.userRepository.existsById(uid)) {
 				return new ResponseEntity<>(this.userRepository.findById(uid).get(), HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}*/
-		    return ResponseEntity.status(HttpStatus.OK).body("{\"uid\": \"" + uid + "\"}");
-
-
+			}
 			
 		} catch (Exception ex) {
-			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 	}

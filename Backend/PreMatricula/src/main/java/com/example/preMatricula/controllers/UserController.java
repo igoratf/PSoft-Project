@@ -21,7 +21,7 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping
-	public @ResponseBody ResponseEntity<String> getUser(
+	public @ResponseBody ResponseEntity<User> getUser(
 			@RequestHeader(name = "Authorization") String token) throws Exception {
 		
 		return this.userService.getUser(token);
