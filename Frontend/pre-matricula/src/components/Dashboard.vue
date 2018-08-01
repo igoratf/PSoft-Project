@@ -127,7 +127,7 @@
     methods: {
       submitEnrollment() {
         let enrollment = this.checked.map(function(discipline) {
-          // return discipline.code;
+          return discipline.code;
         })
         return axios.put('/course/enroll', {
           enrollment

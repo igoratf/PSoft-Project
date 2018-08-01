@@ -66,7 +66,7 @@ export default {
           axios
             .get("/users")
             .then(result => {
-              this.$router.replace("student-registration");
+              this.$router.replace("dashboard");
               let user = result.request.response;
               console.log('user aqui ', user)
               localStorage.setItem("user", user);

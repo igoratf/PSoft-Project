@@ -78,6 +78,7 @@ export default {
       localStorage.setItem('user', JSON.stringify(this.user))
       return axios.put('/students', this.user)
       .then((result) => {
+        alert(result.data)
         this.clearFormData();
         this.$router.replace('dashboard')
         console.log(result)
