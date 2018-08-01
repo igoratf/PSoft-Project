@@ -27,7 +27,7 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      meta: { requiresAuth: true, requiresRole: 'Coordinator' || 'Student' }
+      meta: { requiresAuth: true, requiresRole: true }
     },
     {
       path: '/student-registration',
@@ -39,7 +39,7 @@ const router = new Router({
       path: '/course-registration',
       name: 'course-registration',
       component: CourseRegistration,
-      meta: { requiresAuth: true, requiresRole: 'Coordinator' }
+      meta: { requiresAuth: true, requiresRole: true }
     }
   ]
 })
@@ -61,9 +61,7 @@ router.beforeEach((to, from, next) => {
     next('login')
   } else if (requiresRole && !currentUserRole) {
     next('student-registration')
-  } else if (requiresRole && currentUserRole != requiresRole) {
-    next('dashboard')
-  }
+  } 
   else {
     next()
   }

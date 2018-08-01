@@ -60,7 +60,9 @@ export default {
   components: {
     MenuPreMat
   },
-  mounted() {},
+  mounted() {
+    axios.idToken = localStorage.getItem('token')
+  },
   data() {
     return {
       user: "",
@@ -121,9 +123,6 @@ export default {
 
 <style scoped>
 
-.back {
-  font-size: 16px;
-}
 .form-container {
   width: 100%;
   border: 2px solid black;
@@ -157,5 +156,11 @@ export default {
 .sign-google {
   font-family: "Arial Narrow Bold", sans-serif;
   margin-left: 8px;
+}
+
+
+.back {
+  font-size: 16px;
+  margin-bottom: 10%;
 }
 </style>

@@ -115,12 +115,12 @@
         let enrollment = this.checked.map(function(discipline) {
           return discipline.code;
         })
-        return AuthService.submitEnrollment(enrollment)
+        return CourseService.submitEnrollment(enrollment)
         .then((result) => {
           console.log(result)
-          setSuccessAlert(result.data)
+          this.setSuccessAlert("Sucesso")
         })
-        .then((error) => {
+        .catch((error) => {
           console.log(error)
           alert(error.message)
         })
@@ -144,6 +144,7 @@
           this.selected = null;
           return CourseService.registerDiscipline(discipline)
           .then((result) => {
+            this.setSuccessAlert(result.data)
             console.log('tá entrando aqui')
             console.log(result)
           })
@@ -178,6 +179,9 @@
       },
       closeErrorAlert() {
         this.showError = false;
+      },
+      exportEnrollments() {
+        return axios.get('/')
       }
     },
     computed: {},
