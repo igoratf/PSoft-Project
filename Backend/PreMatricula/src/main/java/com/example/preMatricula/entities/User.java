@@ -67,5 +67,7 @@ public abstract class User {
 	public abstract StudentCoursePlan getCoursePlan();
 
 	public abstract void setCoursePlan(StudentCoursePlan coursePlan);
+
+	public abstract void unenrollFrom(Integer code);
 	
 }

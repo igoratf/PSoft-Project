@@ -60,4 +60,9 @@ public class Coordinator extends User {
 		throw new StudentOnlyException();
 	}
 
+	@Override
+	public void unenrollFrom(Integer code) {
+		throw new StudentOnlyException();
+	}
+
 }

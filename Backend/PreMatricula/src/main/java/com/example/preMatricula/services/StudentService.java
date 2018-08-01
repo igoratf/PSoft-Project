@@ -28,6 +28,14 @@ public class StudentService {
 		User student = this.students.findById(enrollment.getStudentID()).get();
 		student.setEnrolledDisciplinesID(new HashSet<>(enrollment.getDisciplineCodes()));
 	}
+	
+	public void unenrollStudentsFrom(Integer code) {
+		this.students.findAll().forEach(student -> {
+			if (student.getRole().equals("Student")) {
+				student.unenrollFrom(code);
+			}
+		});
+	}
 
 	public boolean putStudent(Student student) {
 		boolean existed = this.students.existsById(student.getId());

@@ -23,6 +23,11 @@ public class Student extends User {
 	private Integer computeSemester() {		
 		return -1;
 	}
+	
+	@Override
+	public void unenrollFrom(Integer code) {
+		this.enrolledDisciplinesID.remove(code);
+	}
 
 	@Override
 	public Set<Integer> getEnrolledDisciplinesID() {
