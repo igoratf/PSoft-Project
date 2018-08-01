@@ -1,7 +1,6 @@
 package com.example.preMatricula.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
-import com.example.preMatricula.entities.User;
 
 @Service
 public class CoordinationService {
@@ -90,7 +88,7 @@ public class CoordinationService {
 		}
 	}
 	
-	public ResponseEntity<Optional<User>> getStudent(String id) {
+	public ResponseEntity<Student> getStudent(String id) {
 		if (this.studentService.containsStudent(id)) {
 			return new ResponseEntity<>(this.studentService.getStudent(id), HttpStatus.FOUND);
 		} else {

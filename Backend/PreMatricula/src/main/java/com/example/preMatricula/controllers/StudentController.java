@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.preMatricula.entities.Discipline;
 import com.example.preMatricula.entities.Student;
-import com.example.preMatricula.entities.User;
 import com.example.preMatricula.services.StudentService;
 
 @RestController
@@ -34,7 +32,7 @@ public class StudentController {
 	}
 
 	@GetMapping
-	public @ResponseBody ResponseEntity<List<User>> getDisciplines(
+	public @ResponseBody ResponseEntity<List<Student>> getStudents(
 			@RequestHeader(name = "Authorization") String token) throws Exception {
 		return this.studentService.getStudents(token);
 	}
