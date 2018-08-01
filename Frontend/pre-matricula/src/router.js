@@ -45,10 +45,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  /*let currentUser = firebase.auth().currentUser;
-  let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  */
-
   let requiresAuth = to.meta.requiresAuth
   let requiresAdmin = to.meta.role
   let currentUser = AuthService.getCurrentUser();
@@ -61,7 +57,7 @@ router.beforeEach((to, from, next) => {
     currentUserRole = currentUser.role;
   }
 
-  if (to.path != '/login' && (!localStorage.token || (!currentUser && requiresAuth)) && ) {
+  if (to.path != '/login' && (!localStorage.token || (!currentUser && requiresAuth))) {
     next('login')
   } else if (requiresAdmin && currentUserRole != 'Coordinator') {
     next('dashboard')
