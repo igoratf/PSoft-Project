@@ -92,6 +92,7 @@ export default {
 .form-container {
   width: 100%;
   border: 2px solid black;
+  border-radius: 10px;
   padding: 12px;
   margin-top: 15%;
   margin-bottom: 15%;
