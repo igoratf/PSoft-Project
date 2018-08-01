@@ -66,6 +66,10 @@ public class StudentService {
 
 			boolean existed = this.students.existsById(student.getId());
 
+			if (existed && this.students.findById(student.getId()).get().getRole().equals("Coordinator")) {
+				return new ResponseEntity<>("Você não é um estudante.", HttpStatus.NOT_ACCEPTABLE);
+			}
+			
 			this.students.save(student);
 
 			if (existed) {
