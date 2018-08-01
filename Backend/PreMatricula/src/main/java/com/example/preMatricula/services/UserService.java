@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.preMatricula.entities.User;
-import com.example.preMatricula.repositories.UserRepository;
+import com.example.preMatricula.repositories.StudentRepository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 
@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseToken;
 public class UserService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private StudentRepository userRepository;
 
 	public FirebaseToken getFirebaseTokenFromIdToken(String idToken) throws Exception {
 		System.out.println(idToken);

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.entities.User;
-import com.example.preMatricula.repositories.UserRepository;
+import com.example.preMatricula.repositories.StudentRepository;
 import com.google.api.Http;
 import com.google.firebase.auth.FirebaseToken;
 
@@ -23,7 +23,7 @@ public class StudentService {
 	private UserService userService;
 
 	@Autowired
-	private UserRepository students;
+	private StudentRepository students;
 
 	public void enrollStudentInDisciplines(Enrollment enrollment) {
 		User student = this.students.findById(enrollment.getStudentID()).get();
