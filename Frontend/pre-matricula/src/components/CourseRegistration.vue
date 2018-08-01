@@ -1,6 +1,5 @@
 /* <template>
   <section class="course-registration">
-    <!-- > Lembrar de passar user como prop para MenuPreMat -->
     <MenuPreMat />
 
     <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError"/>
@@ -85,7 +84,6 @@ export default {
       showError: false
     };
   },
-
   methods: {
     submit() {
       console.log(this.code)
@@ -106,16 +104,6 @@ export default {
         console.log(error)
         this.setErrorAlert(error.message)
       })
-      // axios.put('/disciplines', {
-      //   discipline
-      // }).then((result) => {
-      //   console.log(result)
-      //   this.setSuccessAlert(result.message)
-      // })
-      // .catch((error) => {
-      //   console.log(error)
-      //   this.setErrorAlert(error.message)
-      // })
     },
     setSuccessAlert(message) {
         this.successMessage = message;

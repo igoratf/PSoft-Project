@@ -40,7 +40,7 @@
               </select></td>
         <td v-else>{{list.coursePlan}}</td>
         <td v-if="user.role == 'Coordinator'">
-        <span class="btn-opts"@click="editDiscipline(index)"><i class="far fa-edit" ></i></span>
+        <span class="btn-opts"@click="editDiscipline(index)"><i class="fas fa-edit"></i></span>
         <span class="btn-opts btn-remove" @click="deleteCourse(index)"><i class="fas fa-trash-alt"></i></span>
         </td>
       </tr>    
