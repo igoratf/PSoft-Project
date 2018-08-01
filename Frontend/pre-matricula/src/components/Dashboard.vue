@@ -53,7 +53,7 @@
   <button type="submit" class="btn btn-primary" v-if="user.role == 'Student'">Realizar pré matrícula</button>
   </form>
   </div>
-  
+
   <div class="footer animated zoomIn faster" v-if="user.role == 'Coordinator'">
     <h1>Exportar matrículas </h1>
     <button type="button" class="btn btn-outline-success" @click="getEnrollments">Exportar matrículas</button>
@@ -242,6 +242,7 @@ table {
 }
 
 .footer {
+  margin-top: 5%;
   margin-bottom: 8%;
 }
 </style>
