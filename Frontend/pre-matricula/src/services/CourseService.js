@@ -3,6 +3,7 @@ import axios from '../auth-axios/axios';
 
 export default {
     registerDiscipline(discipline) {
+        console.log(discipline)
        return axios.put('/disciplines', {
         discipline
       })

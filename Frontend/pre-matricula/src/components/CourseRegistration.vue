@@ -88,22 +88,22 @@ export default {
 
   methods: {
     submit() {
+      console.log(this.code)
       let discipline = {
         name: this.name,
         code: this.code,
-        semester: this.semester,
         credits: this.credits,
         workload: this.workload,
+        semester: this.semester,
         coursePlan: this.coursePlan
       };
-      console.log(discipline)
-      return CourseService.registerDiscipline(discipline)
+      return axios.put('/disciplines', discipline)
       .then((result) => {
         console.log(result)
         this.setSuccessAlert(result.message)
       })
       .catch((error) => {
-        this.console(error)
+        console.log(error)
         this.setErrorAlert(error.message)
       })
       // axios.put('/disciplines', {
