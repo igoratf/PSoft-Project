@@ -21,7 +21,6 @@
 
       <div class="header-infos">
         <div v-if="user">
-          <!-- <span class="header-info" @click="editUser"><i class="fas fa-user"></i><span class="logged-info">{{user.name}}</span></span> -->
           <div class="dropdown user-drop">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-user"><span class="logged-info">{{user.name}}</span></i>
@@ -32,10 +31,6 @@
             </div>
           </div>
           <div>
-          <!-- <span class="header-info logout" @click="signOut">
-            <i class="fas fa-times"></i>
-            <span class="logged-info">Sair</span>
-          </span> -->
           </div>
         </div>
       </div>
