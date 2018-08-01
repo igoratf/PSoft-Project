@@ -2,6 +2,7 @@ package com.example.preMatricula.entities;
 
 import java.util.Set;
 
+import com.example.preMatricula.enums.StudentCoursePlan;
 import com.example.preMatricula.exceptions.StudentOnlyException;
 
 public class Coordinator extends User {
@@ -37,6 +38,16 @@ public class Coordinator extends User {
 
 	@Override
 	public void setSemester(Integer semester) {
+		throw new StudentOnlyException();
+	}
+
+	@Override
+	public StudentCoursePlan getCoursePlan() {
+		throw new StudentOnlyException();
+	}
+
+	@Override
+	public void setCoursePlan(StudentCoursePlan coursePlan) {
 		throw new StudentOnlyException();
 	}
 

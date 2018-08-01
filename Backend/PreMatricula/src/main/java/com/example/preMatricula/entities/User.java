@@ -4,6 +4,8 @@ import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 
+import com.example.preMatricula.enums.StudentCoursePlan;
+
 public abstract class User {
 
 	@Id
@@ -61,5 +63,9 @@ public abstract class User {
 	public abstract Integer getSemester();
 
 	public abstract void setSemester(Integer semester);
+
+	public abstract StudentCoursePlan getCoursePlan();
+
+	public abstract void setCoursePlan(StudentCoursePlan coursePlan);
 	
 }
