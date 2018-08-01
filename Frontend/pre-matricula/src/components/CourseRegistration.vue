@@ -24,11 +24,11 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="semester">Período</label>
-            <input type="number" class="form-control" id="semester" min=1 max=10 placeholder="Período da disciplina" v-model="semester" required>
+            <input type="number" class="form-control" id="semester" min=1 max=9 placeholder="Período da disciplina" v-model="semester" required>
           </div>
           <div class="form-group col-md-6">
             <label for="workload">Carga horária</label>
-            <input type="number" class="form-control" id="workload" placeholder="Carga horária da disciplina" v-model="workload" required>
+            <input type="number" class="form-control" id="workload" placeholder="Carga horária da disciplina" min=0 max=120 v-model="workload" required>
           </div>
         </div>
         <div class="form-row">
