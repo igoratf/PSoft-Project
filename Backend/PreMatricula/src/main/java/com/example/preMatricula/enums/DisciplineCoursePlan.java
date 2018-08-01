@@ -1,6 +1,6 @@
 package com.example.preMatricula.enums;
 
-public enum CoursePlan {
+public enum DisciplineCoursePlan {
 	Nova,
 	Antiga,
 	Ambas

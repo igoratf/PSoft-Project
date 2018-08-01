@@ -2,10 +2,13 @@ package com.example.preMatricula.entities;
 
 import java.util.Set;
 
+import com.example.preMatricula.enums.StudentCoursePlan;
+
 import java.util.HashSet;
 
 public class Student extends User {
 	
+	private StudentCoursePlan coursePlan;
 	private Long registration;
 	private Integer semester;
 	private Set<Integer> enrolledDisciplinesID;
@@ -15,6 +18,15 @@ public class Student extends User {
 		this.registration = registration;
 		this.semester = semester;
 		this.enrolledDisciplinesID = new HashSet<>();
+	}
+	
+	private Integer computeSemester() {		
+		return -1;
+	}
+	
+	@Override
+	public void unenrollFrom(Integer code) {
+		this.enrolledDisciplinesID.remove(code);
 	}
 
 	@Override
@@ -34,6 +46,7 @@ public class Student extends User {
 
 	@Override
 	public void setRegistration(Long registration) {
+		//this.semester = 
 		this.registration = registration;
 	}
 
@@ -45,6 +58,16 @@ public class Student extends User {
 	@Override
 	public void setSemester(Integer semester) {
 		this.semester = semester;
+	}
+
+	@Override
+	public StudentCoursePlan getCoursePlan() {
+		return coursePlan;
+	}
+
+	@Override
+	public void setCoursePlan(StudentCoursePlan coursePlan) {
+		this.coursePlan = coursePlan;
 	}
 	
 }

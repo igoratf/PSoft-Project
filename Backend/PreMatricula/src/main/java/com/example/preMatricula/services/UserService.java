@@ -19,11 +19,15 @@ public class UserService {
 	private UserRepository userRepository;
 
 	public FirebaseToken getFirebaseTokenFromIdToken(String idToken) throws Exception {
+		System.out.println(idToken);
+		
 		idToken = idToken.split(" ")[1];
 		
+		System.out.println(idToken);
 		try {
 			return FirebaseAuth.getInstance().verifyIdTokenAsync(idToken).get();
 		} catch (InterruptedException | ExecutionException e) {
+			System.out.println(e.getMessage());
 			throw new Exception("User Not Authenticated");
 		}
 	}
@@ -54,6 +58,7 @@ public class UserService {
 			if (this.userRepository.existsById(uid)) {
 				return new ResponseEntity<>(this.userRepository.findById(uid).get(), HttpStatus.OK);
 			} else {
+				System.out.println("Chega aqui.");
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 			
