@@ -66,21 +66,18 @@ export default {
           axios
             .get("/users")
             .then(result => {
-              this.$router.replace("dashboard");
               let user = result.request.response;
-              console.log('user aqui ', user)
               localStorage.setItem("user", user);
+              if (user.registration) {
+                this.$router.replace("student-registration")
+              } else {
+                this.$router.replace("login");
+              }
+              console.log('user aqui ', user)
               console.log(result);
               console.log(result.request.response);
             })
             .catch(error => {
-              this.$router.replace("student-registration");
-              let testUser = {
-                name: 'Igor Farias',
-                email: 'igor.atf@gmail.com',
-                role: 'Coordinator'
-              }
-              localStorage.setItem("user", testUser)
               alert(error.message);
             });
         })

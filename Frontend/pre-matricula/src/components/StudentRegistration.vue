@@ -1,7 +1,6 @@
 <template>
 
   <section class="student-registration">
-    <!-- > Lembrar de passar user como prop para MenuPreMat -->
     <MenuPreMat />
 
     <div class="container animated zoomIn faster">

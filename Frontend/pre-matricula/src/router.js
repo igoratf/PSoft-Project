@@ -47,31 +47,28 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   /*let currentUser = firebase.auth().currentUser;
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  */
 
-  if (requiresAuth && !currentUser) next('login')
-  else if (!requiresAuth && currentUser) next('about')
-  else next()*/
   let requiresAuth = to.meta.requiresAuth
   let requiresAdmin = to.meta.role
   let currentUser = AuthService.getCurrentUser();
-  let currentUserRole = ""
-  if (currentUser) {
-    currentUserRole = currentUser.role  
-  } else {
-    currentUserRole = ""
-  }
-  
-  // let currentUserRole = AuthService.getUserRole();
+  let currentUserRole = "";
+
+
   console.log(currentUserRole)
+
+  if (currentUser) {
+    currentUserRole = currentUser.role;
+  }
 
   if (!localStorage.token && requiresAuth) {
     next('login')
   } else if (requiresAdmin && currentUserRole != 'Coordinator') {
-      next('dashboard')
-    }
-    else {
-      next()
-    }
+    next('dashboard')
+  }
+  else {
+    next()
+  }
 
 })
 

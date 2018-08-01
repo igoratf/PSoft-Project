@@ -46,9 +46,9 @@
       </tr>    
     </tbody>
   </table>
-  {{selected}}
+
   <hr>
-  <button type="submit" class="btn btn-primary">Concluir</button>
+  <button type="submit" class="btn btn-primary" v-if="user.role == 'Student'">Realizar pré matrícula</button>
   </form>
   </div>
 
