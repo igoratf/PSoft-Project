@@ -36,6 +36,7 @@ public class DisciplineService {
 				return new ResponseEntity<>("Disciplina criada!", HttpStatus.CREATED);
 			}
 		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
