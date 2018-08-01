@@ -81,21 +81,17 @@ export default {
       .then((result) => {
         alert(result.data)
         this.clearFormData();
-        console.log('aqui ', result)
       })
       .then(() => {
         return axios.get('/users').then((result) => {
-          console.log('aqui é quando eu recebo ', result)
           localStorage.setItem("user", JSON.stringify(result.data))
           console.log(localStorage.getItem("user"))
           this.$router.replace('dashboard')
         })
       })
       .catch((error) => {
-        console.log(error)
         alert(error.message)
       })
-      console.log(formData);
     },
     checkCurrentLogin() {
       if (AuthService.checkCurrentLogin()) {
