@@ -74,7 +74,7 @@ export default {
   methods: {
     submit() {
       let formData = {
-        number: this.registration,
+        registration: this.registration,
         coursePlan: this.coursePlan
       }
       return axios.put('/students', formData)
@@ -86,7 +86,7 @@ export default {
       .then(() => {
         return axios.get('/users').then((result) => {
           console.log('aqui é quando eu recebo ', result)
-          localStorage.setItem("user", (result.data))
+          localStorage.setItem("user", JSON.stringify(result.data))
           console.log(localStorage.getItem("user"))
           this.$router.replace('dashboard')
         })

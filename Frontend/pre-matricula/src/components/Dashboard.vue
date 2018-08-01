@@ -85,8 +85,8 @@ export default {
       courseList: [],
       checked: [],
       selected: null,
-      successMessage: "oi",
-      errorMessage: "oi",
+      successMessage: "",
+      errorMessage: "",
       showSuccess: false,
       showError: false
     };
@@ -103,7 +103,7 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          this.setErrorAlert(error.message)
+          this.setErrorAlert(error.message);
         });
     },
     deleteCourse(index) {
@@ -130,7 +130,7 @@ export default {
             console.log(result);
           })
           .catch(error => {
-            this.setErrorAlert(error.message)
+            this.setErrorAlert(error.message);
           });
       } else {
         this.selected = this.courseList[index];
@@ -155,22 +155,20 @@ export default {
           console.log("json", result.data);
           var enrollmentsCsv = Papa.unparse(result.data);
           console.log(enrollmentsCsv);
-          // Papa.download(Papa.unparse(result.data), "data.csv");
-
-          // var encoda = encodeURI(Papa.unparse(result.data);
-          // var baixa = document.createElement("a");
-          // baixa.setAttribute("href", encoda);
-          // baixa.setAttribute("id", "downloadcsv");
-          // baixa.setAttribute("download", "arquivo.csv");
-          // document.body.appendChild(baixa);
-          // baixa.click();
-          // document.body.removeChild(baixa)
+          var encodedUri = encodeURI(enrollmentsCsv);
+          var link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", "my_data.csv");
+          link.innerHTML = "Click Here to download";
+          document.body.appendChild(link); // Required for FF
+          link.click(); // This will download the data file named "my_data.csv".
         })
         .catch(error => {
           console.log(error);
         });
     },
-    setSuccessAlert() {
+    setSuccessAlert(message) {
+      this.successMessage = message;
       this.showSuccess = true;
       setTimeout(this.closeSuccessAlert, 2000);
     },
