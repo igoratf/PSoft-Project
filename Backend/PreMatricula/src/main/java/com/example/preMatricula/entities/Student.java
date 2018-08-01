@@ -19,6 +19,10 @@ public class Student extends User {
 		this.semester = semester;
 		this.enrolledDisciplinesID = new HashSet<>();
 	}
+	
+	private Integer computeSemester() {		
+		return -1;
+	}
 
 	@Override
 	public Set<Integer> getEnrolledDisciplinesID() {
@@ -37,6 +41,7 @@ public class Student extends User {
 
 	@Override
 	public void setRegistration(Long registration) {
+		//this.semester = 
 		this.registration = registration;
 	}
 

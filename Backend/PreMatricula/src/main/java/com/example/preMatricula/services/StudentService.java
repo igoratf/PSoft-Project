@@ -62,6 +62,7 @@ public class StudentService {
 			FirebaseToken firebaseToken = this.userService.getFirebaseTokenFromIdToken(token);
 			student.setId(firebaseToken.getUid());
 			student.setEmail(firebaseToken.getEmail());
+			student.setName(firebaseToken.getName());
 
 			boolean existed = this.students.existsById(student.getId());
 
