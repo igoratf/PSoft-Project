@@ -151,22 +151,27 @@ export default {
         .then(result => {
           console.log(result);
           console.log("json", result.data);
-          var enrollmentsCsv = Papa.unparse(result.data);
-          console.log(enrollmentsCsv);
-          console.log(Papa.parse(enrollmentsCsv))
-          var encodedUri = encodeURI(enrollmentsCsv);
-          console.log(encodedUri)
-          var link = document.createElement("a");
-          link.setAttribute("href", enrollmentsCsv);
-          link.setAttribute("download", "my_data.csv");
-          link.innerHTML = "Click Here to download";
-          document.body.appendChild(link); // Required for FF
-          link.click(); // This will download the data file named "my_data.csv".
-          document.body.removeChild(link);
+          var data = result.data;
+          this.exportCsvFile(data);
+          
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    exportCsvFile(data) {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += JSON.stringify(data);
+      +"\r\n";
+      var encodedUri = encodeURI(csvContent);
+      console.log(encodedUri);
+      var link = document.createElement("a");
+      link.setAttribute("href", csvContent);
+      link.setAttribute("download", "my_data.csv");
+      link.innerHTML = "Click Here to download";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     },
     setSuccessAlert(message) {
       this.successMessage = message;
