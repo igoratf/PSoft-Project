@@ -46,7 +46,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   let requiresAuth = to.meta.requiresAuth
-  let requiresRole = to.meta.role
+  let requiresRole = to.meta.requiresRole
   let currentUser = AuthService.getCurrentUser();
   let currentUserRole = "";
 

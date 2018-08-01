@@ -23,7 +23,6 @@ checkCurrentLogin() {
     }
 },
 
-
 getCurrentUser() {
     let user = JSON.parse(localStorage.getItem('user'))
     if (user) {
@@ -32,6 +31,10 @@ getCurrentUser() {
         return undefined
     }
 },
+
+getFirebaseUser() {
+    return firebase.auth().currentUser;
+}
 
 
 }

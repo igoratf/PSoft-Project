@@ -1,7 +1,7 @@
 <template>
 
   <section class="student-registration">
-    <MenuPreMat />
+    <MenuPreMat v-if="user.role =='Coordinator' || user.registration"/>
 
     <div class="container animated zoomIn faster">
       <div class="row">
@@ -83,7 +83,7 @@ export default {
       .then(() => {
         return axios.get('/users').then((result) => {
           console.log('aqui é quando eu recebo ', result)
-          localStorage.setItem("user", result)
+          localStorage.setItem("user", JSON.stringify(result.data))
         })
       })
       .catch((error) => {

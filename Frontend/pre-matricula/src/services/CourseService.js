@@ -15,7 +15,7 @@ export default {
     },
 
     getDisciplines() {
-        return axios.get('/course/disciplines')
+        return axios.get('/disciplines')
     },
 
     deleteDiscipline(code) {

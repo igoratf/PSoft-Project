@@ -65,6 +65,7 @@ export default {
         .then(() => {
           axios.get("/users")
             .then(result => {
+              console.log(result)
               let user = result.request.response;
               localStorage.setItem("user", user);
               if (!user.registration) {
@@ -73,10 +74,13 @@ export default {
                 this.$router.replace("dashboard");
               }
               console.log('user aqui ', user)
-              console.log(result);
-              console.log(result.request.response);
+              // console.log(result);
+              // console.log(result.request.response);
             })
             .catch(error => {
+              let user = firebase.auth().currentUser;
+              localStorage.setItem("user", JSON.stringify(user))
+              this.$router.replace("student-registration")
               console.log(error)
               alert(error.message);
             });
@@ -85,19 +89,13 @@ export default {
           alert(error.message);
         });
     },
-    adminLogin() {
-      return AuthService.adminSignIn(this.email, this.password)
-        .then()
-        .catch();
-    }
   },
   created() {
-    console.log("oi", localStorage.getItem('user'));
+    console.log("oi", localStorage.getItem("user"));
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .form-container {
   width: 100%;
