@@ -37,12 +37,9 @@ import AuthService from '../services/AuthService.js';
 
   export default {
     name: 'menu-pre-mat',
+    props: ['user'],
     data() {
       return {
-        user: {
-          role: 'admin',
-          // user: this.authUser
-        }
       }
     },
     methods: {
@@ -63,7 +60,8 @@ import AuthService from '../services/AuthService.js';
     computed: {
     },
     created() {
-      this.user = AuthService.getCurrentUser()
+      // this.user = AuthService.getCurrentUser()
+      localStorage.getItem('token')
       // let testUser = JSON.parse(localStorage.getItem('user'))
       // console.log('meu user ', testUser)
       
@@ -71,7 +69,7 @@ import AuthService from '../services/AuthService.js';
       console.log('oi')
       console.log(this.user.name)
       // console.log(localStorage.getItem('user').name)
-      localStorage.getItem('token')
+      
     }
 }
 </script>

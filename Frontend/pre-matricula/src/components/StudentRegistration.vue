@@ -1,7 +1,7 @@
 <template>
 
   <section class="student-registration">
-    <MenuPreMat v-if="user.role =='Coordinator' || user.registration"/>
+    <MenuPreMat :user="user" v-if="user.role =='Coordinator' || user.registration"/>
 
     <div class="container animated zoomIn faster">
       <div class="row">

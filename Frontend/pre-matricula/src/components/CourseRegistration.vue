@@ -1,6 +1,6 @@
 /* <template>
   <section class="course-registration">
-    <MenuPreMat />
+    <MenuPreMat :user="user"/>
 
     <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError"/>
 

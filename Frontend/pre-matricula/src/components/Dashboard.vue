@@ -1,7 +1,7 @@
   /* <template lang="html">
 
     <section class="dashboard">
-      <MenuPreMat />
+      <MenuPreMat :user="user"/>
 
       <div class="container animated zoomIn faster">
         <h1> Lista de disciplinas cadastradas</h1>
