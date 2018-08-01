@@ -8,11 +8,11 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link to="student-registration" class="nav-link" active-class="active">Home</router-link>
+            <router-link to="dashboard" class="nav-link" active-class="active">Home</router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link class="nav-link" to="dashboard" active-class="active">Dashboard</router-link>
-          </li>
+          </li> -->
           <li class="nav-item" v-if="user.role == 'Coordinator'">
             <router-link class="nav-link" to="course-registration" active-class="active">Cadastrar disciplinas</router-link>
           </li>

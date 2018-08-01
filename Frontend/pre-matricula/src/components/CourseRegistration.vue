@@ -143,6 +143,9 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  margin-top: 10%;
+}
 .form-container {
   width: 100%;
   border: 2px solid black;

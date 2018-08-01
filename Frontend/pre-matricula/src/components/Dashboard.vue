@@ -2,7 +2,7 @@
 
     <section class="dashboard">
       <MenuPreMat :user="user"/>
-      
+
       <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError" />
 
       <div class="container animated zoomIn faster">
@@ -158,7 +158,10 @@
       getDisciplines() {
         return CourseService.getDisciplines()
         .then((result) => {
-          this.courseList = result.data;
+          let list = result.data;
+          this.courseList = list.sort(function(a,b) {
+            return a.semester - b.semester
+          })
         })
         .catch((error) => {
           alert(error.message)
