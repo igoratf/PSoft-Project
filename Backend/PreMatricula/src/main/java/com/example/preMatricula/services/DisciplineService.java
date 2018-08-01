@@ -78,12 +78,16 @@ public class DisciplineService {
 	}
 
 	public void unenrollStudentFromAllDisciplines(String studentID) {
-		this.disciplines.findAll().forEach(discipline -> discipline.unenrollStudent(studentID));
+		this.disciplines.findAll().forEach(discipline -> {
+			discipline.unenrollStudent(studentID);
+			this.disciplines.save(discipline);
+		});
 	}
 
 	public void enrollStudentInDisciplines(Enrollment enrollment) {
 		Iterable<Discipline> found = this.disciplines.findAllById(enrollment.getDisciplineCodes());
 		found.forEach(discipline -> discipline.enrollStudent(enrollment.getStudentID()));
+		this.disciplines.saveAll(found);
 	}
 
 	public Integer computeTotalCredits(List<Integer> codes) {

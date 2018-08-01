@@ -27,12 +27,14 @@ public class StudentService {
 	public void enrollStudentInDisciplines(Enrollment enrollment) {
 		User student = this.students.findById(enrollment.getStudentID()).get();
 		student.setEnrolledDisciplinesID(new HashSet<>(enrollment.getDisciplineCodes()));
+		this.students.save(student);
 	}
 	
 	public void unenrollStudentsFrom(Integer code) {
 		this.students.findAll().forEach(student -> {
 			if (student.getRole().equals("Student")) {
 				student.unenrollFrom(code);
+				this.students.save(student);
 			}
 		});
 	}

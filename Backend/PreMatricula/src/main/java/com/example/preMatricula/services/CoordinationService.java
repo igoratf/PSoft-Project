@@ -64,10 +64,12 @@ public class CoordinationService {
 			
 			this.studentService.enrollStudentInDisciplines(enrollment);
 			
+			System.out.println("Chega aqui!");
+			
 			return new ResponseEntity<>("Estudante matriculado com sucesso!", HttpStatus.ACCEPTED);
 			
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 			return new ResponseEntity<>("{" + "responseBody:" + e.getMessage() + "}", HttpStatus.BAD_REQUEST);
 		}
 	}
