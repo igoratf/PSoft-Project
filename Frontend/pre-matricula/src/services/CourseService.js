@@ -21,6 +21,10 @@ export default {
 
     exportEnrollments() {
         return axios.get('')
+    },
+
+    getEnrollments() {
+        return axios.get('/students')
     }
 
 }
