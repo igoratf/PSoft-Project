@@ -84,7 +84,6 @@ export default {
       .then(() => {
         return axios.get('/users').then((result) => {
           localStorage.setItem("user", JSON.stringify(result.data))
-          console.log(localStorage.getItem("user"))
           this.$router.replace('dashboard')
         })
       })

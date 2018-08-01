@@ -65,7 +65,6 @@ export default {
           axios
             .get("/users")
             .then(result => {
-              console.log('deu get')
               let user = JSON.parse(result.request.response)
               console.log(JSON.parse(result.request.response))
               localStorage.setItem("user", JSON.stringify(user));

@@ -119,13 +119,11 @@ export default {
     },
     editDiscipline(index) {
       let discipline = this.courseList[index];
-      console.log(discipline);
       if (this.selected) {
         this.selected = null;
         return CourseService.registerDiscipline(discipline)
           .then(result => {
             this.setSuccessAlert(result.data);
-            console.log(result);
           })
           .catch(error => {
             this.setErrorAlert(error.message);
@@ -149,8 +147,6 @@ export default {
     getEnrollments() {
       return CourseService.getEnrollments()
         .then(result => {
-          console.log(result);
-          console.log("json", result.data);
           var data = result.data;
           this.exportCsvFile(data);
           
@@ -164,7 +160,6 @@ export default {
       csvContent += JSON.stringify(data);
       +"\r\n";
       var encodedUri = encodeURI(csvContent);
-      console.log(encodedUri);
       var link = document.createElement("a");
       link.setAttribute("href", csvContent);
       link.setAttribute("download", "my_data.csv");
