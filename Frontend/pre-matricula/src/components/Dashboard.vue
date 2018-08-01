@@ -127,9 +127,14 @@
       },
       deleteCourse(index) {
         let discipline = this.courseList[index];
-        return axios.delete('/')
-        .then(setSuccessAlert())
-        .catch(this.setErrorAlert())
+        return axios.delete('/disciplines/{discipline.code}')
+        .then((result) => {
+          console.log('sucesso')
+          console.log(result)
+        })
+        .catch((error) => {
+          alert(error.message)
+        })
         this.courseList.splice(index, 1);
       },
       editDiscipline(index) {

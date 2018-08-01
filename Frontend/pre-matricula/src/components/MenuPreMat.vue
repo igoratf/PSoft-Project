@@ -5,106 +5,111 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <router-link to="student-registration" class="nav-link" active-class="active">Home</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link class="nav-link" to="dashboard" active-class="active">Dashboard</router-link>
-      </li>
-      <li class="nav-item" v-if="user.role == 'Coordinator'">
-        <router-link class="nav-link" to="course-registration" active-class="active">Cadastrar disciplinas</router-link>
-      </li>
-    </ul>
-  </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <router-link to="student-registration" class="nav-link" active-class="active">Home</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="dashboard" active-class="active">Dashboard</router-link>
+          </li>
+          <li class="nav-item" v-if="user.role == 'Coordinator'">
+            <router-link class="nav-link" to="course-registration" active-class="active">Cadastrar disciplinas</router-link>
+          </li>
+        </ul>
+      </div>
 
-  <div class="header-infos">
-    <div v-if="user">
-      <span class="header-info" @click="editUser"><i class="fas fa-user"></i><span class="logged-info">{{user.name}}</span></span>
-      <span class="header-info logout" @click="signOut"><i class="fas fa-times"></i><span class="logged-info">Sair</span></span>
-    </div>
-  </div>  
-</nav>
-</div>
+      <div class="header-infos">
+        <div v-if="user">
+          <!-- <span class="header-info" @click="editUser"><i class="fas fa-user"></i><span class="logged-info">{{user.name}}</span></span> -->
+          <div class="dropdown user-drop">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{user.name}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </div>
+          <div>
+          <span class="header-info logout" @click="signOut">
+            <i class="fas fa-times"></i>
+            <span class="logged-info">Sair</span>
+          </span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
 
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import AuthService from '../services/AuthService.js';
+import firebase from "firebase/app";
+import "firebase/auth";
+import AuthService from "../services/AuthService.js";
 
-  export default {
-    name: 'menu-pre-mat',
-    props: ['user'],
-    data() {
-      return {
-      }
-    },
-    methods: {
-      signOut() {
-        return AuthService.signOut()
-        .then((result) => {
-          this.$router.replace('login')
-          localStorage.clear()
+export default {
+  name: "menu-pre-mat",
+  props: ["user"],
+  data() {
+    return {};
+  },
+  methods: {
+    signOut() {
+      return AuthService.signOut()
+        .then(result => {
+          this.$router.replace("login");
+          localStorage.clear();
         })
-        .catch((error) => {
-          alert(error.message)
-        })
-      },
-      editUser() {
-        this.$router.replace('student-registration')
-      }
+        .catch(error => {
+          alert(error.message);
+        });
     },
-    computed: {
-    },
-    created() {
-      // this.user = AuthService.getCurrentUser()
-      localStorage.getItem('token')
-      // let testUser = JSON.parse(localStorage.getItem('user'))
-      // console.log('meu user ', testUser)
-      
-      console.log(this.user.role)
-      console.log('oi')
-      console.log(this.user.name)
-      // console.log(localStorage.getItem('user').name)
-      
+    editUser() {
+      this.$router.replace("student-registration");
     }
-}
+  },
+  computed: {},
+  created() {
+    localStorage.getItem("token");
+  }
+};
 </script>
 
 <style scoped>
-  .menu-pre-mat {
-    margin-bottom: 15px;
-  }
 
-  .router-link-exact-active {
-  background: #2E2E2E;
+.menu-pre-mat {
+  margin-bottom: 15px;
 }
 
-  .logout {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: white;
-    font-size: 16px;
-    line-height: 1.5;
-    margin-left: 16px;
-  }
+.router-link-exact-active {
+  background: #2e2e2e;
+}
 
-  .logout:hover {
-    cursor: pointer;
-  }
+.logout {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-left: 16px;
+}
 
-  .header-infos {
-    color: white;
-  }
+.logout:hover {
+  cursor: pointer;
+}
 
-  .header-info {
-    margin-left: 16px;
-  }
+.header-infos {
+  color: white;
+}
 
-  .logged-info {
-    margin-left: 8px;
-  }
+.header-info {
+  display: inline-block;
+  margin-left: 16px;
+}
 
+.logged-info {
+  margin-left: 8px;
+}
 </style>

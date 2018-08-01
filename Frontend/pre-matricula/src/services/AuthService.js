@@ -12,6 +12,7 @@ signInWithGoogle() {
 
 signOut() {
     localStorage.clear();
+    console.log('limpei')
     return firebase.auth().signOut()
     },
 
@@ -28,8 +29,21 @@ getCurrentUser() {
     if (user) {
         return user
     } else {
-        return undefined
+        console.log('to sem usuário')
+        return this.getUser()
+        .then((result) => {
+            user = result.request.response;
+            localStorage.setItem("user", user)
+            return user
+        })
+        .catch((error) => {
+            alert(error.message)
+        })
     }
+},
+
+getUser() {
+    return axios.get('/users')
 },
 
 getFirebaseUser() {

@@ -59,36 +59,37 @@ export default {
     signInWithGoogle() {
       return AuthService.signInWithGoogle()
         .then(result => {
-          console.log(result.user._lat)
+          console.log(result.user._lat);
           localStorage.setItem("token", result.user._lat);
         })
         .then(() => {
-          axios.get("/users")
+          axios
+            .get("/users")
             .then(result => {
-              console.log(result)
+              console.log(result);
               let user = result.request.response;
               localStorage.setItem("user", user);
               if (!user.registration) {
-                this.$router.replace("student-registration")
+                this.$router.replace("student-registration");
               } else {
                 this.$router.replace("dashboard");
               }
-              console.log('user aqui ', user)
+              console.log("user aqui ", user);
               // console.log(result);
               // console.log(result.request.response);
             })
             .catch(error => {
-              let user = firebase.auth().currentUser;
-              localStorage.setItem("user", JSON.stringify(user))
-              this.$router.replace("student-registration")
-              console.log(error)
+              let user = AuthService.getFirebaseUser();
+              localStorage.setItem("user", JSON.stringify(user));
+              this.$router.replace("student-registration");
+              console.log(error);
               alert(error.message);
             });
         })
         .catch(error => {
           alert(error.message);
         });
-    },
+    }
   },
   created() {
     console.log("oi", localStorage.getItem("user"));
