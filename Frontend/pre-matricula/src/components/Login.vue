@@ -59,14 +59,12 @@ export default {
     signInWithGoogle() {
       return AuthService.signInWithGoogle()
         .then(result => {
-          console.log(result.user._lat);
           localStorage.setItem("token", result.user._lat);
         })
         .then(() => {
           axios
             .get("/users")
             .then(result => {
-              console.log(result);
               let user = result.request.response;
               localStorage.setItem("user", user);
               if (!user.registration) {
@@ -74,10 +72,8 @@ export default {
               } else {
                 this.$router.replace("dashboard");
               }
-              console.log("user aqui ", user);
             })
             .catch(error => {
-              console.log('to caindo aqui')
               this.$router.replace("student-registration");
               console.log(error);
             });
@@ -88,7 +84,6 @@ export default {
     }
   },
   created() {
-    console.log('to na tela de login')
   }
 };
 </script>
@@ -97,6 +92,7 @@ export default {
 .form-container {
   width: 100%;
   border: 2px solid black;
+  border-radius: 10px;
   padding: 12px;
   margin-top: 15%;
   margin-bottom: 15%;

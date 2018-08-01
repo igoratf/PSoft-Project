@@ -19,10 +19,6 @@ export default {
         return axios.put('/coordination/enroll', courseList)
     },
 
-    exportEnrollments() {
-        return axios.get('')
-    },
-
     getEnrollments() {
         return axios.get('/students')
     }

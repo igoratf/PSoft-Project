@@ -54,8 +54,6 @@
   </form>
   </div>
 
-  {{checked}}
-
   <div class="footer animated zoomIn faster" v-if="user.role == 'Coordinator'">
     <h1>Exportar matrículas </h1>
     <button type="button" class="btn btn-outline-success" @click="getEnrollments">Exportar matrículas</button>
@@ -106,7 +104,7 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          alert(error.message);
+          this.setErrorAlert(error.message)
         });
     },
     deleteCourse(index) {
@@ -130,12 +128,10 @@ export default {
         return CourseService.registerDiscipline(discipline)
           .then(result => {
             this.setSuccessAlert(result.data);
-            console.log("tá entrando aqui");
             console.log(result);
           })
           .catch(error => {
-            console.log("deu erro");
-            alert(error.message);
+            this.setErrorAlert(error.message)
           });
       } else {
         this.selected = this.courseList[index];
@@ -150,7 +146,7 @@ export default {
           });
         })
         .catch(error => {
-          alert(error.message);
+          this.setErrorAlert(error.message);
         });
     },
     getEnrollments() {
@@ -199,13 +195,6 @@ export default {
   created() {
     this.user = AuthService.getCurrentUser();
     this.getDisciplines();
-    // CourseService.getDisciplines()
-    // .then((result) => {
-    //   this.courseList = result;
-    // })
-    // .catch((error) => {
-    //   alert(error.message)
-    // })
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -236,9 +225,6 @@ h1 {
   cursor: pointer;
 }
 
-.btn-opts {
-  /* margin-right: 8px; */
-}
 .btn-remove {
   margin-left: 8px;
 }
@@ -256,6 +242,7 @@ table {
 }
 
 .footer {
+  margin-top: 5%;
   margin-bottom: 8%;
 }
 </style>
