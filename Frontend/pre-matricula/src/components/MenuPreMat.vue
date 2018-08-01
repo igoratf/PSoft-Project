@@ -24,19 +24,18 @@
           <!-- <span class="header-info" @click="editUser"><i class="fas fa-user"></i><span class="logged-info">{{user.name}}</span></span> -->
           <div class="dropdown user-drop">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{user.name}}
+              <i class="fas fa-user"><span class="logged-info">{{user.name}}</span></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <router-link class="dropdown-item" to="student-registration">Alterar dados</router-link>
               <a class="dropdown-item logout" @click="signOut">Sair</a>
-              <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </div>
           <div>
-          <span class="header-info logout" @click="signOut">
+          <!-- <span class="header-info logout" @click="signOut">
             <i class="fas fa-times"></i>
             <span class="logged-info">Sair</span>
-          </span>
+          </span> -->
           </div>
         </div>
       </div>
