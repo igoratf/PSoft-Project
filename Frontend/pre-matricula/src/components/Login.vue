@@ -15,9 +15,9 @@
                 <img src="../assets/logoufcg.jpg" width=130px>
               </div>
             </div>
-
             <hr>
             <h1> Login </h1>
+            <hr>
             <div class="row">
               <div class="col">
                 Realize login abaixo com sua conta @ccc.ufcg.edu.br
@@ -79,8 +79,7 @@ export default {
               // console.log(result.request.response);
             })
             .catch(error => {
-              let user = AuthService.getFirebaseUser();
-              localStorage.setItem("user", JSON.stringify(user));
+              console.log('to caindo aqui')
               this.$router.replace("student-registration");
               console.log(error);
               alert(error.message);
@@ -92,7 +91,7 @@ export default {
     }
   },
   created() {
-    console.log("oi", localStorage.getItem("user"));
+    console.log('to na tela de login')
   }
 };
 </script>

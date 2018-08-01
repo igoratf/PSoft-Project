@@ -35,13 +35,16 @@
                 <small class="form-text text-muted">Campo obrigatório</small>
               </div>
               <hr>
-              <button type="submit" class="btn btn-primary">Cadastrar</button>
+              <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
             </form>
-
           </div>
+          <!-- <button class="btn btn-outline-primary">Voltar para o login</button> -->
+          <button class="btn btn-outline-dark back" @click="returnNavigation"><i class="fas fa-backward"></i> Voltar</button>
         </div>
-        <div class="col"></div>
+        <div class="col">
+        </div>
       </div>
+
     </div>
   </section>
 
@@ -71,8 +74,6 @@ export default {
         number: this.registration,
         coursePlan: this.coursePlan
       }
-      this.user.registration = this.registration;
-      this.user.coursePlan = this.coursePlan;
       return axios.put('/students', formData)
       .then((result) => {
         alert(result.data)
@@ -87,6 +88,7 @@ export default {
         })
       })
       .catch((error) => {
+        console.log(error)
         alert(error.message)
       })
       console.log(formData);
@@ -101,6 +103,9 @@ export default {
     clearFormData() {
       this.registration = null;
       this.coursePlan = "";
+    },
+    returnNavigation() {
+      this.$router.replace("login")
     }
   },
   computed: {},
@@ -115,6 +120,10 @@ export default {
 </script>
 
 <style scoped>
+
+.back {
+  font-size: 16px;
+}
 .form-container {
   width: 100%;
   border: 2px solid black;

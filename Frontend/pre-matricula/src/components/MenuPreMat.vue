@@ -58,14 +58,7 @@ export default {
   },
   methods: {
     signOut() {
-      return AuthService.signOut()
-        .then(result => {
-          this.$router.replace("login");
-          localStorage.clear();
-        })
-        .catch(error => {
-          alert(error.message);
-        });
+      AuthService.signOut();
     },
     editUser() {
       this.$router.replace("student-registration");

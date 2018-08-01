@@ -27,7 +27,7 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, requiresRole: 'Coordinator' || 'Student' }
     },
     {
       path: '/student-registration',

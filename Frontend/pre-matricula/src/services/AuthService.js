@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import axios from '../auth-axios/axios';
+import router from '../router';
 
 export default {
 signInWithGoogle() {
@@ -11,9 +12,8 @@ signInWithGoogle() {
     },
 
 signOut() {
+    router.replace("login")
     localStorage.clear();
-    console.log('limpei')
-    return firebase.auth().signOut()
     },
 
 checkCurrentLogin() {
@@ -28,7 +28,7 @@ getCurrentUser() {
     let user = JSON.parse(localStorage.getItem('user'))
     if (user) {
         return user
-    } else {
+    } else if (localStorage.getItem("token")) {
         console.log('to sem usuário')
         return this.getUser()
         .then((result) => {

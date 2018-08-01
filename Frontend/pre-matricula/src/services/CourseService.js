@@ -13,6 +13,10 @@ export default {
 
     deleteDiscipline(code) {
         return axios.delete('/course/disciplines/{code}')
+    },
+
+    submitEnrollment(courseList) {
+        return axios.put('/coordination/enroll', courseList)
     }
 
 }

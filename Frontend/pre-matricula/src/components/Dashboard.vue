@@ -115,14 +115,14 @@
         let enrollment = this.checked.map(function(discipline) {
           return discipline.code;
         })
-        return axios.put('/course/enroll', {
-          enrollment
-        })
+        return AuthService.submitEnrollment(enrollment)
         .then((result) => {
-          this.setAlert(result.data);
+          console.log(result)
+          setSuccessAlert(result.data)
         })
-        .catch((error) => {
-          this.setErrorAlert(error.message);
+        .then((error) => {
+          console.log(error)
+          alert(error.message)
         })
       },
       deleteCourse(index) {
@@ -164,7 +164,7 @@
           alert(error.message)
         })
       },
-      setSucessAlert() {
+      setSuccessAlert() {
         this.showSuccess = true;
         setTimeout(this.closeSuccessAlert, 2000);
       },
