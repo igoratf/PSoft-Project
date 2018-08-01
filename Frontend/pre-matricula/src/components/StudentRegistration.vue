@@ -8,11 +8,11 @@
         <div class="col"></div>
         <div class="col">
           <div class="form-container">
-            <h1 v-if="!user.registration"> Cadastro </h1>
+            <h1 v-if="!user.role"> Cadastro </h1>
             <h1 v-else>Editar dados</h1>
             <hr>
             <div class="row">
-              <div class="col" v-if="!user.registration">
+              <div class="col" v-if="!user.role">
                 Para continuar, por favor insira sua matrícula e sua grade abaixo
               </div>
               <div class="col" v-else>
@@ -23,12 +23,13 @@
             <form id="student-form" @submit.prevent="submit">
               <div class="form-group">
                 <label for="exampleInputEmail1">Matrícula</label>
-                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira sua matrícula" v-model="registration" min=0 max=999999999 required>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira sua matrícula" v-model="registration" minlength=9 maxlength=9 required>
                 <small class="form-text text-muted">Campo obrigatório</small>
               </div>
               <div class="form-group">
                 <label for="exampleFormControlSelect2">Grade Curricular</label>
                 <select class="form-control" id="exampleFormControlSelect2" v-model="coursePlan" required>
+                  <option disabled selected value="">Selecione a grade</option>
                   <option>Nova</option>
                   <option>Antiga</option>
                 </select>
@@ -38,8 +39,7 @@
               <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
             </form>
           </div>
-          <!-- <button class="btn btn-outline-primary">Voltar para o login</button> -->
-          <button class="btn btn-outline-dark back" @click="returnNavigation"><i class="fas fa-backward"></i> Voltar</button>
+          <button class="btn btn-outline-dark back" @click="returnNavigation"><i class="fas fa-backward"></i> Sair</button>
         </div>
         <div class="col">
         </div>
@@ -73,27 +73,24 @@ export default {
   methods: {
     submit() {
       let formData = {
-        number: this.registration,
+        registration: this.registration,
         coursePlan: this.coursePlan
       }
       return axios.put('/students', formData)
       .then((result) => {
         alert(result.data)
         this.clearFormData();
-        this.$router.replace('dashboard')
-        console.log('aqui ', result)
       })
       .then(() => {
         return axios.get('/users').then((result) => {
-          console.log('aqui é quando eu recebo ', result)
           localStorage.setItem("user", JSON.stringify(result.data))
+          console.log(localStorage.getItem("user"))
+          this.$router.replace('dashboard')
         })
       })
       .catch((error) => {
-        console.log(error)
         alert(error.message)
       })
-      console.log(formData);
     },
     checkCurrentLogin() {
       if (AuthService.checkCurrentLogin()) {

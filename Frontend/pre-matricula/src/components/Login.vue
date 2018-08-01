@@ -66,9 +66,10 @@ export default {
             .get("/users")
             .then(result => {
               console.log('deu get')
-              let user = result.request.response;
-              localStorage.setItem("user", user);
-              if (!user.registration) {
+              let user = JSON.parse(result.request.response)
+              console.log(JSON.parse(result.request.response))
+              localStorage.setItem("user", JSON.stringify(user));
+              if (!user.role) {
                 this.$router.replace("student-registration");
               } else {
                 this.$router.replace("dashboard");
@@ -85,6 +86,7 @@ export default {
     }
   },
   created() {
+    localStorage.clear();
   }
 };
 </script>
