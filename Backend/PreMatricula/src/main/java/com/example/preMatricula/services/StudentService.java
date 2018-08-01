@@ -60,6 +60,7 @@ public class StudentService {
 	public ResponseEntity<String> putStudent(Student student, String token) {
 		try {
 			FirebaseToken firebaseToken = this.userService.getFirebaseTokenFromIdToken(token);
+			student.setRole("Student");
 			student.setId(firebaseToken.getUid());
 			student.setEmail(firebaseToken.getEmail());
 			student.setName(firebaseToken.getName());
@@ -78,6 +79,7 @@ public class StudentService {
 				return new ResponseEntity<>("Estudante criado(a)!", HttpStatus.CREATED);
 			}
 		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
