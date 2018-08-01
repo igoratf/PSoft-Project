@@ -75,14 +75,11 @@ export default {
                 this.$router.replace("dashboard");
               }
               console.log("user aqui ", user);
-              // console.log(result);
-              // console.log(result.request.response);
             })
             .catch(error => {
               console.log('to caindo aqui')
               this.$router.replace("student-registration");
               console.log(error);
-              alert(error.message);
             });
         })
         .catch(error => {

@@ -60,206 +60,203 @@
     <h1>Exportar matrículas </h1>
     <button type="button" class="btn btn-outline-success" @click="getEnrollments">Exportar matrículas</button>
   </div>
+  <a id="csvFile"></a>
     </section>
 
   </template>
 
   <script>
-  import firebase from 'firebase/app';
-  import axios from '../auth-axios/axios.js';
-  import MenuPreMat from '@/components/MenuPreMat.vue';
-  import AuthService from '../services/AuthService.js';
-  import CourseService from '../services/CourseService.js';
-  import Alert from './Alert.vue';
+import firebase from "firebase/app";
+import axios from "../auth-axios/axios.js";
+import Papa from "papaparse";
+import MenuPreMat from "@/components/MenuPreMat.vue";
+import AuthService from "../services/AuthService.js";
+import CourseService from "../services/CourseService.js";
+import Alert from "./Alert.vue";
 
-  export default {
-    name: "dashboard",
-    components: {
-      MenuPreMat,
-      Alert
+export default {
+  name: "dashboard",
+  components: {
+    MenuPreMat,
+    Alert
+  },
+  props: [],
+  mounted() {},
+  data() {
+    return {
+      user: "",
+      courseList: [],
+      checked: [],
+      selected: null,
+      successMessage: "oi",
+      errorMessage: "oi",
+      showSuccess: false,
+      showError: false
+    };
+  },
+  methods: {
+    submitEnrollment() {
+      let enrollment = this.checked.map(function(discipline) {
+        return discipline.code;
+      });
+      return CourseService.submitEnrollment(enrollment)
+        .then(result => {
+          console.log(result);
+          this.setSuccessAlert("Sucesso");
+        })
+        .catch(error => {
+          console.log(error);
+          alert(error.message);
+        });
     },
-    props: [],
-    mounted() {},
-    data() {
-      return {
-        user: "",
-        courseList: [
-          {
-            semester: 1,
-            code: "18290380123",
-            name: "Programação I",
-            credits: 4,
-            workload: 60,
-            coursePlan: "Ambas"
-          },
-          {
-            semester: 1,
-            code: "12903819203",
-            name: "LPT",
-            credits: 4,
-            workload: 60,
-            coursePlan: "Antiga"
-          }
-        ],
-        checked: [],
-        selected: null,
-        successMessage: "oi",
-        errorMessage: "oi",
-        showSuccess: false,
-        showError: false
-      };
-    },
-    methods: {
-      submitEnrollment() {
-        let enrollment = this.checked.map(function(discipline) {
-          return discipline.code;
-        })
-        return CourseService.submitEnrollment(enrollment)
-        .then((result) => {
-          console.log(result)
-          this.setSuccessAlert("Sucesso")
-        })
-        .catch((error) => {
-          console.log(error)
-          alert(error.message)
-        })
-      },
-      deleteCourse(index) {
-        let discipline = this.courseList[index];
-        let code = parseInt(discipline.code)
-        return axios.delete('/disciplines/' + code)
-        .then((result) => {
-          console.log(result)
+    deleteCourse(index) {
+      let discipline = this.courseList[index];
+      let code = parseInt(discipline.code);
+      return axios
+        .delete("/disciplines/" + code)
+        .then(result => {
+          console.log(result);
           this.getDisciplines();
         })
-        .catch((error) => {
-          this.setErrorAlert(error.message)
-        })
-      },
-      editDiscipline(index) {
-        let discipline = this.courseList[index];
-        console.log(discipline)
-        if (this.selected) {
-          this.selected = null;
-          return CourseService.registerDiscipline(discipline)
-          .then((result) => {
-            this.setSuccessAlert(result.data)
-            console.log('tá entrando aqui')
-            console.log(result)
+        .catch(error => {
+          this.setErrorAlert(error.message);
+        });
+    },
+    editDiscipline(index) {
+      let discipline = this.courseList[index];
+      console.log(discipline);
+      if (this.selected) {
+        this.selected = null;
+        return CourseService.registerDiscipline(discipline)
+          .then(result => {
+            this.setSuccessAlert(result.data);
+            console.log("tá entrando aqui");
+            console.log(result);
           })
-          .catch((error) => {
-            console.log('deu erro')
-            alert(error.message)
-          })
-        } else {
-          this.selected = this.courseList[index];
-        }
-      },
-      getDisciplines() {
-        return CourseService.getDisciplines()
-        .then((result) => {
-          let list = result.data;
-          this.courseList = list.sort(function(a,b) {
-            return a.semester - b.semester
-          })
-        })
-        .catch((error) => {
-          alert(error.message)
-        })
-      },
-      getEnrollments() {
-        return CourseService.getEnrollments()
-        .then((result) => {
-          console.log(result)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-      },
-      setSuccessAlert() {
-        this.showSuccess = true;
-        setTimeout(this.closeSuccessAlert, 2000);
-      },
-      setErrorAlert(message) {
-        this.errorMessage = message;
-        this.showError = true;
-        setTimeout(this.closeErrorAlert, 2000);
-      },
-      closeSuccessAlert() {
-        this.showSuccess = false;
-      },
-      closeErrorAlert() {
-        this.showError = false;
-      },
-      exportEnrollments() {
-        return axios.get('/')
+          .catch(error => {
+            console.log("deu erro");
+            alert(error.message);
+          });
+      } else {
+        this.selected = this.courseList[index];
       }
     },
-    computed: {},
-    updated() {},
-    created() {
-      this.user = AuthService.getCurrentUser();
-      this.getDisciplines();
-      // CourseService.getDisciplines()
-      // .then((result) => {
-      //   this.courseList = result;
-      // })
-      // .catch((error) => {
-      //   alert(error.message)
-      // })
+    getDisciplines() {
+      return CourseService.getDisciplines()
+        .then(result => {
+          let list = result.data;
+          this.courseList = list.sort(function(a, b) {
+            return a.semester - b.semester;
+          });
+        })
+        .catch(error => {
+          alert(error.message);
+        });
     },
-    beforeRouteEnter(to, from, next) {
-      next(vm => {
-        if (AuthService.checkCurrentLogin()) {
-          vm.$router.replace(vm.$route.query.redirect || "/dashboard");
-        } else {
-          vm.$router.replace("/login");
-        }
-      });
+    getEnrollments() {
+      return CourseService.getEnrollments()
+        .then(result => {
+          console.log(result);
+          console.log("json", result.data);
+          var enrollmentsCsv = Papa.unparse(result.data);
+          console.log(enrollmentsCsv);
+          // Papa.download(Papa.unparse(result.data), "data.csv");
+
+          // var encoda = encodeURI(Papa.unparse(result.data);
+          // var baixa = document.createElement("a");
+          // baixa.setAttribute("href", encoda);
+          // baixa.setAttribute("id", "downloadcsv");
+          // baixa.setAttribute("download", "arquivo.csv");
+          // document.body.appendChild(baixa);
+          // baixa.click();
+          // document.body.removeChild(baixa)
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    setSuccessAlert() {
+      this.showSuccess = true;
+      setTimeout(this.closeSuccessAlert, 2000);
+    },
+    setErrorAlert(message) {
+      this.errorMessage = message;
+      this.showError = true;
+      setTimeout(this.closeErrorAlert, 2000);
+    },
+    closeSuccessAlert() {
+      this.showSuccess = false;
+    },
+    closeErrorAlert() {
+      this.showError = false;
+    },
+    exportEnrollments() {
+      return axios.get("/");
     }
-    
-  };
-  </script>
+  },
+  computed: {},
+  updated() {},
+  created() {
+    this.user = AuthService.getCurrentUser();
+    this.getDisciplines();
+    // CourseService.getDisciplines()
+    // .then((result) => {
+    //   this.courseList = result;
+    // })
+    // .catch((error) => {
+    //   alert(error.message)
+    // })
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (AuthService.checkCurrentLogin()) {
+        vm.$router.replace(vm.$route.query.redirect || "/dashboard");
+      } else {
+        vm.$router.replace("/login");
+      }
+    });
+  }
+};
+</script>
 
   <style scoped>
-  .container {
-    margin-top: 5%;
-  }
+.container {
+  margin-top: 5%;
+}
 
-  .course-checkbox {
-    margin-top: 18px;
-  }
+.course-checkbox {
+  margin-top: 18px;
+}
 
-  h1 {
-    margin-bottom: 2%;
-  }
+h1 {
+  margin-bottom: 2%;
+}
 
-  .btn-opts:hover {
-    cursor: pointer;
-  }
+.btn-opts:hover {
+  cursor: pointer;
+}
 
-  .btn-opts {
-    /* margin-right: 8px; */
-  }
-  .btn-remove {
-    margin-left: 8px;
-  }
+.btn-opts {
+  /* margin-right: 8px; */
+}
+.btn-remove {
+  margin-left: 8px;
+}
 
-  .form-input-text {
-    width: 100px;
-  }
+.form-input-text {
+  width: 100px;
+}
 
-  .form-input-number {
-    width: 50px;
-  }
+.form-input-number {
+  width: 50px;
+}
 
-  table {
-    margin-right: 10%;
-  }
+table {
+  margin-right: 10%;
+}
 
-
-  .footer {
-    margin-bottom: 8%;
-  }
-  </style>
+.footer {
+  margin-bottom: 8%;
+}
+</style>
   */

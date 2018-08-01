@@ -29,7 +29,6 @@ getCurrentUser() {
     if (user) {
         return user
     } else if (localStorage.getItem("token")) {
-        console.log('to sem usuário')
         return this.getUser()
         .then((result) => {
             user = result.request.response;
