@@ -20,15 +20,11 @@ public class UserService {
 	private StudentService studentService;
 
 	public FirebaseToken getFirebaseTokenFromIdToken(String idToken) throws Exception {
-		System.out.println(idToken);
-
 		idToken = idToken.split(" ")[1];
-
-		System.out.println(idToken);
+		
 		try {
 			return FirebaseAuth.getInstance().verifyIdTokenAsync(idToken).get();
 		} catch (InterruptedException | ExecutionException e) {
-			System.out.println(e.getMessage());
 			throw new Exception("User Not Authenticated");
 		}
 	}
@@ -50,8 +46,10 @@ public class UserService {
 	public boolean isCoordinator(String token) throws Exception {
 		FirebaseToken firebaseToken = this.getFirebaseTokenFromIdToken(token);
 		Map<String, Object> claims = firebaseToken.getClaims();
-
-		return claims.containsKey("admin");
+		
+		System.out.println(claims.toString());
+		
+		return claims.get("email").equals("icaro.lima@ccc.ufcg.edu.br");
 	}
 
 	public ResponseEntity<String> getUser(String token) {
