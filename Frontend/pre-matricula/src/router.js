@@ -24,7 +24,7 @@ const router = new Router({
       component: Login,
       beforeEnter: (to, from, next) => {
         let currentUser = AuthService.getCurrentUser();
-        if (currentUser.role) {
+        if (currentUser && currentUser.role) {
           next("dashboard")
         } else {
           next()
