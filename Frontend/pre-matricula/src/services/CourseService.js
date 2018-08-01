@@ -7,12 +7,6 @@ export default {
        return axios.put('/disciplines', discipline)
     },
 
-    studentEnroll(codeList) {
-        return axios.put('/course/enroll', {
-            codes: codeList
-        })
-    },
-
     getDisciplines() {
         return axios.get('/disciplines')
     },

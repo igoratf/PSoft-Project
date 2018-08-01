@@ -40,8 +40,8 @@
               </select></td>
         <td v-else>{{list.coursePlan}}</td>
         <td v-if="user.role == 'Coordinator'">
-        <button class="btn-opts"@click="editDiscipline(index)"><i class="far fa-edit" ></i></button>
-        <button class="btn- opts btn-remove" @click="deleteCourse(index)"><i class="fas fa-times"></i></button>
+        <span class="btn-opts"@click="editDiscipline(index)"><i class="far fa-edit" ></i></span>
+        <span class="btn-opts btn-remove" @click="deleteCourse(index)"><i class="fas fa-trash-alt"></i></span>
         </td>
       </tr>    
     </tbody>
@@ -51,20 +51,6 @@
   <button type="submit" class="btn btn-primary" v-if="user.role == 'Student'">Realizar pré matrícula</button>
   </form>
   </div>
-
-   <!-- <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
-      {{successMessage}}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="container alert alert-danger alert-dismissible fade" :class="{show: showError}" role="alert">
-      {{errorMessage}}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div> -->
 
   {{checked}}
 
@@ -148,12 +134,16 @@
       },
       editDiscipline(index) {
         let discipline = this.courseList[index];
+        console.log(discipline)
         if (this.selected) {
           this.selected = null;
           return CourseService.registerDiscipline(discipline)
           .then((result) => {
+            console.log('tá entrando aqui')
+            console.log(result)
           })
           .catch((error) => {
+            console.log('deu erro')
             alert(error.message)
           })
         } else {
@@ -177,22 +167,16 @@
       }
     },
     computed: {},
-    updated() {
-    },
+    updated() {},
     created() {
       this.user = AuthService.getCurrentUser();
       return CourseService.getDisciplines()
       .then((result) => {
-        console.log('aqui deu bom')
-        console.log('resultado ', result)
         this.courseList = result.data;
       })
       .catch((error) => {
         alert(error.message)
       })
-      console.log(this.user)
-      this.user = AuthService.getCurrentUser();
-      console.log(this.user.role)
       // CourseService.getDisciplines()
       // .then((result) => {
       //   this.courseList = result;
@@ -227,8 +211,15 @@
     margin-bottom: 2%;
   }
 
+  .btn-opts:hover {
+    cursor: pointer;
+  }
+
+  .btn-opts {
+    /* margin-right: 8px; */
+  }
   .btn-remove {
-    margin-left: 6px;
+    margin-left: 8px;
   }
 
   .form-input-text {
