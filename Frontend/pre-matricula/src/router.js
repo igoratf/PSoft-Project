@@ -33,13 +33,29 @@ const router = new Router({
       path: '/student-registration',
       name: 'student-registration',
       component: StudentRegistration,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
+      beforeEnter: (to, from, next) => {
+        let currentUser = AuthService.getCurrentUser();
+        if (currentUser && currentUser.role == 'Coordinator') {
+          next("dashboard")
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/course-registration',
       name: 'course-registration',
       component: CourseRegistration,
-      meta: { requiresAuth: true, requiresRole: true }
+      meta: { requiresAuth: true, requiresRole: true },
+      beforeEnter: (to, from, next) => {
+        let currentUser = AuthService.getCurrentUser();
+        if (currentUser && currentUser.role == 'Student') {
+          next("dashboard")
+        } else {
+          next()
+        }
+      }
     }
   ]
 })
