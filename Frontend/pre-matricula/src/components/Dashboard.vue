@@ -9,7 +9,7 @@
     <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col"></th>
+        <th scope="col" v-if="user.role == 'Student'"></th>
         <th scope="col">Período</th>
         <th scope="col">Código</th>
         <th scope="col">Disciplina</th>
@@ -21,7 +21,7 @@
     </thead>
     <tbody is="transition-group" leave-active-class="animated zoomOut faster">
       <tr v-for="(list, index) in courseList" :key="index">
-        <input class="course-checkbox" type="checkbox" :value="list" v-model="checked" v-if="user.role">
+        <input class="course-checkbox" type="checkbox" :value="list" v-model="checked" v-if="user.role == 'Student'">
         <td scope="row" v-if="list == selected"><input class="form-input-number" type="number"  v-model="selected.semester"></td>
         <td v-else scope="row">{{list.semester}}</td>
         <td scope="row" v-if="list == selected"><input class="form-input-text" type="text" v-model="selected.code"></td>
@@ -178,17 +178,10 @@
     },
     computed: {},
     updated() {
-      this.user = AuthService.getCurrentUser();
-      return axios.get('/disciplines')
-      .then((result) => {
-        // this.courseList = result
-        console.log(result)
-      })
     },
     created() {
       console.log(this.user)
       this.user = AuthService.getCurrentUser();
-      this.getUser();
       console.log(this.user.role)
       // CourseService.getDisciplines()
       // .then((result) => {

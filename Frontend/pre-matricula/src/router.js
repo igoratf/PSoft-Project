@@ -33,20 +33,20 @@ const router = new Router({
       path: '/student-registration',
       name: 'student-registration',
       component: StudentRegistration,
-      meta: { requiresAuth: true, registered: false }
+      meta: { requiresAuth: true }
     },
     {
       path: '/course-registration',
       name: 'course-registration',
       component: CourseRegistration,
-      meta: { requiresAuth: true, requiresAdmin: true }
+      meta: { requiresAuth: true, requiresRole: true }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   let requiresAuth = to.meta.requiresAuth
-  let requiresAdmin = to.meta.role
+  let requiresRole = to.meta.role
   let currentUser = AuthService.getCurrentUser();
   let currentUserRole = "";
 
@@ -59,7 +59,9 @@ router.beforeEach((to, from, next) => {
 
   if (to.path != '/login' && (!localStorage.token || (!currentUser && requiresAuth))) {
     next('login')
-  } else if (requiresAdmin && currentUserRole != 'Coordinator') {
+  } else if (requiresRole && !currentUserRole) {
+    next('student-registration')
+  } else if (requiresRole && currentUserRole != 'Coordinator') {
     next('dashboard')
   }
   else {
