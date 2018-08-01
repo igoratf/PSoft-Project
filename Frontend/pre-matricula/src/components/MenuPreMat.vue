@@ -27,8 +27,8 @@
               {{user.name}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
+              <router-link class="dropdown-item" to="student-registration">Alterar dados</router-link>
+              <a class="dropdown-item" href="#">Sair</a>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </div>
