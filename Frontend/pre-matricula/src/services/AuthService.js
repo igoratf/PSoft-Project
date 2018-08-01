@@ -12,8 +12,8 @@ signInWithGoogle() {
     },
 
 signOut() {
-    router.replace("login")
     localStorage.clear();
+    router.replace("login")
     },
 
 checkCurrentLogin() {

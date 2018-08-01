@@ -22,20 +22,20 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login,
-      beforeEnter: (to, from, next) => {
-        let currentUser = localStorage.getItem("user");
-        if (currentUser && currentUser.role) {
-          next("dashboard")
-        } else {
-          next()
-        }
-      }
     },
     {
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      meta: { requiresAuth: true, requiresRole: true }
+      meta: { requiresAuth: true, requiresRole: true },
+      beforeEnter: (to, from, next) => {
+        let currentUser = AuthService.getCurrentUser();
+        if (!currentUser) {
+          next("login")
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/student-registration',
@@ -58,7 +58,10 @@ const router = new Router({
       meta: { requiresAuth: true, requiresRole: true },
       beforeEnter: (to, from, next) => {
         let currentUser = AuthService.getCurrentUser();
-        if (currentUser && currentUser.role == 'Student') {
+        if (!currentUser) {
+          next("login")
+        }
+        else if (currentUser && currentUser.role == 'Student') {
           next("dashboard")
         } else {
           next()
@@ -68,31 +71,31 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  let requiresAuth = to.meta.requiresAuth
-  let requiresRole = to.meta.requiresRole
-  let currentUser = AuthService.getCurrentUser();
-  let currentUserRole = "";
+// router.beforeEach((to, from, next) => {
+//   let requiresAuth = to.meta.requiresAuth
+//   let requiresRole = to.meta.requiresRole
+//   let currentUser = AuthService.getCurrentUser();
+//   let currentUserRole = "";
 
 
-  console.log(currentUserRole)
+//   console.log(currentUserRole)
 
-  if (currentUser) {
-    currentUserRole = currentUser.role;
-  }
+//   if (currentUser) {
+//     currentUserRole = currentUser.role;
+//   }
 
-  if (to.path != '/login' && (!localStorage.token || (!currentUser && requiresAuth))) {
-    next('login')
-  } else if (requiresRole && !currentUserRole) {
-    console.log('tá travando aqui')
-    console.log(currentUser)
-    next('student-registration')
-  } 
-  else {
-    next()
-  }
+//   if (to.path != '/login' && (!localStorage.token || !currentUser)) {
+//     next('login')
+//   } else if (requiresRole && !currentUserRole) {
+//     console.log('tá travando aqui')
+//     console.log(currentUser)
+//     next('student-registration')
+//   } 
+//   else {
+//     next()
+//   }
 
-})
+// })
 
 
 export default router
