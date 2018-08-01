@@ -2,7 +2,7 @@ package com.example.preMatricula.entities;
 
 import java.util.Set;
 
-import com.example.preMatricula.enums.CoursePlan;
+import com.example.preMatricula.enums.DisciplineCoursePlan;
 
 import org.springframework.data.annotation.Id;
 
@@ -16,10 +16,10 @@ public class Discipline {
 	private Integer credits;
 	private Integer workload;
 	private Integer semester;
-	private CoursePlan coursePlan;
+	private DisciplineCoursePlan coursePlan;
 	private Set<String> studentsEnrolledIDs;
 	
-	public Discipline(Integer code, Integer semester, String name, Integer credits, Integer workload, CoursePlan coursePlan) {
+	public Discipline(Integer code, Integer semester, String name, Integer credits, Integer workload, DisciplineCoursePlan coursePlan) {
 		super();
 		this.name = name;
 		this.code = code;
@@ -80,16 +80,20 @@ public class Discipline {
 		this.semester = semester;
 	}
 
-	public CoursePlan getCoursePlan() {
+	public DisciplineCoursePlan getCoursePlan() {
 		return coursePlan;
 	}
 
-	public void setCoursePlan(CoursePlan coursePlan) {
+	public void setCoursePlan(DisciplineCoursePlan coursePlan) {
 		this.coursePlan = coursePlan;
 	}
 
 	public Integer getCode() {
 		return code;
+	}
+	
+	public void setCode(Integer code) {
+		this.code = code;
 	}
 
 	public Set<String> getStudentsEnrolledIDs() {

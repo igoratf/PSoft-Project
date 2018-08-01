@@ -27,6 +27,16 @@ public class StudentService {
 	public void enrollStudentInDisciplines(Enrollment enrollment) {
 		User student = this.students.findById(enrollment.getStudentID()).get();
 		student.setEnrolledDisciplinesID(new HashSet<>(enrollment.getDisciplineCodes()));
+		this.students.save(student);
+	}
+	
+	public void unenrollStudentsFrom(Integer code) {
+		this.students.findAll().forEach(student -> {
+			if (student.getRole().equals("Student")) {
+				student.unenrollFrom(code);
+				this.students.save(student);
+			}
+		});
 	}
 
 	public boolean putStudent(Student student) {
@@ -60,11 +70,17 @@ public class StudentService {
 	public ResponseEntity<String> putStudent(Student student, String token) {
 		try {
 			FirebaseToken firebaseToken = this.userService.getFirebaseTokenFromIdToken(token);
+			student.setRole("Student");
 			student.setId(firebaseToken.getUid());
 			student.setEmail(firebaseToken.getEmail());
+			student.setName(firebaseToken.getName());
 
 			boolean existed = this.students.existsById(student.getId());
 
+			if (existed && this.students.findById(student.getId()).get().getRole().equals("Coordinator")) {
+				return new ResponseEntity<>("Você não é um estudante.", HttpStatus.NOT_ACCEPTABLE);
+			}
+			
 			this.students.save(student);
 
 			if (existed) {
@@ -73,6 +89,7 @@ public class StudentService {
 				return new ResponseEntity<>("Estudante criado(a)!", HttpStatus.CREATED);
 			}
 		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
