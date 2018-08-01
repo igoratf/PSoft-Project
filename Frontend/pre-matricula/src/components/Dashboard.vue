@@ -2,6 +2,8 @@
 
     <section class="dashboard">
       <MenuPreMat :user="user"/>
+      
+      <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError" />
 
       <div class="container animated zoomIn faster">
         <h1> Lista de disciplinas cadastradas</h1>
@@ -54,10 +56,7 @@
 
   {{checked}}
 
-  <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError" />
-
-
-  <div class="container footer animated zoomIn faster" v-if="user.role == 'Coordinator'">
+  <div class="footer animated zoomIn faster" v-if="user.role == 'Coordinator'">
     <h1>Exportar matrículas </h1>
     <button type="button" class="btn btn-outline-success" @click="getEnrollments">Exportar matrículas</button>
   </div>
