@@ -14,13 +14,13 @@ public class Coordinator extends User {
 
 	@Override
 	@JsonIgnore
-	public Set<Integer> getEnrolledDisciplinesID() {
+	public Set<Discipline> getEnrolledDisciplinesID() {
 		throw new StudentOnlyException();
 	}
 
 	@Override
 	@JsonIgnore
-	public void setEnrolledDisciplinesID(Set<Integer> enrolledDisciplinesID) {
+	public void setEnrolledDisciplinesID(Set<Discipline> enrolledDisciplinesID) {
 		throw new StudentOnlyException();
 	}
 

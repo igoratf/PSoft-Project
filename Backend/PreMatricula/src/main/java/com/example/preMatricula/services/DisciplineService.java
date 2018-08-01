@@ -1,6 +1,8 @@
 package com.example.preMatricula.services;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +48,12 @@ public class DisciplineService {
 			System.out.println(ex.getMessage());
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	public Set<Discipline> getDisciplines(List<Integer> codes) {
+		Iterable<Discipline> disciplines = this.disciplines.findAllById(codes);
+		HashSet<Discipline> disciplineSet = new HashSet<>();
+		disciplines.forEach(discipline -> this.dis);
 	}
 
 	public ResponseEntity<List<Discipline>> getDisciplines(String token) {

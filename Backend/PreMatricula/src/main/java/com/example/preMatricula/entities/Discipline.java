@@ -17,6 +17,7 @@ public class Discipline {
 	private Integer workload;
 	private Integer semester;
 	private DisciplineCoursePlan coursePlan;
+	
 	private Set<String> studentsEnrolledIDs;
 	
 	public Discipline(Integer code, Integer semester, String name, Integer credits, Integer workload, DisciplineCoursePlan coursePlan) {

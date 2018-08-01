@@ -52,9 +52,9 @@ public abstract class User {
 		this.role = role;
 	}
 	
-	public abstract Set<Integer> getEnrolledDisciplinesID();
+	public abstract Set<Discipline> getEnrolledDisciplinesID();
 
-	public abstract void setEnrolledDisciplinesID(Set<Integer> enrolledDisciplinesID);
+	public abstract void setEnrolledDisciplinesID(Set<Discipline> enrolledDisciplinesID);
 
 	public abstract Long getRegistration();
 

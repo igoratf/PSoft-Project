@@ -2,6 +2,8 @@ package com.example.preMatricula.entities;
 
 import java.util.Set;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import com.example.preMatricula.enums.StudentCoursePlan;
 
 import java.util.HashSet;
@@ -11,7 +13,9 @@ public class Student extends User {
 	private StudentCoursePlan coursePlan;
 	private Long registration;
 	private Integer semester;
-	private Set<Integer> enrolledDisciplinesID;
+	
+	@DBRef
+	private Set<Discipline> enrolledDisciplinesID;
 	
 	public Student(String name, Long registration, Integer semester) {
 		super(name, "Student");
@@ -30,12 +34,12 @@ public class Student extends User {
 	}
 
 	@Override
-	public Set<Integer> getEnrolledDisciplinesID() {
+	public Set<Discipline> getEnrolledDisciplinesID() {
 		return enrolledDisciplinesID;
 	}
 
 	@Override
-	public void setEnrolledDisciplinesID(Set<Integer> enrolledDisciplinesID) {
+	public void setEnrolledDisciplinesID(Set<Discipline> enrolledDisciplinesID) {
 		this.enrolledDisciplinesID = enrolledDisciplinesID;
 	}
 

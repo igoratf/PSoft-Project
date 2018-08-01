@@ -9,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.preMatricula.entities.Discipline;
 import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.entities.User;
+import com.example.preMatricula.repositories.DisciplinaRepository;
 import com.example.preMatricula.repositories.UserRepository;
 import com.google.api.Http;
 import com.google.firebase.auth.FirebaseToken;
@@ -24,10 +26,13 @@ public class StudentService {
 
 	@Autowired
 	private UserRepository students;
+	
+	@Autowired
+	private DisciplineService disciplineService;
 
 	public void enrollStudentInDisciplines(Enrollment enrollment) {
 		User student = this.students.findById(enrollment.getStudentID()).get();
-		student.setEnrolledDisciplinesID(new HashSet<>(enrollment.getDisciplineCodes()));
+		student.setEnrolledDisciplinesID(new HashSet<>(
 	}
 	
 	public void unenrollStudentsFrom(Integer code) {
