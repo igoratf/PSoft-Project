@@ -27,7 +27,7 @@
               <i class="fas fa-user"><span class="logged-info">{{user.name}}</span></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <router-link class="dropdown-item" to="student-registration">Alterar dados</router-link>
+              <router-link class="dropdown-item" to="student-registration" v-if="user.role != 'Coordinator'">Alterar dados</router-link>
               <a class="dropdown-item logout" @click="signOut">Sair</a>
             </div>
           </div>
