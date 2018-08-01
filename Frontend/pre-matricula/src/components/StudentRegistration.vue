@@ -29,6 +29,7 @@
               <div class="form-group">
                 <label for="exampleFormControlSelect2">Grade Curricular</label>
                 <select class="form-control" id="exampleFormControlSelect2" v-model="coursePlan" required>
+                  <option disabled selected value="">Selecione a grade</option>
                   <option>Nova</option>
                   <option>Antiga</option>
                 </select>

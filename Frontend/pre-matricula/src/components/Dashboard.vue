@@ -24,15 +24,15 @@
     <tbody is="transition-group" leave-active-class="animated zoomOut faster">
       <tr v-for="(list, index) in courseList" :key="index">
         <input class="course-checkbox" type="checkbox" :value="list" v-model="checked" v-if="user.role == 'Student'">
-        <td scope="row" v-if="list == selected"><input class="form-input-number" type="number"  v-model="selected.semester"></td>
+        <td scope="row" v-if="list == selected"><input class="form-input-number" type="number"  v-model="selected.semester" min=0 max=10></td>
         <td v-else scope="row">{{list.semester}}</td>
         <td scope="row" v-if="list == selected"><input class="form-input-text" type="text" v-model="selected.code"></td>
         <td v-else>{{list.code}}</td>
         <td scope="row" v-if="list == selected"><input class="form-input-text" type="text" v-model="selected.name"></td>
         <td v-else>{{list.name}}</td>
-        <td scope="row" v-if="list == selected"><input class="form-input-number" type="number" v-model="selected.credits"></td>
+        <td scope="row" v-if="list == selected"><input class="form-input-number" type="number" v-model="selected.credits" min=0 max=10></td>
         <td v-if="list != selected">{{list.credits}}</td>
-        <td scope="row" v-if="list == selected"><input class="form-input-text" type="number" v-model="selected.workload"></td>
+        <td scope="row" v-if="list == selected"><input class="form-input-text" type="number" v-model="selected.workload" min=0 max=300></td>
         <td v-else>{{list.workload}}</td>
         <td scope="row" v-if="list == selected"><select id="coursePlan" class="form-input-text" v-model="selected.coursePlan">
                 <option disabled selected value="">Selecione a grade</option>
@@ -42,7 +42,7 @@
               </select></td>
         <td v-else>{{list.coursePlan}}</td>
         <td v-if="user.role == 'Coordinator'">
-        <span class="btn-opts"@click="editDiscipline(index)"><i class="fas fa-edit"></i></span>
+        <span class="btn-opts" @click="editDiscipline(index)"><i class="fas fa-edit"></i></span>
         <span class="btn-opts btn-remove" @click="deleteCourse(index)"><i class="fas fa-trash-alt"></i></span>
         </td>
       </tr>    
@@ -64,7 +64,6 @@
   </template>
 
   <script>
-import firebase from "firebase/app";
 import axios from "../auth-axios/axios.js";
 import Papa from "papaparse";
 import MenuPreMat from "@/components/MenuPreMat.vue";

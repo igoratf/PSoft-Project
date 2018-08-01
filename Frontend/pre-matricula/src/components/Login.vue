@@ -68,7 +68,7 @@ export default {
               console.log('deu get')
               let user = result.request.response;
               console.log(JSON.parse(result.request.response))
-              localStorage.setItem("user", JSON.parse(user));
+              localStorage.setItem("user", user);
               if (!user.role) {
                 this.$router.replace("student-registration");
               } else {
