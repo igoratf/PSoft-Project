@@ -39,7 +39,7 @@ public class DisciplineController {
 	}
 	
 	@DeleteMapping(path = "/{code}")
-	public @ResponseBody ResponseEntity<String> getDisciplines(
+	public @ResponseBody ResponseEntity<String> deleteDisciplines(
 			@RequestHeader(name = "Authorization") String token, @PathVariable(name = "code") Integer code) throws Exception {
 		return this.disciplineService.deleteDiscipline(code, token);
 	}

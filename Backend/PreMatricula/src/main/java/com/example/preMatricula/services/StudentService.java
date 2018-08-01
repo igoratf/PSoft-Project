@@ -13,6 +13,7 @@ import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
 import com.example.preMatricula.entities.User;
 import com.example.preMatricula.repositories.UserRepository;
+import com.google.api.Http;
 import com.google.firebase.auth.FirebaseToken;
 
 @Service
@@ -45,8 +46,17 @@ public class StudentService {
 		return existed;
 	}
 
-	public List<User> getStudents() {
-		return this.students.findAll();
+	public ResponseEntity<List<User>> getStudents(String token) {
+		try {
+			if (!this.userService.isCoordinator(token)) {
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
+			
+			return new ResponseEntity<>(this.students.findAll(), HttpStatus.OK);
+			
+		} catch(Exception ex) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	public boolean containsStudent(String id) {

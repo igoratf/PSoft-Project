@@ -90,10 +90,6 @@ public class CoordinationService {
 		}
 	}
 	
-	public List<User> getStudents() {
-		return this.studentService.getStudents();
-	}
-	
 	public ResponseEntity<Optional<User>> getStudent(String id) {
 		if (this.studentService.containsStudent(id)) {
 			return new ResponseEntity<>(this.studentService.getStudent(id), HttpStatus.FOUND);
