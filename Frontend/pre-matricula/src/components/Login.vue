@@ -3,49 +3,26 @@
     <div class="container">
       <div class="row">
         <div class="col label">
-          <h1 >Bem vindo(a) ao Sistema de Pré Matrícula da UFCG</h1>
+          <h1>Bem vindo(a) ao Sistema de Pré Matrícula da UFCG</h1>
         </div>
       </div>
       <div class="row">
         <div class="col"></div>
         <div class="col">
           <div class="form-container">
-
-            <h1> Login </h1>
-            <hr>
-
-            <form @submit.prevent="adminLogin">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" v-model="email">
-              </div>
-
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="password">
-              </div>
-
-              <div class="row">
-                <div class="col">
-                  <small>
-                    <a href="#">Change password</a>
-                  </small>
-                </div>
-              </div>
-              <br>
-
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary">Login</button>
-              </div>
-              <hr>
-            </form>
-
             <div class="row">
               <div class="col">
-                Se você for um aluno, realize login abaixo com sua conta CCC
+                <img src="../assets/logoufcg.jpg" width=130px>
               </div>
             </div>
-
+            <hr>
+            <h1> Login </h1>
+            <hr>
+            <div class="row">
+              <div class="col">
+                Realize login abaixo com sua conta @ccc.ufcg.edu.br
+              </div>
+            </div>
             <hr>
 
             <button class="btn btn-google" @click="signInWithGoogle">
@@ -67,8 +44,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import AuthService from "../services/AuthService.js";
-import axios from '../auth-axios/axios';
-
+import axios from "../auth-axios/axios";
 
 export default {
   name: "login",
@@ -81,38 +57,42 @@ export default {
   },
   methods: {
     signInWithGoogle() {
-      return AuthService.signInWithGoogle().then(result => {
-        localStorage.setItem('token', result.user._lat)
-      }).then(() => {
-        axios.get('/users')
-        .then((result) => {
-          this.$router.replace('student-registration')
-          let user = result.request.response
-          localStorage.setItem('user', user)
-          console.log(result)
-          console.log(result.request.response)
+      return AuthService.signInWithGoogle()
+        .then(result => {
+          console.log(result.user._lat);
+          localStorage.setItem("token", result.user._lat);
         })
-        .catch((error) => {
-          alert(error.message)
+        .then(() => {
+          axios
+            .get("/users")
+            .then(result => {
+              console.log(result);
+              let user = result.request.response;
+              localStorage.setItem("user", user);
+              if (!user.registration) {
+                this.$router.replace("student-registration");
+              } else {
+                this.$router.replace("dashboard");
+              }
+              console.log("user aqui ", user);
+            })
+            .catch(error => {
+              console.log('to caindo aqui')
+              this.$router.replace("student-registration");
+              console.log(error);
+            });
         })
-      })
-       .catch((error) => {
-         alert(error.message)
-       })       
-    },
-    adminLogin() {
-      return AuthService.adminSignIn(this.email, this.password)
-      .then()
-      .catch()
+        .catch(error => {
+          alert(error.message);
+        });
     }
   },
   created() {
-    console.log('oi', localStorage.user)
+    console.log('to na tela de login')
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .form-container {
   width: 100%;
@@ -121,7 +101,6 @@ export default {
   margin-top: 15%;
   margin-bottom: 15%;
 }
-
 
 .label {
   min-width: 300px;
@@ -140,7 +119,6 @@ export default {
 .btn-google:hover {
   background-color: darkred;
 }
-
 
 .sign-google {
   font-family: "Arial Narrow Bold", sans-serif;

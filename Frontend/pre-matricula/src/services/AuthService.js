@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import axios from '../auth-axios/axios';
+import router from '../router';
 
 export default {
 signInWithGoogle() {
@@ -11,8 +12,8 @@ signInWithGoogle() {
     },
 
 signOut() {
+    router.replace("login")
     localStorage.clear();
-    return firebase.auth().signOut()
     },
 
 checkCurrentLogin() {
@@ -23,16 +24,30 @@ checkCurrentLogin() {
     }
 },
 
-getUserRole() {
-    let user = firebase.auth().currentUser;
+getCurrentUser() {
+    let user = JSON.parse(localStorage.getItem('user'))
     if (user) {
-        user.role = 'admin'
-        user.registered = false
-        return user.role
-    } else {
-        return ''
+        return user
+    } else if (localStorage.getItem("token")) {
+        return this.getUser()
+        .then((result) => {
+            user = result.request.response;
+            localStorage.setItem("user", user)
+            return user
+        })
+        .catch((error) => {
+            alert(error.message)
+        })
     }
-    
+},
 
+getUser() {
+    return axios.get('/users')
+},
+
+getFirebaseUser() {
+    return firebase.auth().currentUser;
 }
+
+
 }

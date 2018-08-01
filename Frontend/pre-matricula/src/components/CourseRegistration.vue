@@ -1,23 +1,8 @@
 /* <template>
   <section class="course-registration">
-    <!-- > Lembrar de passar user como prop para MenuPreMat -->
-    <MenuPreMat />
+    <MenuPreMat :user="user"/>
 
     <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError"/>
-
-    <!-- <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
-      {{successMessage}}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="container alert alert-danger alert-dismissible fade" :class="{show: showError}" role="alert">
-      {{errorMessage}}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div> -->
 
     <div class="container form-container animated zoomIn faster">
       <form @submit.prevent="submit">
@@ -38,11 +23,11 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="semester">Período</label>
-            <input type="number" class="form-control" id="semester" min=1 max=10 placeholder="Período da disciplina" v-model="semester" required>
+            <input type="number" class="form-control" id="semester" min=1 max=9 placeholder="Período da disciplina" v-model="semester" required>
           </div>
           <div class="form-group col-md-6">
             <label for="workload">Carga horária</label>
-            <input type="number" class="form-control" id="workload" placeholder="Carga horária da disciplina" v-model="workload" required>
+            <input type="number" class="form-control" id="workload" placeholder="Carga horária da disciplina" min=0 max=120 v-model="workload" required>
           </div>
         </div>
         <div class="form-row">
@@ -60,7 +45,7 @@
             </select>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
       </form>
     </div>
 
@@ -99,29 +84,26 @@ export default {
       showError: false
     };
   },
-
   methods: {
     submit() {
-      let discipline = {
+      console.log(this.code)
+      var discipline = {
         name: this.name,
         code: this.code,
-        semester: this.semester,
         credits: this.credits,
         workload: this.workload,
+        semester: this.semester,
         coursePlan: this.coursePlan
       };
-      console.log(discipline)
-      axios.put('/course/disciplines/put', {
-        discipline
-      }).then((result) => {
+      return CourseService.registerDiscipline(discipline)
+      .then((result) => {
         console.log(result)
-        setSuccessAlert(result.message)
+        this.setSuccessAlert(result.data)
       })
       .catch((error) => {
         console.log(error)
-        setErrorAlert(error.message)
+        this.setErrorAlert(error.message)
       })
-      // this.clearFormData();
     },
     setSuccessAlert(message) {
         this.successMessage = message;
@@ -161,6 +143,9 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  margin-top: 10%;
+}
 .form-container {
   width: 100%;
   border: 2px solid black;

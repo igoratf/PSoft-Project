@@ -3,23 +3,28 @@ import axios from '../auth-axios/axios';
 
 export default {
     registerDiscipline(discipline) {
-       return axios.put('/course/disciplines/put', {
-        discipline
-      })
-    },
-
-    studentEnroll(codeList) {
-        return axios.put('/course/enroll', {
-            codes: codeList
-        })
+        console.log(discipline)
+       return axios.put('/disciplines', discipline)
     },
 
     getDisciplines() {
-        return axios.get('/course/disciplines')
+        return axios.get('/disciplines')
     },
 
     deleteDiscipline(code) {
         return axios.delete('/course/disciplines/{code}')
+    },
+
+    submitEnrollment(courseList) {
+        return axios.put('/coordination/enroll', courseList)
+    },
+
+    exportEnrollments() {
+        return axios.get('')
+    },
+
+    getEnrollments() {
+        return axios.get('/students')
     }
 
 }

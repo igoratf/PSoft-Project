@@ -4,7 +4,6 @@ import Login from './components/Login.vue'
 import Dashboard from './components/Dashboard.vue'
 import StudentRegistration from './components/StudentRegistration.vue'
 import CourseRegistration from './components/CourseRegistration.vue'
-import About from './views/About.vue'
 import AuthService from './services/AuthService';
 
 Vue.use(Router)
@@ -28,48 +27,44 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, requiresRole: true }
     },
     {
       path: '/student-registration',
       name: 'student-registration',
       component: StudentRegistration,
-      meta: { requiresAuth: true, registered: false }
+      meta: { requiresAuth: true }
     },
     {
       path: '/course-registration',
       name: 'course-registration',
       component: CourseRegistration,
-      meta: { requiresAuth: true, role: 'admin' }
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: About
-    },
+      meta: { requiresAuth: true, requiresRole: true }
+    }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  /*let currentUser = firebase.auth().currentUser;
-  let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-
-  if (requiresAuth && !currentUser) next('login')
-  else if (!requiresAuth && currentUser) next('about')
-  else next()*/
   let requiresAuth = to.meta.requiresAuth
-  let requiresAdmin = to.meta.role
-  let currentUserRole = localStorage.getItem('user')
+  let requiresRole = to.meta.requiresRole
+  let currentUser = AuthService.getCurrentUser();
+  let currentUserRole = "";
+
+
   console.log(currentUserRole)
 
-  if (!localStorage.token && requiresAuth) {
+  if (currentUser) {
+    currentUserRole = currentUser.role;
+  }
+
+  if (to.path != '/login' && (!localStorage.token || (!currentUser && requiresAuth))) {
     next('login')
-  } else if (requiresAdmin && currentUserRole != 'admin') {
-      next('dashboard')
-    }
-    else {
-      next()
-    }
+  } else if (requiresRole && !currentUserRole) {
+    next('student-registration')
+  } 
+  else {
+    next()
+  }
 
 })
 

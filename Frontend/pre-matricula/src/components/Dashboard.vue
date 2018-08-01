@@ -1,7 +1,9 @@
   /* <template lang="html">
 
     <section class="dashboard">
-      <MenuPreMat />
+      <MenuPreMat :user="user"/>
+
+      <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError" />
 
       <div class="container animated zoomIn faster">
         <h1> Lista de disciplinas cadastradas</h1>
@@ -9,7 +11,7 @@
     <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col"></th>
+        <th scope="col" v-if="user.role == 'Student'"></th>
         <th scope="col">Período</th>
         <th scope="col">Código</th>
         <th scope="col">Disciplina</th>
@@ -21,7 +23,7 @@
     </thead>
     <tbody is="transition-group" leave-active-class="animated zoomOut faster">
       <tr v-for="(list, index) in courseList" :key="index">
-        <input class="course-checkbox" type="checkbox" :value="list" v-model="checked">
+        <input class="course-checkbox" type="checkbox" :value="list" v-model="checked" v-if="user.role == 'Student'">
         <td scope="row" v-if="list == selected"><input class="form-input-number" type="number"  v-model="selected.semester"></td>
         <td v-else scope="row">{{list.semester}}</td>
         <td scope="row" v-if="list == selected"><input class="form-input-text" type="text" v-model="selected.code"></td>
@@ -39,206 +41,222 @@
                 <option>Ambas</option>
               </select></td>
         <td v-else>{{list.coursePlan}}</td>
-        <button @click="editDiscipline(index)"><i class="far fa-edit"></i></button>
-        <button class="btn-remove" @click="deleteCourse(index)"><i class="fas fa-times"></i></button>
+        <td v-if="user.role == 'Coordinator'">
+        <span class="btn-opts"@click="editDiscipline(index)"><i class="fas fa-edit"></i></span>
+        <span class="btn-opts btn-remove" @click="deleteCourse(index)"><i class="fas fa-trash-alt"></i></span>
+        </td>
       </tr>    
     </tbody>
   </table>
-  {{selected}}
+
   <hr>
-  <button type="submit" class="btn btn-primary">Concluir</button>
+  <button type="submit" class="btn btn-primary" v-if="user.role == 'Student'">Realizar pré matrícula</button>
   </form>
   </div>
 
-   <!-- <div class="container alert alert-success alert-dismissible fade" :class="{show: showSuccess}" role="alert">
-      {{successMessage}}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="container alert alert-danger alert-dismissible fade" :class="{show: showError}" role="alert">
-      {{errorMessage}}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div> -->
-
   {{checked}}
 
-  <Alert :successMessage="successMessage" :errorMessage="errorMessage" :showSuccess="showSuccess" :showError="showError" />
-
-
-  <div class="container footer animated zoomIn faster">
+  <div class="footer animated zoomIn faster" v-if="user.role == 'Coordinator'">
     <h1>Exportar matrículas </h1>
-    <button type="button" class="btn btn-outline-success">Exportar matrículas</button>
+    <button type="button" class="btn btn-outline-success" @click="getEnrollments">Exportar matrículas</button>
   </div>
+  <a id="csvFile"></a>
     </section>
 
   </template>
 
   <script>
-  import firebase from 'firebase/app';
-  import axios from '../auth-axios/axios.js';
-  import MenuPreMat from '@/components/MenuPreMat.vue';
-  import AuthService from '../services/AuthService.js';
-  import CourseService from '../services/CourseService.js';
-  import Alert from './Alert.vue';
+import firebase from "firebase/app";
+import axios from "../auth-axios/axios.js";
+import Papa from "papaparse";
+import MenuPreMat from "@/components/MenuPreMat.vue";
+import AuthService from "../services/AuthService.js";
+import CourseService from "../services/CourseService.js";
+import Alert from "./Alert.vue";
 
-  export default {
-    name: "dashboard",
-    components: {
-      MenuPreMat,
-      Alert
+export default {
+  name: "dashboard",
+  components: {
+    MenuPreMat,
+    Alert
+  },
+  props: [],
+  mounted() {},
+  data() {
+    return {
+      user: "",
+      courseList: [],
+      checked: [],
+      selected: null,
+      successMessage: "oi",
+      errorMessage: "oi",
+      showSuccess: false,
+      showError: false
+    };
+  },
+  methods: {
+    submitEnrollment() {
+      let enrollment = this.checked.map(function(discipline) {
+        return discipline.code;
+      });
+      return CourseService.submitEnrollment(enrollment)
+        .then(result => {
+          console.log(result);
+          this.setSuccessAlert("Sucesso");
+        })
+        .catch(error => {
+          console.log(error);
+          alert(error.message);
+        });
     },
-    props: [],
-    mounted() {},
-    data() {
-      return {
-        currentUser: "",
-        courseList: [
-          {
-            semester: 1,
-            code: "18290380123",
-            name: "Programação I",
-            credits: 4,
-            workload: 60,
-            coursePlan: "Ambas"
-          },
-          {
-            semester: 1,
-            code: "12903819203",
-            name: "LPT",
-            credits: 4,
-            workload: 60,
-            coursePlan: "Antiga"
-          }
-        ],
-        checked: [],
-        selected: null,
-        successMessage: "oi",
-        errorMessage: "oi",
-        showSuccess: false,
-        showError: false
-      };
-    },
-    methods: {
-      submitEnrollment() {
-        let enrollment = this.checked.map(function(discipline) {
-          // return discipline.code;
+    deleteCourse(index) {
+      let discipline = this.courseList[index];
+      let code = parseInt(discipline.code);
+      return axios
+        .delete("/disciplines/" + code)
+        .then(result => {
+          console.log(result);
+          this.getDisciplines();
         })
-        return axios.put('/course/enroll', {
-          enrollment
-        })
-        .then((result) => {
-          this.setAlert(this.showSuccess);
-        })
-        .catch((error) => {
+        .catch(error => {
           this.setErrorAlert(error.message);
-        })
-      },
-      getUsers() {
-        let user = null
-        return axios.get('users')
-        .then((result) => user = result)
-        .catch((error) => console.log(error.message))
-        console.log(user);
-      },
-      deleteCourse(index) {
-        let discipline = this.courseList[index];
-        return axios.delete('/')
-        .then(setSuccessAlert())
-        .catch(this.setErrorAlert())
-        this.courseList.splice(index, 1);
-      },
-      editDiscipline(index) {
-        let discipline = this.courseList[index];
-        if (this.selected) {
-          this.selected = null;
-          return CourseService.registerDiscipline(discipline)
-          .then((result) => {
+        });
+    },
+    editDiscipline(index) {
+      let discipline = this.courseList[index];
+      console.log(discipline);
+      if (this.selected) {
+        this.selected = null;
+        return CourseService.registerDiscipline(discipline)
+          .then(result => {
+            this.setSuccessAlert(result.data);
+            console.log("tá entrando aqui");
+            console.log(result);
           })
-          .catch((error) => {
-            alert(error.message)
-          })
-        } else {
-          this.selected = this.courseList[index];
-        }
-      },
-      setSucessAlert() {
-        this.showSuccess = true;
-        setTimeout(this.closeSuccessAlert, 2000);
-      },
-      setErrorAlert(message) {
-        this.errorMessage = message;
-        this.showError = true;
-        setTimeout(this.closeErrorAlert, 2000);
-      },
-      closeSuccessAlert() {
-        this.showSuccess = false;
-      },
-      closeErrorAlert() {
-        this.showError = false;
+          .catch(error => {
+            console.log("deu erro");
+            alert(error.message);
+          });
+      } else {
+        this.selected = this.courseList[index];
       }
     },
-    computed: {},
-    updated() {
+    getDisciplines() {
+      return CourseService.getDisciplines()
+        .then(result => {
+          let list = result.data;
+          this.courseList = list.sort(function(a, b) {
+            return a.semester - b.semester;
+          });
+        })
+        .catch(error => {
+          alert(error.message);
+        });
     },
-    created() {
-      this.currentUser = AuthService.getCurrentUser();
-      this.getUser();
-      // CourseService.getDisciplines()
-      // .then((result) => {
-      //   this.courseList = result;
-      // })
-      // .catch((error) => {
-      //   alert(error.message)
-      // })
+    getEnrollments() {
+      return CourseService.getEnrollments()
+        .then(result => {
+          console.log(result);
+          console.log("json", result.data);
+          var enrollmentsCsv = Papa.unparse(result.data);
+          console.log(enrollmentsCsv);
+          // Papa.download(Papa.unparse(result.data), "data.csv");
+
+          // var encoda = encodeURI(Papa.unparse(result.data);
+          // var baixa = document.createElement("a");
+          // baixa.setAttribute("href", encoda);
+          // baixa.setAttribute("id", "downloadcsv");
+          // baixa.setAttribute("download", "arquivo.csv");
+          // document.body.appendChild(baixa);
+          // baixa.click();
+          // document.body.removeChild(baixa)
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
-    beforeRouteEnter(to, from, next) {
-      next(vm => {
-        if (AuthService.checkCurrentLogin()) {
-          vm.$router.replace(vm.$route.query.redirect || "/dashboard");
-        } else {
-          vm.$router.replace("/login");
-        }
-      });
+    setSuccessAlert() {
+      this.showSuccess = true;
+      setTimeout(this.closeSuccessAlert, 2000);
+    },
+    setErrorAlert(message) {
+      this.errorMessage = message;
+      this.showError = true;
+      setTimeout(this.closeErrorAlert, 2000);
+    },
+    closeSuccessAlert() {
+      this.showSuccess = false;
+    },
+    closeErrorAlert() {
+      this.showError = false;
+    },
+    exportEnrollments() {
+      return axios.get("/");
     }
-    
-  };
-  </script>
+  },
+  computed: {},
+  updated() {},
+  created() {
+    this.user = AuthService.getCurrentUser();
+    this.getDisciplines();
+    // CourseService.getDisciplines()
+    // .then((result) => {
+    //   this.courseList = result;
+    // })
+    // .catch((error) => {
+    //   alert(error.message)
+    // })
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (AuthService.checkCurrentLogin()) {
+        vm.$router.replace(vm.$route.query.redirect || "/dashboard");
+      } else {
+        vm.$router.replace("/login");
+      }
+    });
+  }
+};
+</script>
 
   <style scoped>
-  .container {
-    margin-top: 5%;
-  }
+.container {
+  margin-top: 5%;
+}
 
-  .course-checkbox {
-    margin-top: 18px;
-  }
+.course-checkbox {
+  margin-top: 18px;
+}
 
-  h1 {
-    margin-bottom: 2%;
-  }
+h1 {
+  margin-bottom: 2%;
+}
 
-  .btn-remove {
-    margin-left: 6px;
-  }
+.btn-opts:hover {
+  cursor: pointer;
+}
 
-  .form-input-text {
-    width: 100px;
-  }
+.btn-opts {
+  /* margin-right: 8px; */
+}
+.btn-remove {
+  margin-left: 8px;
+}
 
-  .form-input-number {
-    width: 50px;
-  }
+.form-input-text {
+  width: 100px;
+}
 
-  table {
-    margin-right: 10%;
-  }
+.form-input-number {
+  width: 50px;
+}
 
-  .footer {
-    margin-bottom: 8%;
-  }
-  </style>
+table {
+  margin-right: 10%;
+}
+
+.footer {
+  margin-bottom: 8%;
+}
+</style>
   */
