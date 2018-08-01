@@ -180,6 +180,16 @@
     updated() {
     },
     created() {
+      this.user = AuthService.getCurrentUser();
+      return CourseService.getDisciplines()
+      .then((result) => {
+        console.log('aqui deu bom')
+        console.log('resultado ', result)
+        this.courseList = result.data;
+      })
+      .catch((error) => {
+        alert(error.message)
+      })
       console.log(this.user)
       this.user = AuthService.getCurrentUser();
       console.log(this.user.role)
