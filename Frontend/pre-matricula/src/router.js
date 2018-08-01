@@ -61,7 +61,7 @@ router.beforeEach((to, from, next) => {
     currentUserRole = currentUser.role;
   }
 
-  if ((!localStorage.token || (!currentUser && requiresAuth)) && to.path != '/login') {
+  if (to.path != '/login' && (!localStorage.token || (!currentUser && requiresAuth)) && ) {
     next('login')
   } else if (requiresAdmin && currentUserRole != 'Coordinator') {
     next('dashboard')
