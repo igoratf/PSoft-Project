@@ -5,6 +5,7 @@ import java.util.Set;
 import com.example.preMatricula.enums.DisciplineCoursePlan;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.HashSet;
 
@@ -18,7 +19,8 @@ public class Discipline {
 	private Integer semester;
 	private DisciplineCoursePlan coursePlan;
 	
-	private Set<String> studentsEnrolledIDs;
+	@DBRef
+	private Set<Student> studentsEnrolledIDs;
 	
 	public Discipline(Integer code, Integer semester, String name, Integer credits, Integer workload, DisciplineCoursePlan coursePlan) {
 		super();
@@ -36,7 +38,7 @@ public class Discipline {
 	 * @param studentID O identificador do estudante a ser matriculado.
 	 * @return true se o estudante ainda não estava presente e false caso contrário.
 	 */
-	public boolean enrollStudent(String studentID) {	
+	public boolean enrollStudent(Student studentID) {	
 		return studentsEnrolledIDs.add(studentID);
 	}
 	
@@ -45,7 +47,7 @@ public class Discipline {
 	 * @param studentID O identificador do estudante a ser desmatriculado.
 	 * @return true se tinha um estudante com esse id, false caso contrário.
 	 */
-	public boolean unenrollStudent(String studentID) {
+	public boolean unenrollStudent(Student studentID) {
 		return this.studentsEnrolledIDs.remove(studentID);
 	}
 
@@ -97,7 +99,7 @@ public class Discipline {
 		this.code = code;
 	}
 
-	public Set<String> getStudentsEnrolledIDs() {
+	public Set<Student> getStudentsEnrolledIDs() {
 		return studentsEnrolledIDs;
 	}
 	

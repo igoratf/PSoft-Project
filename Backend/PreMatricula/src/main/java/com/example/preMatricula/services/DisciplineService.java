@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.preMatricula.entities.Discipline;
-import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.repositories.DisciplinaRepository;
 
 @Service
@@ -21,9 +20,6 @@ public class DisciplineService {
 
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private StudentService studentService;
 
 	public ResponseEntity<String> putDiscipline(Discipline discipline, String token) {
 		try {
@@ -50,10 +46,12 @@ public class DisciplineService {
 		}
 	}
 	
-	public Set<Discipline> getDisciplines(List<Integer> codes) {
+	public Set<Discipline> getDisciplinesByCode(List<Integer> codes) {
 		Iterable<Discipline> disciplines = this.disciplines.findAllById(codes);
 		HashSet<Discipline> disciplineSet = new HashSet<>();
-		disciplines.forEach(discipline -> this.dis);
+		disciplines.forEach(discipline -> disciplineSet.add(discipline));
+		
+		return disciplineSet;
 	}
 
 	public ResponseEntity<List<Discipline>> getDisciplines(String token) {
@@ -71,27 +69,6 @@ public class DisciplineService {
 
 	public boolean containsDiscipline(Integer code) {
 		return this.disciplines.existsById(code);
-	}
-
-	public boolean containsAllDisciplines(List<Integer> codes) {
-		Iterable<Discipline> found = this.disciplines.findAllById(codes);
-
-		int size = 0;
-		while (found.iterator().hasNext()) {
-			found.iterator().next();
-			size++;
-		}
-
-		return size == codes.size();
-	}
-
-	public void unenrollStudentFromAllDisciplines(String studentID) {
-		this.disciplines.findAll().forEach(discipline -> discipline.unenrollStudent(studentID));
-	}
-
-	public void enrollStudentInDisciplines(Enrollment enrollment) {
-		Iterable<Discipline> found = this.disciplines.findAllById(enrollment.getDisciplineCodes());
-		found.forEach(discipline -> discipline.enrollStudent(enrollment.getStudentID()));
 	}
 
 	public Integer computeTotalCredits(List<Integer> codes) {
@@ -115,7 +92,6 @@ public class DisciplineService {
 				return new ResponseEntity<String>("O código de disciplina não foi encontrado.", HttpStatus.NOT_FOUND);
 			}
 			
-			this.studentService.unenrollStudentsFrom(code);
 			this.disciplines.deleteById(code);
 			
 			return new ResponseEntity<String>("Disciplina removida com sucesso!", HttpStatus.OK); 

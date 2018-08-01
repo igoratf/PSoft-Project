@@ -2,76 +2,91 @@ package com.example.preMatricula.entities;
 
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import com.example.preMatricula.enums.StudentCoursePlan;
 
 import java.util.HashSet;
 
-public class Student extends User {
+public class Student {
 	
-	private StudentCoursePlan coursePlan;
-	private Long registration;
+	@Id
+	private String id;
+	private String name;
+	private String email;
 	private Integer semester;
+	private Long registration;
+	private StudentCoursePlan coursePlan;
 	
 	@DBRef
 	private Set<Discipline> enrolledDisciplinesID;
 	
 	public Student(String name, Long registration, Integer semester) {
-		super(name, "Student");
+		this.name = name;
 		this.registration = registration;
 		this.semester = semester;
 		this.enrolledDisciplinesID = new HashSet<>();
 	}
 	
-	private Integer computeSemester() {		
-		return -1;
-	}
-	
-	@Override
-	public void unenrollFrom(Integer code) {
-		this.enrolledDisciplinesID.remove(code);
+	public void unenrollFrom(Discipline discipline) {
+		this.enrolledDisciplinesID.remove(discipline);
 	}
 
-	@Override
 	public Set<Discipline> getEnrolledDisciplinesID() {
 		return enrolledDisciplinesID;
 	}
 
-	@Override
 	public void setEnrolledDisciplinesID(Set<Discipline> enrolledDisciplinesID) {
 		this.enrolledDisciplinesID = enrolledDisciplinesID;
 	}
 
-	@Override
 	public Long getRegistration() {
 		return registration;
 	}
 
-	@Override
 	public void setRegistration(Long registration) {
-		//this.semester = 
 		this.registration = registration;
 	}
 
-	@Override
 	public Integer getSemester() {
 		return semester;
 	}
 
-	@Override
 	public void setSemester(Integer semester) {
 		this.semester = semester;
 	}
 
-	@Override
 	public StudentCoursePlan getCoursePlan() {
 		return coursePlan;
 	}
 
-	@Override
 	public void setCoursePlan(StudentCoursePlan coursePlan) {
 		this.coursePlan = coursePlan;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

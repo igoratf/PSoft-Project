@@ -1,5 +1,6 @@
 package com.example.preMatricula.controllers;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.preMatricula.entities.User;
 import com.example.preMatricula.services.UserService;
 
 @RestController
@@ -21,7 +21,7 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping
-	public @ResponseBody ResponseEntity<User> getUser(
+	public @ResponseBody ResponseEntity<JSONObject> getUser(
 			@RequestHeader(name = "Authorization") String token) throws Exception {
 		
 		return this.userService.getUser(token);

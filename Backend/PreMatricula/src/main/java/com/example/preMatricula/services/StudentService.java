@@ -1,21 +1,15 @@
 package com.example.preMatricula.services;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.preMatricula.entities.Discipline;
 import com.example.preMatricula.entities.Enrollment;
 import com.example.preMatricula.entities.Student;
-import com.example.preMatricula.entities.User;
-import com.example.preMatricula.repositories.DisciplinaRepository;
 import com.example.preMatricula.repositories.UserRepository;
-import com.google.api.Http;
 import com.google.firebase.auth.FirebaseToken;
 
 @Service
@@ -31,16 +25,9 @@ public class StudentService {
 	private DisciplineService disciplineService;
 
 	public void enrollStudentInDisciplines(Enrollment enrollment) {
-		User student = this.students.findById(enrollment.getStudentID()).get();
-		student.setEnrolledDisciplinesID(new HashSet<>(
-	}
-	
-	public void unenrollStudentsFrom(Integer code) {
-		this.students.findAll().forEach(student -> {
-			if (student.getRole().equals("Student")) {
-				student.unenrollFrom(code);
-			}
-		});
+		Student student = this.students.findById(enrollment.getStudentID()).get();
+		student.setEnrolledDisciplinesID(this.disciplineService.getDisciplinesByCode(enrollment.getDisciplineCodes()));
+		this.students.save(student);
 	}
 
 	public boolean putStudent(Student student) {
@@ -51,7 +38,7 @@ public class StudentService {
 		return existed;
 	}
 
-	public ResponseEntity<List<User>> getStudents(String token) {
+	public ResponseEntity<List<Student>> getStudents(String token) {
 		try {
 			if (!this.userService.isCoordinator(token)) {
 				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -68,31 +55,26 @@ public class StudentService {
 		return this.students.existsById(id);
 	}
 
-	public Optional<User> getStudent(String id) {
-		return this.students.findById(id);
+	public Student getStudent(String id) {
+		return this.students.findById(id).get();
 	}
 
 	public void deleteStudents() {
 		this.students.deleteAll();
 	}
 
-	public boolean userExists(String uid) {
-		return false;
-	}
-
 	public ResponseEntity<String> putStudent(Student student, String token) {
 		try {
+			if (this.userService.isCoordinator(token)) {
+				return new ResponseEntity<>("Você não é um estudante.", HttpStatus.NOT_ACCEPTABLE);
+			}
+			
 			FirebaseToken firebaseToken = this.userService.getFirebaseTokenFromIdToken(token);
-			student.setRole("Student");
 			student.setId(firebaseToken.getUid());
 			student.setEmail(firebaseToken.getEmail());
 			student.setName(firebaseToken.getName());
 
 			boolean existed = this.students.existsById(student.getId());
-
-			if (existed && this.students.findById(student.getId()).get().getRole().equals("Coordinator")) {
-				return new ResponseEntity<>("Você não é um estudante.", HttpStatus.NOT_ACCEPTABLE);
-			}
 			
 			this.students.save(student);
 
