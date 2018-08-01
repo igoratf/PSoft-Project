@@ -86,7 +86,6 @@ export default {
   },
   methods: {
     submit() {
-      console.log(this.code)
       var discipline = {
         name: this.name,
         code: this.code,
@@ -97,11 +96,9 @@ export default {
       };
       return CourseService.registerDiscipline(discipline)
       .then((result) => {
-        console.log(result)
         this.setSuccessAlert(result.data)
       })
       .catch((error) => {
-        console.log(error)
         this.setErrorAlert(error.message)
       })
     },
