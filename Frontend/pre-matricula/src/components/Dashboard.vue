@@ -165,6 +165,15 @@
           alert(error.message)
         })
       },
+      getEnrollments() {
+        return CourseService.getEnrollments()
+        .then((result) => {
+          console.log(result)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      },
       setSuccessAlert() {
         this.showSuccess = true;
         setTimeout(this.closeSuccessAlert, 2000);

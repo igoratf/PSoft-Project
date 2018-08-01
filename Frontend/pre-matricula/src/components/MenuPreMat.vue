@@ -28,7 +28,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <router-link class="dropdown-item" to="student-registration">Alterar dados</router-link>
-              <a class="dropdown-item" href="#">Sair</a>
+              <a class="dropdown-item logout" @click="signOut">Sair</a>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </div>
@@ -79,18 +79,19 @@ export default {
 
 .router-link-exact-active {
   background: #2e2e2e;
+  color: white;
 }
 
 .logout {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: white;
   font-size: 16px;
-  line-height: 1.5;
-  margin-left: 16px;
 }
 
 .logout:hover {
+  background: #2e2e2e;
   cursor: pointer;
+  color: white;
 }
 
 .header-infos {
@@ -104,5 +105,11 @@ export default {
 
 .logged-info {
   margin-left: 8px;
+}
+
+
+.dropdown-item:hover {
+  color: white!important;
+  background: #2e2e2e;
 }
 </style>
