@@ -98,7 +98,7 @@ export default {
       return CourseService.registerDiscipline(discipline)
       .then((result) => {
         console.log(result)
-        this.setSuccessAlert(result.message)
+        this.setSuccessAlert(result.data)
       })
       .catch((error) => {
         console.log(error)

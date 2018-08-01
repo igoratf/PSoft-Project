@@ -119,7 +119,7 @@
           enrollment
         })
         .then((result) => {
-          this.setAlert(this.showSuccess);
+          this.setAlert(result.data);
         })
         .catch((error) => {
           this.setErrorAlert(error.message);
@@ -134,9 +134,8 @@
           this.getDisciplines();
         })
         .catch((error) => {
-          alert(error.message)
+          this.setErrorAlert(error.message)
         })
-        // this.courseList.splice(index, 1);
       },
       editDiscipline(index) {
         let discipline = this.courseList[index];
