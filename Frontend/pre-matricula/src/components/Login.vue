@@ -65,6 +65,7 @@ export default {
           axios
             .get("/users")
             .then(result => {
+              console.log('deu get')
               let user = result.request.response;
               localStorage.setItem("user", user);
               if (!user.registration) {

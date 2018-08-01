@@ -36,7 +36,7 @@ getCurrentUser() {
             return user
         })
         .catch((error) => {
-            alert(error.message)
+            console.log(error.message)
         })
     }
 },

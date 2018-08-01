@@ -50,7 +50,7 @@
   </table>
 
   <hr>
-  <button type="submit" class="btn btn-primary" v-if="user.role == 'Student'">Realizar pré matrícula</button>
+  <button type="submit" class="btn btn-outline-primary" v-if="user.role == 'Student'">Realizar pré matrícula</button>
   </form>
   </div>
 

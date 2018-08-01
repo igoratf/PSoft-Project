@@ -23,7 +23,7 @@ const router = new Router({
       name: 'login',
       component: Login,
       beforeEnter: (to, from, next) => {
-        let currentUser = AuthService.getCurrentUser();
+        let currentUser = localStorage.getItem("user");
         if (currentUser && currentUser.role) {
           next("dashboard")
         } else {
@@ -41,7 +41,7 @@ const router = new Router({
       path: '/student-registration',
       name: 'student-registration',
       component: StudentRegistration,
-      meta: { requiresAuth: true },
+      // meta: { requiresAuth: true },
       beforeEnter: (to, from, next) => {
         let currentUser = AuthService.getCurrentUser();
         if (currentUser && currentUser.role == 'Coordinator') {
@@ -84,6 +84,8 @@ router.beforeEach((to, from, next) => {
   if (to.path != '/login' && (!localStorage.token || (!currentUser && requiresAuth))) {
     next('login')
   } else if (requiresRole && !currentUserRole) {
+    console.log('tá travando aqui')
+    console.log(currentUser)
     next('student-registration')
   } 
   else {
