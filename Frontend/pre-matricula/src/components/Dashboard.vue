@@ -127,15 +127,16 @@
       },
       deleteCourse(index) {
         let discipline = this.courseList[index];
-        return axios.delete('/disciplines/{discipline.code}')
+        let code = parseInt(discipline.code)
+        return axios.delete('/disciplines/' + code)
         .then((result) => {
-          console.log('sucesso')
           console.log(result)
+          this.getDisciplines();
         })
         .catch((error) => {
           alert(error.message)
         })
-        this.courseList.splice(index, 1);
+        // this.courseList.splice(index, 1);
       },
       editDiscipline(index) {
         let discipline = this.courseList[index];
@@ -154,6 +155,15 @@
         } else {
           this.selected = this.courseList[index];
         }
+      },
+      getDisciplines() {
+        return CourseService.getDisciplines()
+        .then((result) => {
+          this.courseList = result.data;
+        })
+        .catch((error) => {
+          alert(error.message)
+        })
       },
       setSucessAlert() {
         this.showSuccess = true;
@@ -175,13 +185,7 @@
     updated() {},
     created() {
       this.user = AuthService.getCurrentUser();
-      return CourseService.getDisciplines()
-      .then((result) => {
-        this.courseList = result.data;
-      })
-      .catch((error) => {
-        alert(error.message)
-      })
+      this.getDisciplines();
       // CourseService.getDisciplines()
       // .then((result) => {
       //   this.courseList = result;
