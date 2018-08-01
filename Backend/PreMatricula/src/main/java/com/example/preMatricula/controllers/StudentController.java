@@ -1,8 +1,11 @@
 package com.example.preMatricula.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -28,4 +31,10 @@ public class StudentController {
 		return this.studentService.putStudent(student, token);
 	}
 
+	@GetMapping
+	public @ResponseBody ResponseEntity<List<Student>> getStudents(
+			@RequestHeader(name = "Authorization") String token) throws Exception {
+		return this.studentService.getStudents(token);
+	}
+	
 }
