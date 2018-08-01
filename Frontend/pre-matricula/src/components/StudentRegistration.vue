@@ -73,14 +73,18 @@ export default {
       }
       this.user.registration = this.registration;
       this.user.coursePlan = this.coursePlan;
-      console.log(this.user)
-      localStorage.setItem('user', JSON.stringify(this.user))
-      return axios.put('/students', this.user)
+      return axios.put('/students', formData)
       .then((result) => {
         alert(result.data)
         this.clearFormData();
         this.$router.replace('dashboard')
-        console.log(result)
+        console.log('aqui ', result)
+      })
+      .then(() => {
+        return axios.get('/users').then((result) => {
+          console.log('aqui é quando eu recebo ', result)
+          localStorage.setItem("user", result)
+        })
       })
       .catch((error) => {
         alert(error.message)

@@ -3,7 +3,7 @@ import axios from '../auth-axios/axios';
 
 export default {
     registerDiscipline(discipline) {
-       return axios.put('/course/disciplines/put', {
+       return axios.put('/disciplines', {
         discipline
       })
     },

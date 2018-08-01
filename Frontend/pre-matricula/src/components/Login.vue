@@ -63,8 +63,7 @@ export default {
           localStorage.setItem("token", result.user._lat);
         })
         .then(() => {
-          axios
-            .get("/users")
+          axios.get("/users")
             .then(result => {
               let user = result.request.response;
               localStorage.setItem("user", user);
@@ -93,7 +92,7 @@ export default {
     }
   },
   created() {
-    console.log("oi", localStorage.user);
+    console.log("oi", localStorage.getItem('user'));
   }
 };
 </script>

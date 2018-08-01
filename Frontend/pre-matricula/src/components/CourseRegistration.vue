@@ -97,17 +97,25 @@ export default {
         coursePlan: this.coursePlan
       };
       console.log(discipline)
-      axios.put('/disciplines', {
-        discipline
-      }).then((result) => {
+      return CourseService.registerDiscipline(discipline)
+      .then((result) => {
         console.log(result)
         this.setSuccessAlert(result.message)
       })
       .catch((error) => {
-        console.log(error)
+        this.console(error)
         this.setErrorAlert(error.message)
       })
-      console.log(this.name)
+      // axios.put('/disciplines', {
+      //   discipline
+      // }).then((result) => {
+      //   console.log(result)
+      //   this.setSuccessAlert(result.message)
+      // })
+      // .catch((error) => {
+      //   console.log(error)
+      //   this.setErrorAlert(error.message)
+      // })
     },
     setSuccessAlert(message) {
         this.successMessage = message;
