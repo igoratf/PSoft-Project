@@ -98,7 +98,6 @@ export default {
       });
       return CourseService.submitEnrollment(enrollment)
         .then(result => {
-          console.log(result);
           this.setSuccessAlert("Sucesso");
         })
         .catch(error => {
@@ -112,7 +111,6 @@ export default {
       return axios
         .delete("/disciplines/" + code)
         .then(result => {
-          console.log(result);
           this.getDisciplines();
         })
         .catch(error => {
@@ -155,9 +153,11 @@ export default {
           console.log("json", result.data);
           var enrollmentsCsv = Papa.unparse(result.data);
           console.log(enrollmentsCsv);
+          console.log(Papa.parse(enrollmentsCsv))
           var encodedUri = encodeURI(enrollmentsCsv);
+          console.log(encodedUri)
           var link = document.createElement("a");
-          link.setAttribute("href", encodedUri);
+          link.setAttribute("href", enrollmentsCsv);
           link.setAttribute("download", "my_data.csv");
           link.innerHTML = "Click Here to download";
           document.body.appendChild(link); // Required for FF

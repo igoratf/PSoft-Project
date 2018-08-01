@@ -27,7 +27,7 @@
           </div>
           <div class="form-group col-md-6">
             <label for="workload">Carga horária</label>
-            <input type="number" class="form-control" id="workload" placeholder="Carga horária da disciplina" min=0 max=120 v-model="workload" required>
+            <input type="number" class="form-control" id="workload" placeholder="Carga horária da disciplina" min=0 max=300 v-model="workload" required>
           </div>
         </div>
         <div class="form-row">

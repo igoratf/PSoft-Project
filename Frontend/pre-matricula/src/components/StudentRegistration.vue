@@ -39,7 +39,6 @@
               <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
             </form>
           </div>
-          <!-- <button class="btn btn-outline-primary">Voltar para o login</button> -->
           <button class="btn btn-outline-dark back" @click="returnNavigation"><i class="fas fa-backward"></i> Sair</button>
         </div>
         <div class="col">
