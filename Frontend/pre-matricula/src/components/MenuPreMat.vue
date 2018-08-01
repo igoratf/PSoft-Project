@@ -49,8 +49,11 @@ import AuthService from '../services/AuthService.js';
       signOut() {
         return AuthService.signOut()
         .then((result) => {
-          localStorage.clear()
           this.$router.replace('login')
+          localStorage.clear()
+        })
+        .catch((error) => {
+          alert(error.message)
         })
       },
       editUser() {

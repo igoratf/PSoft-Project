@@ -68,10 +68,10 @@ export default {
             .then(result => {
               let user = result.request.response;
               localStorage.setItem("user", user);
-              if (user.registration) {
+              if (!user.registration) {
                 this.$router.replace("student-registration")
               } else {
-                this.$router.replace("login");
+                this.$router.replace("dashboard");
               }
               console.log('user aqui ', user)
               console.log(result);
