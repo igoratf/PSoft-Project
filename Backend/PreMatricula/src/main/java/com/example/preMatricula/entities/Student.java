@@ -31,11 +31,6 @@ public class Student {
 		this.enrolledDisciplinesID.remove(code);
 	}
 
-	public Set<Integer> getEnrolledDisciplinesID() {
-		return enrolledDisciplinesID;
-	}
-
-	@JsonIgnore
 	public void setEnrolledDisciplinesID(Set<Integer> enrolledDisciplinesID) {
 		this.enrolledDisciplinesID = enrolledDisciplinesID;
 	}
@@ -87,5 +82,8 @@ public class Student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public Set<Integer> getEnrolledDisciplinesID() {
 	
+		return this.enrolledDisciplinesID; 
+ 	}	
 }
