@@ -1,6 +1,10 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
+### LOG ###
+*.log
+*.gz
+
 ### STS ###
 .apt_generated
 .classpath
