@@ -19,7 +19,7 @@ public class UserService {
 	@Autowired
 	private StudentService studentService;
 
-	private String[] coordinatorsEmails = {"projsw@ccc.ufcg.edu.br"};
+	private String[] coordinatorsEmails = {"projsw@ccc.ufcg.edu.br", "javan.lacerda@ccc.ufcg.edu.br"};
 
 	public FirebaseToken getFirebaseTokenFromIdToken(String idToken) throws Exception {
 		idToken = idToken.split(" ")[1];

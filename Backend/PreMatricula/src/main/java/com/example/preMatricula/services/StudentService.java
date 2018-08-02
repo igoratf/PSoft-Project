@@ -79,6 +79,7 @@ public class StudentService {
 			student.setId(firebaseToken.getUid());
 			student.setEmail(firebaseToken.getEmail());
 			student.setName(firebaseToken.getName());
+			student.setSemester((int) (student.getRegistration() / 100000 % 1000));
 
 			boolean existed = this.students.existsById(student.getId());
 			

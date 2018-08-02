@@ -5,7 +5,6 @@ import java.util.Set;
 import org.springframework.data.annotation.Id;
 
 import com.example.preMatricula.enums.StudentCoursePlan;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashSet;
 
