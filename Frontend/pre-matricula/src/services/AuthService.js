@@ -17,7 +17,7 @@ signOut() {
     },
 
 checkCurrentLogin() {
-    if (localStorage.token) {
+    if (localStorage.getItem('token')) {
         return true;
     } else {
         return false;
@@ -42,6 +42,7 @@ getCurrentUser() {
 },
 
 getUser() {
+    console.log('entrei aqui no authservice')
     return axios.get('/users')
 },
 

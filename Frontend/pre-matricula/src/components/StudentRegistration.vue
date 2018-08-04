@@ -108,7 +108,6 @@ export default {
   },
   computed: {},
   created () {
-    this.user = AuthService.getCurrentUser();
     this.checkCurrentLogin();
   },
   updated () {
