@@ -30,7 +30,7 @@ const router = new Router({
       meta: { requiresAuth: true, requiresRole: true },
       beforeEnter: (to, from, next) => {
         let currentUser = AuthService.getCurrentUser();
-        if (!currentUser) {
+        if (!currentUser || !currentUser.role) {
           next("login")
         } else {
           next()
