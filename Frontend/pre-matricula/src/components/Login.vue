@@ -63,6 +63,7 @@ export default {
         })
         .then(token => {
           localStorage.setItem("token", token);
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
           console.log(localStorage.getItem("token"));
         })
         .then(result => {
