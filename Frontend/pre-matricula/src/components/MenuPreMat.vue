@@ -40,8 +40,6 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import "firebase/auth";
 import AuthService from "../services/AuthService.js";
 
 export default {
