@@ -23,6 +23,14 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login,
+      beforeEnter: (to, from, next) => {
+        let currentUser = AuthService.getCurrentUser();
+        if (currentUser) {
+          next("dashboard")
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/dashboard',
@@ -61,9 +69,6 @@ const router = new Router({
         let currentUser = AuthService.getCurrentUser();
         if (!currentUser) {
           next("login")
-        }
-        else if (currentUser) {
-          next("dashboard")
         } else {
           next()
         }
