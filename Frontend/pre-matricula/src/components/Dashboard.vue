@@ -138,9 +138,18 @@ export default {
       return CourseService.getDisciplines()
         .then(result => {
           let list = result.data;
-          this.courseList = list.sort(function(a, b) {
+          let sortBySemester = function(a, b) {
             return a.semester - b.semester;
-          });
+          }
+
+          if (this.user.role == 'Coordinator') {
+            this.courseList = list.sort(sortBySemester)
+          } else {
+            list = list.filter(function(discipline) {
+              return discipline.coursePlan == 'Nova'
+            })
+            this.courseList = list;
+          }
         })
         .catch(error => {
           this.setErrorAlert(error.message);
