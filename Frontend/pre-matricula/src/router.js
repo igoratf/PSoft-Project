@@ -26,14 +26,14 @@ const router = new Router({
       beforeEnter: (to, from, next) => {
         let currentUser = AuthService.getCurrentUser();
         if (currentUser) {
-          next("courses")
+          next("course")
         } else {
           next()
         }
       }
     },
     {
-      path: '/courses',
+      path: '/course',
       name: 'dashboard',
       component: Dashboard,
       meta: { requiresAuth: true, requiresRole: true },
@@ -54,14 +54,14 @@ const router = new Router({
       beforeEnter: (to, from, next) => {
         let currentUser = AuthService.getCurrentUser();
         if (currentUser && currentUser.role == 'Coordinator') {
-          next("courses")
+          next("course")
         } else {
           next()
         }
       }
     },
     {
-      path: '/courses/register',
+      path: '/course/register',
       name: 'course-registration',
       component: CourseRegistration,
       meta: { requiresAuth: true, requiresRole: true },

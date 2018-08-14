@@ -72,7 +72,7 @@ export default {
           if (!user.role) {
             this.$router.replace("student");
           } else {
-            this.$router.replace("courses");
+            this.$router.replace("course");
           }
         })
         .catch(error => {
