@@ -3,6 +3,8 @@ import 'firebase/auth';
 import axios from '../auth-axios/axios';
 import router from '../router';
 
+
+
 export default {
 signInWithGoogle() {
     firebase.auth().useDeviceLanguage();
@@ -42,7 +44,6 @@ getCurrentUser() {
 },
 
 getUser() {
-    console.log('entrei aqui no authservice')
     return axios.get('/users')
 },
 

@@ -84,7 +84,7 @@ export default {
       .then(() => {
         return axios.get('/users').then((result) => {
           localStorage.setItem("user", JSON.stringify(result.data))
-          this.$router.replace('dashboard')
+          this.$router.replace('courses')
         })
       })
       .catch((error) => {

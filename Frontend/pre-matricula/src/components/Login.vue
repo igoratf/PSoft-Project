@@ -64,20 +64,19 @@ export default {
         .then(token => {
           localStorage.setItem("token", token);
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
-          console.log(localStorage.getItem("token"));
           return AuthService.getUser();
         })
         .then(result => {
           let user = JSON.parse(result.request.response);
           localStorage.setItem("user", JSON.stringify(user));
           if (!user.role) {
-            this.$router.replace("student-registration");
+            this.$router.replace("student");
           } else {
-            this.$router.replace("dashboard");
+            this.$router.replace("course");
           }
         })
         .catch(error => {
-          this.$router.replace("student-registration");
+          this.$router.replace("student");
           console.log(error);
         });
     }

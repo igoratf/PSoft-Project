@@ -7,6 +7,7 @@
 
       <div class="container animated zoomIn faster">
         <h1> Lista de disciplinas cadastradas</h1>
+        <div class="table-responsive">
   <form @submit.prevent="submitEnrollment">
     <table class="table table-hover">
     <thead>
@@ -52,6 +53,7 @@
   <hr>
   <button type="submit" class="btn btn-outline-primary" v-if="user.role == 'Student'">Realizar pré matrícula</button>
   </form>
+  </div>
   </div>
 
   <div class="footer animated zoomIn faster" v-if="user.role == 'Coordinator'">
@@ -136,9 +138,18 @@ export default {
       return CourseService.getDisciplines()
         .then(result => {
           let list = result.data;
-          this.courseList = list.sort(function(a, b) {
+          let sortBySemester = function(a, b) {
             return a.semester - b.semester;
-          });
+          }
+
+          if (this.user.role == 'Coordinator') {
+            this.courseList = list.sort(sortBySemester)
+          } else {
+            list = list.filter(function(discipline) {
+              return discipline.coursePlan == 'Nova'
+            })
+            this.courseList = list;
+          }
         })
         .catch(error => {
           this.setErrorAlert(error.message);
