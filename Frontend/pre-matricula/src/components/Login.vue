@@ -70,13 +70,13 @@ export default {
           let user = JSON.parse(result.request.response);
           localStorage.setItem("user", JSON.stringify(user));
           if (!user.role) {
-            this.$router.replace("student-registration");
+            this.$router.replace("student");
           } else {
-            this.$router.replace("dashboard");
+            this.$router.replace("courses");
           }
         })
         .catch(error => {
-          this.$router.replace("student-registration");
+          this.$router.replace("student");
           console.log(error);
         });
     }
