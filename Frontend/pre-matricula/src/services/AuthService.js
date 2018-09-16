@@ -3,6 +3,8 @@ import 'firebase/auth';
 import axios from '../auth-axios/axios';
 import router from '../router';
 
+
+
 export default {
 signInWithGoogle() {
     firebase.auth().useDeviceLanguage();
@@ -17,7 +19,7 @@ signOut() {
     },
 
 checkCurrentLogin() {
-    if (localStorage.token) {
+    if (localStorage.getItem('token')) {
         return true;
     } else {
         return false;
@@ -47,7 +49,7 @@ getUser() {
 
 getFirebaseUser() {
     return firebase.auth().currentUser;
-}
+},
 
 
 }

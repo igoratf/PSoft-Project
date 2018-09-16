@@ -59,28 +59,25 @@ export default {
     signInWithGoogle() {
       return AuthService.signInWithGoogle()
         .then(result => {
-          localStorage.setItem("token", result.user._lat);
+          return result.user.getIdToken();
         })
-        .then(() => {
-          axios
-            .get("/users")
-            .then(result => {
-              let user = JSON.parse(result.request.response)
-              console.log(JSON.parse(result.request.response))
-              localStorage.setItem("user", JSON.stringify(user));
-              if (!user.role) {
-                this.$router.replace("student-registration");
-              } else {
-                this.$router.replace("dashboard");
-              }
-            })
-            .catch(error => {
-              this.$router.replace("student-registration");
-              console.log(error);
-            });
+        .then(token => {
+          localStorage.setItem("token", token);
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+          return AuthService.getUser();
+        })
+        .then(result => {
+          let user = JSON.parse(result.request.response);
+          localStorage.setItem("user", JSON.stringify(user));
+          if (!user.role) {
+            this.$router.replace("student");
+          } else {
+            this.$router.replace("course");
+          }
         })
         .catch(error => {
-          alert(error.message);
+          this.$router.replace("student");
+          console.log(error);
         });
     }
   },
@@ -98,6 +95,7 @@ export default {
   padding: 12px;
   margin-top: 15%;
   margin-bottom: 15%;
+  box-shadow: 5px 5px 10px 5px;
 }
 
 .label {

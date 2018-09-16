@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard.vue'
 import StudentRegistration from './components/StudentRegistration.vue'
 import CourseRegistration from './components/CourseRegistration.vue'
 import AuthService from './services/AuthService';
+import axios from './auth-axios/axios';
 
 Vue.use(Router)
 
@@ -22,15 +23,23 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login,
+      beforeEnter: (to, from, next) => {
+        let currentUser = AuthService.getCurrentUser();
+        if (currentUser) {
+          next("course")
+        } else {
+          next()
+        }
+      }
     },
     {
-      path: '/dashboard',
+      path: '/course',
       name: 'dashboard',
       component: Dashboard,
       meta: { requiresAuth: true, requiresRole: true },
       beforeEnter: (to, from, next) => {
         let currentUser = AuthService.getCurrentUser();
-        if (!currentUser) {
+        if (!currentUser || !currentUser.role) {
           next("login")
         } else {
           next()
@@ -38,21 +47,21 @@ const router = new Router({
       }
     },
     {
-      path: '/student-registration',
+      path: '/student',
       name: 'student-registration',
       component: StudentRegistration,
       // meta: { requiresAuth: true },
       beforeEnter: (to, from, next) => {
         let currentUser = AuthService.getCurrentUser();
         if (currentUser && currentUser.role == 'Coordinator') {
-          next("dashboard")
+          next("course")
         } else {
           next()
         }
       }
     },
     {
-      path: '/course-registration',
+      path: '/course/register',
       name: 'course-registration',
       component: CourseRegistration,
       meta: { requiresAuth: true, requiresRole: true },
@@ -60,9 +69,6 @@ const router = new Router({
         let currentUser = AuthService.getCurrentUser();
         if (!currentUser) {
           next("login")
-        }
-        else if (currentUser && currentUser.role == 'Student') {
-          next("dashboard")
         } else {
           next()
         }
@@ -71,31 +77,11 @@ const router = new Router({
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   let requiresAuth = to.meta.requiresAuth
-//   let requiresRole = to.meta.requiresRole
-//   let currentUser = AuthService.getCurrentUser();
-//   let currentUserRole = "";
+router.beforeEach((to, from, next) => {
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+next()
 
-
-//   console.log(currentUserRole)
-
-//   if (currentUser) {
-//     currentUserRole = currentUser.role;
-//   }
-
-//   if (to.path != '/login' && (!localStorage.token || !currentUser)) {
-//     next('login')
-//   } else if (requiresRole && !currentUserRole) {
-//     console.log('tá travando aqui')
-//     console.log(currentUser)
-//     next('student-registration')
-//   } 
-//   else {
-//     next()
-//   }
-
-// })
+})
 
 
 export default router
