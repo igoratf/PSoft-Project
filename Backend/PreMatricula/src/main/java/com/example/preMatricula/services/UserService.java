@@ -19,6 +19,8 @@ public class UserService {
 	@Autowired
 	private StudentService studentService;
 
+	private String[] coordinatorsEmails = {"projsw@ccc.ufcg.edu.br", "javan.lacerda@ccc.ufcg.edu.br"};
+
 	public FirebaseToken getFirebaseTokenFromIdToken(String idToken) throws Exception {
 		idToken = idToken.split(" ")[1];
 		
@@ -48,8 +50,13 @@ public class UserService {
 		Map<String, Object> claims = firebaseToken.getClaims();
 		
 		System.out.println(claims.toString());
+
+		for (String coordinatorEmail : this.coordinatorsEmails) {
+
+			if (coordinatorEmail.equals(claims.get("email"))) return true;
+		}
 		
-		return claims.get("email").equals("icaro.lima@ccc.ufcg.edu.br");
+		return false;
 	}
 
 	public ResponseEntity<String> getUser(String token) {

@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col"></div>
         <div class="col">
-          <div class="form-container">
+          <div class="form-container" style="box-shadow: -12px 12px 8px 0  rgba(0, 0, 0, 0.5);">
             <div class="row">
               <div class="col">
                 <img src="../assets/logoufcg.jpg" width=130px>
@@ -25,13 +25,13 @@
             </div>
             <hr>
 
-            <button class="btn btn-google" @click="signInWithGoogle">
+            <button class="btn btn-google" @click="signInWithGoogle" style="margin-bottom: 25px">
               <i class="fab fa-google"></i>
               <span class="sign-google">
                 <strong>Sign in with Google</strong>
               </span>
             </button>
-
+          
           </div>
         </div>
         <div class="col"></div>

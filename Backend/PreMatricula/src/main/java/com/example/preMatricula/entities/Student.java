@@ -5,7 +5,6 @@ import java.util.Set;
 import org.springframework.data.annotation.Id;
 
 import com.example.preMatricula.enums.StudentCoursePlan;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashSet;
 
@@ -31,11 +30,6 @@ public class Student {
 		this.enrolledDisciplinesID.remove(code);
 	}
 
-	public Set<Integer> getEnrolledDisciplinesID() {
-		return enrolledDisciplinesID;
-	}
-
-	@JsonIgnore
 	public void setEnrolledDisciplinesID(Set<Integer> enrolledDisciplinesID) {
 		this.enrolledDisciplinesID = enrolledDisciplinesID;
 	}
@@ -87,5 +81,8 @@ public class Student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public Set<Integer> getEnrolledDisciplinesID() {
 	
+		return this.enrolledDisciplinesID; 
+ 	}	
 }

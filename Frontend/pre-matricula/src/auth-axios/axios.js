@@ -5,8 +5,8 @@ const API_URL = 'https://prematriculapp.herokuapp.com'
 
 var instance = axios.create({
   baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+  }
 })
-
-export default instance
-
-
