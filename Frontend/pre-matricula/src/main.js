@@ -9,7 +9,7 @@ Vue.config.productionTip = false
 
 // Initialize firebase
 var config = {
-  apiKey: '<apiKeyHere>',
+  apiKey: '<<apiKeyHere>>',
   authDomain: "prematricula-b0cd0.firebaseapp.com",
   databaseURL: "https://prematricula-b0cd0.firebaseio.com",
   projectId: "prematricula-b0cd0",
